@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title text-center>Entrar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="loginForm(f)">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Usuário, E-mail, Celular ou CPF</ion-label>
+        <ion-input ngModel type="text" name="credential" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input ngModel type="password" name="password" required></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <button ion-button block [disabled]="!f.valid">Entrar</button>
+    
+  </form>
+</ion-content>
