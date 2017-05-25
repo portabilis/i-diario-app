@@ -1,7 +1,11 @@
-import { AuthService } from '../../services/auth';
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
-import { LoadingController, AlertController } from 'ionic-angular';
+
+import { LoadingController, AlertController, NavController } from 'ionic-angular';
+
+import { FrequencyPage } from '../frequency/frequency';
+
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'page-sign-in',
@@ -11,26 +15,24 @@ export class SignIn {
   constructor(
     private auth: AuthService,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private navCtrl: NavController
   ){
-
   }
   loginForm(form: NgForm ){
-
-    const url = "http://localhost:3000/usuarios/logar.json";
-    
+   
     const credential = form.value.credential;
     const password = form.value.password;
-
 
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
     });
     loading.present();
-    const result = this.auth.signIn(credential, password)
+    this.auth.signIn(credential, password)
       .then(result => {
         loading.dismiss();
         this.auth.setCurrentUser(result);
+        this.navCtrl.push(FrequencyPage);
       })
       .catch(error => {
           loading.dismiss();

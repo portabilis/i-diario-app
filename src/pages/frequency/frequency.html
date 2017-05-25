@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Frequência</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
+    <ion-list>
+      <ion-item>
+        <ion-label>Escola</ion-label>
+        <ion-select [(ngModel)]="unity" name="unity" required (ionChange)="onChangeUnity()">
+          <ion-option *ngFor="let unity of unities" value={{unity.id}}>
+            {{ unity.description }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Turma</ion-label>
+        <ion-select [(ngModel)]="classroom" name="classroom" required>
+          <ion-option *ngFor="let classroom of classrooms" value={{classroom.id}}>
+            {{ classroom.description }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Data</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
+      </ion-item>
+    </ion-list>
+    <button ion-button block [disabled]="!f.valid">Entrar</button>
+  </form>
+</ion-content>

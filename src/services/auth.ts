@@ -5,7 +5,6 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
-  
   constructor(
     private http: Http,
     private storage: Storage
