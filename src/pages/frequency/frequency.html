@@ -1,11 +1,8 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Frequência</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
@@ -21,16 +18,36 @@
 
       <ion-item>
         <ion-label>Turma</ion-label>
-        <ion-select [(ngModel)]="classroom" name="classroom" required>
+        <ion-select [(ngModel)]="classroom" name="classroom" (ionChange)="onChangeClassroom()" >
           <ion-option *ngFor="let classroom of classrooms" value={{classroom.id}}>
             {{ classroom.description }}
           </ion-option>
         </ion-select>
       </ion-item>
+
+       <ion-item [hidden]="globalAbsence">
+        <ion-label>Disciplina</ion-label>
+        <ion-select [(ngModel)]="discipline" name="discipline" [required]="!globalAbsence">
+          <ion-option *ngFor="let discipline of disciplines" value={{discipline.id}}>
+            {{ discipline.description }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item [hidden]="globalAbsence">
+        <ion-label>Aulas</ion-label>
+        <ion-select [(ngModel)]="selectedClasses" name="classes" multiple="true" [required]="!globalAbsence">
+          <ion-option *ngFor="let class of classes;let i = index" value={{class}}>
+            {{ class }}ª Aula
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
       <ion-item>
         <ion-label>Data</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
       </ion-item>
+
     </ion-list>
     <button ion-button block [disabled]="!f.valid">Entrar</button>
   </form>

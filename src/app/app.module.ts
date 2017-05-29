@@ -20,6 +20,9 @@ import { AuthService } from '../services/auth';
 import { UnitiesService } from '../services/unities';
 import { ClassroomsService } from '../services/classrooms';
 import { DailyFrequencyService } from '../services/daily_frequency';
+import { ExamRulesService } from '../services/exam_rules';
+import { DisciplinesService } from '../services/disciplines';
+import { SchoolCalendarsService } from '../services/school_calendars';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { DailyFrequencyService } from '../services/daily_frequency';
     UnitiesService,
     ClassroomsService,
     DailyFrequencyService,
+    ExamRulesService,
+    DisciplinesService,
+    SchoolCalendarsService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -8,9 +8,7 @@ export class UnitiesService {
   constructor(
     private http: Http,
     private storage: Storage
-  ){
-
-  }
+  ){}
 
   getUnities(teacherId: string){
     const url = "http://localhost:3000/api/v1/teacher_unities.json";

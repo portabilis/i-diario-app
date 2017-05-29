@@ -9,7 +9,7 @@ export class AuthService {
     private http: Http,
     private storage: Storage
   ){
-    
+
   }
 
   signIn(credential, password){
@@ -21,7 +21,12 @@ export class AuthService {
   }
 
   isSignedIn(){
-    return (this.storage.get('user') != null);
+    this.storage.get('user').then(result => {
+      return true;
+    }).catch(error => {
+      console.log(error);
+      return false;
+    });
   }
 
   currentUser(){

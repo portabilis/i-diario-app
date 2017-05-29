@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 
 @Injectable()
-export class ClassroomsService {
+export class ExamRulesService {
   constructor(
     private http: Http,
     private storage: Storage
   ){}
 
-  getClassrooms(teacherId: string, unityId: string){
-    const url = "http://localhost:3000/api/v1/teacher_classrooms.json";
-    const request = this.http.get(url, { params: { teacher_id: teacherId, unity_id: unityId } } );
+  getExamRules(teacherId: string, classroomId: string){
+    const url = "http://localhost:3000/api/v1/exam_rules.json";
+    const request = this.http.get(url, { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
       return response.json();
     }).toPromise();

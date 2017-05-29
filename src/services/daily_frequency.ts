@@ -8,9 +8,7 @@ export class DailyFrequencyService {
   constructor(
     private http: Http,
     private storage: Storage
-  ){
-
-  }
+  ){}
 
   getStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
     const url = "http://localhost:3000/api/v1/diario-de-frequencia.json";
