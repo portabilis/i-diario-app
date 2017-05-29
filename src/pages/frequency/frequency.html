@@ -18,7 +18,7 @@
 
       <ion-item>
         <ion-label>Turma</ion-label>
-        <ion-select [(ngModel)]="classroom" name="classroom" (ionChange)="onChangeClassroom()" >
+        <ion-select [(ngModel)]="classroom" name="classroom" (ionChange)="onChangeClassroom()" required>
           <ion-option *ngFor="let classroom of classrooms" value={{classroom.id}}>
             {{ classroom.description }}
           </ion-option>
