@@ -1,3 +1,4 @@
+import { DailyFrequencyStudentService } from './../services/daily_frequency_student';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,6 +15,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
+import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -29,7 +31,8 @@ import { SchoolCalendarsService } from '../services/school_calendars';
     MyApp,
     HomePage,
     SignIn,
-    FrequencyPage
+    FrequencyPage,
+    StudentsFrequencyPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { SchoolCalendarsService } from '../services/school_calendars';
     MyApp,
     HomePage,
     SignIn,
-    FrequencyPage
+    FrequencyPage,
+    StudentsFrequencyPage
   ],
   providers: [
     StatusBar,
@@ -56,6 +60,7 @@ import { SchoolCalendarsService } from '../services/school_calendars';
     ExamRulesService,
     DisciplinesService,
     SchoolCalendarsService,
+    DailyFrequencyStudentService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

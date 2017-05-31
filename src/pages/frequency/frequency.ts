@@ -1,5 +1,6 @@
+import { LoadingController, NavController } from 'ionic-angular';
+
 import { NgForm } from '@angular/forms';
-import { LoadingController } from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../../services/auth';
@@ -9,6 +10,8 @@ import { DisciplinesService } from '../../services/disciplines';
 import { ExamRulesService } from '../../services/exam_rules';
 import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
+
+import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
 
 @Component({
   selector: 'page-frequency',
@@ -32,7 +35,8 @@ export class FrequencyPage implements OnInit{
     private dailyFrequencyService: DailyFrequencyService,
     private examRulesService: ExamRulesService,
     private disciplinesService: DisciplinesService,
-    private schoolCalendarsService: SchoolCalendarsService){}
+    private schoolCalendarsService: SchoolCalendarsService,
+    private navCtrl: NavController){}
 
   ngOnInit(){
     this.auth.currentUser().then((user) => {
@@ -91,6 +95,8 @@ export class FrequencyPage implements OnInit{
     const unityId = form.value.unity;
     const classroomId = form.value.classroom;
     const date = form.value.date;
+    const disciplineId = form.value.discipline;
+    const classes = form.value.classes.join();
 
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
@@ -103,11 +109,11 @@ export class FrequencyPage implements OnInit{
         unityId,
         classroomId,
         date,
-        null,
-        null
+        disciplineId,
+        classes
       ).then(result => {
         loader.dismiss();
-        console.log(result);
+        this.navCtrl.push(StudentsFrequencyPage, { "students": result, "classes": classes });
       }).catch(error => {
         loader.dismiss();
         console.log(error);
