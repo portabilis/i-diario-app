@@ -12,7 +12,6 @@ import { Network } from '@ionic-native/network';
 
 //Pages
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
@@ -31,7 +30,6 @@ import { DailyFrequencyStudentService } from '../services/daily_frequency_studen
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     SignIn,
     FrequencyPage,
     StudentsFrequencyPage
@@ -47,7 +45,6 @@ import { DailyFrequencyStudentService } from '../services/daily_frequency_studen
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     SignIn,
     FrequencyPage,
     StudentsFrequencyPage

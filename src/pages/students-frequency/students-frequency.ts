@@ -24,7 +24,7 @@ export class StudentsFrequencyPage {
     private auth: AuthService) {
   }
 
-  ionViewWillLoad() {
+  ionViewDidLoad() {
     this.studentsFrequency = this.navParams.data.students;
     this.classes = this.navParams.data.classes;
     this.globalAbsence = this.navParams.data.global;

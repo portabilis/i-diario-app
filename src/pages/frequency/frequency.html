@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Frequência</ion-title>
+    <ion-buttons end>
+      <button ion-button color="primary" [hidden]="!connectionService.isOnline">Online</button>
+      <button ion-button color="danger" [hidden]="connectionService.isOnline">Offline</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -9,7 +13,7 @@
     <ion-list>
       <ion-item>
         <ion-label>Escola</ion-label>
-        <ion-select [(ngModel)]="unity" name="unity" required (ionChange)="onChangeUnity()">
+        <ion-select [(ngModel)]="unityId" name="unity" required (ionChange)="onChangeUnity()">
           <ion-option *ngFor="let unity of unities" value={{unity.id}}>
             {{ unity.description }}
           </ion-option>
@@ -18,7 +22,7 @@
 
       <ion-item>
         <ion-label>Turma</ion-label>
-        <ion-select [(ngModel)]="classroom" name="classroom" (ionChange)="onChangeClassroom()" required>
+        <ion-select [(ngModel)]="classroomId" name="classroom" (ionChange)="onChangeClassroom()" required>
           <ion-option *ngFor="let classroom of classrooms" value={{classroom.id}}>
             {{ classroom.description }}
           </ion-option>
@@ -27,7 +31,7 @@
 
        <ion-item [hidden]="globalAbsence">
         <ion-label>Disciplina</ion-label>
-        <ion-select [(ngModel)]="discipline" name="discipline" [required]="!globalAbsence">
+        <ion-select [(ngModel)]="disciplineId" name="discipline" [required]="!globalAbsence">
           <ion-option *ngFor="let discipline of disciplines" value={{discipline.id}}>
             {{ discipline.description }}
           </ion-option>

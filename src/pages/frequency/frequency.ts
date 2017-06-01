@@ -1,7 +1,7 @@
-import { LoadingController, NavController } from 'ionic-angular';
+import { LoadingController, NavController, NavParams } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { AuthService } from '../../services/auth';
 import { UnitiesService } from '../../services/unities';
@@ -10,21 +10,26 @@ import { DisciplinesService } from '../../services/disciplines';
 import { ExamRulesService } from '../../services/exam_rules';
 import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
+import { ConnectionService } from '../../services/connection';
+
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
+
+import { Unity } from '../../data/unity.interface';
+import { Classroom } from '../../data/classroom.interface';
 
 @Component({
   selector: 'page-frequency',
   templateUrl: 'frequency.html',
 })
-export class FrequencyPage implements OnInit{
-  private unities: any;
-  private unity: any;
-  private classrooms: any;
-  private classroom: any;
+export class FrequencyPage{
+  private unities: Unity[];
+  private unityId: number;
+  private classrooms: Classroom[];
+  private classroomId: number;
   private date: any;
   private globalAbsence: boolean = true;
   private disciplines: any;
-  private discipline: any;
+  private disciplineId: number;
   private classes: any;
   private selectedClasses:any = [];
 
@@ -37,17 +42,14 @@ export class FrequencyPage implements OnInit{
     private examRulesService: ExamRulesService,
     private disciplinesService: DisciplinesService,
     private schoolCalendarsService: SchoolCalendarsService,
-    private navCtrl: NavController){}
+    private navCtrl: NavController,
+    private connectionService: ConnectionService,
+    private navParams: NavParams){
+    }
 
-  ngOnInit(){
-    this.auth.currentUser().then((user) => {
-      this.unitiesService.getUnities(user.teacher_id).then(result => {
-        this.unities = result;
-      }).catch(error => {
-        console.log(error);
-      });
-    });
+  ionViewWillEnter(){
     this.date = new Date().toISOString();
+    this.unities = this.navParams.get('unities');
   }
 
   onChangeUnity(){
@@ -56,18 +58,16 @@ export class FrequencyPage implements OnInit{
     });
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.classroomsService.getClassrooms(user.teacher_id, this.unity).then(result => {
-        this.classrooms = result;
-        this.resetSelectedValues();
-        loader.dismiss();
+      this.classroomsService.getClassrooms(user.teacher_id, this.unityId).then((classrooms: Classroom[]) => {
+        this.schoolCalendarsService.getSchoolCalendar(this.unityId).then(schoolCalendar => {
+          this.resetSelectedValues();
+          this.classrooms = classrooms;
+          loader.dismiss();
+          this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.number_of_classes);
+        });
       }).catch(error => {
         console.log(error);
         loader.dismiss();
-      });
-
-      this.schoolCalendarsService.getSchoolCalendar(this.unity).then(result => {
-        this.classes = this.schoolCalendarsService.getClasses(result.number_of_classes);
-        console.log(this);
       });
     });
   }
@@ -78,12 +78,14 @@ export class FrequencyPage implements OnInit{
     });
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.examRulesService.getExamRules(user.teacher_id, this.classroom).then(result => {
+      this.examRulesService.getExamRules(user.teacher_id, this.classroomId).then(result => {
         if(result.exam_rule && result.exam_rule.allow_frequency_by_discipline){
-          this.disciplinesService.getDisciplines(user.teacher_id, this.classroom).then(result => {
+          this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).then(result => {
             this.disciplines = result;
             this.globalAbsence = false;
           });
+        }else{
+          this.globalAbsence = true;
         }
         loader.dismiss();
       }).catch(error => {
@@ -94,7 +96,6 @@ export class FrequencyPage implements OnInit{
   }
 
   frequencyForm(form: NgForm){
-    console.log(form);
     const unityId = form.value.unity;
     const classroomId = form.value.classroom;
     const date = form.value.date;
@@ -128,8 +129,8 @@ export class FrequencyPage implements OnInit{
   }
   resetSelectedValues(){
     this.globalAbsence = true;
-    this.classroom = null;
-    this.discipline = null;
+    this.classroomId = null;
+    this.disciplineId = null;
     this.selectedClasses = [];
   }
 }

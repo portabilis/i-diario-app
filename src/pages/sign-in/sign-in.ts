@@ -7,6 +7,10 @@ import { FrequencyPage } from '../frequency/frequency';
 
 import { AuthService } from '../../services/auth';
 import { ConnectionService } from '../../services/connection';
+import { UnitiesService } from '../../services/unities';
+
+import { Unity } from '../../data/unity.interface';
+import { User } from '../../data/user.interface';
 
 @Component({
   selector: 'page-sign-in',
@@ -18,11 +22,11 @@ export class SignIn {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private navCtrl: NavController,
-    private connection: ConnectionService
+    private connection: ConnectionService,
+    private unitiesService: UnitiesService
   ){
   }
   loginForm(form: NgForm ){
-
     const credential = form.value.credential;
     const password = form.value.password;
 
@@ -30,24 +34,23 @@ export class SignIn {
       content: 'Carregando...'
     });
     loading.present();
-    this.auth.signIn(credential, password)
-      .then(result => {
-        loading.dismiss();
-        this.auth.setCurrentUser(result);
-        this.navCtrl.push(FrequencyPage);
-      })
-      .catch(error => {
-          loading.dismiss();
-          const alert = this.alertCtrl.create({
-            title: 'Dados inválidos.',
-            message: "Não foi possível efetuar login",
-            buttons: ['Ok']
-          });
-          alert.present();
+    this.auth.signIn(credential, password).then((user: User) => {
+      loading.dismiss();
+      this.unitiesService.getUnities(user.teacher_id).then((unities: Unity[]) => {
+        this.auth.setCurrentUser(user);
+        this.navCtrl.push(FrequencyPage, { "unities": unities });
+      }).catch(error => {
+        console.log(error);
       });
+    })
+    .catch(error => {
+      loading.dismiss();
+      const alert = this.alertCtrl.create({
+        title: 'Dados inválidos.',
+        message: "Não foi possível efetuar login",
+        buttons: ['Ok']
+      });
+      alert.present();
+    });
   }
-  test(){
-    console.log(this.connection.isOnline());
-  }
-
 }
