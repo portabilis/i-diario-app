@@ -9,14 +9,20 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6>Alunos</ion-col>
-      <ion-col text-center *ngFor="let class of classes">{{class}}ª Aula</ion-col>
+      <ion-col text-center *ngFor="let class of classes" [hidden]="globalAbsence" >{{class}}ª Aula</ion-col>
+      <ion-col text-center [hidden]="!globalAbsence" >Presença</ion-col>
     </ion-row>
     <ion-row *ngFor="let student of studentsFrequency">
       <ion-col col-6>
         {{student.student_name | uppercase}}
       </ion-col>
-      <ion-col *ngFor="let frequency of student.frequencies" text-center>
+
+      <ion-col *ngFor="let frequency of student.frequencies" text-center [hidden]="globalAbsence">
         <ion-checkbox [(ngModel)]="frequency.present" (ionChange)="updateFrequency(frequency)"></ion-checkbox>
+      </ion-col>
+
+      <ion-col text-center [hidden]="!globalAbsence">
+        <ion-checkbox [(ngModel)]="student.present" (ionChange)="updateFrequency(student)"></ion-checkbox>
       </ion-col>
     </ion-row>
   </ion-grid>

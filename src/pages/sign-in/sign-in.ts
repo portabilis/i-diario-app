@@ -6,6 +6,7 @@ import { LoadingController, AlertController, NavController } from 'ionic-angular
 import { FrequencyPage } from '../frequency/frequency';
 
 import { AuthService } from '../../services/auth';
+import { ConnectionService } from '../../services/connection';
 
 @Component({
   selector: 'page-sign-in',
@@ -16,11 +17,12 @@ export class SignIn {
     private auth: AuthService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private connection: ConnectionService
   ){
   }
   loginForm(form: NgForm ){
-   
+
     const credential = form.value.credential;
     const password = form.value.password;
 
@@ -43,6 +45,9 @@ export class SignIn {
           });
           alert.present();
       });
+  }
+  test(){
+    console.log(this.connection.isOnline());
   }
 
 }

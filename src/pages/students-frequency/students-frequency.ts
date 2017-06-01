@@ -14,6 +14,7 @@ export class StudentsFrequencyPage {
 
   private studentsFrequency:any = [];
   private classes:any = [];
+  private globalAbsence:boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -25,8 +26,8 @@ export class StudentsFrequencyPage {
 
   ionViewWillLoad() {
     this.studentsFrequency = this.navParams.data.students;
-    this.classes = this.navParams.data.classes.split(",");
-    console.log(this.classes);
+    this.classes = this.navParams.data.classes;
+    this.globalAbsence = this.navParams.data.global;
   }
 
   updateFrequency(frequency){

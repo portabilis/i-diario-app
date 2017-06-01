@@ -10,7 +10,6 @@ import { DisciplinesService } from '../../services/disciplines';
 import { ExamRulesService } from '../../services/exam_rules';
 import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
-
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
 
 @Component({
@@ -25,7 +24,9 @@ export class FrequencyPage implements OnInit{
   private date: any;
   private globalAbsence: boolean = true;
   private disciplines: any;
+  private discipline: any;
   private classes: any;
+  private selectedClasses:any = [];
 
   constructor(
     private unitiesService: UnitiesService,
@@ -57,6 +58,7 @@ export class FrequencyPage implements OnInit{
     this.auth.currentUser().then((user) => {
       this.classroomsService.getClassrooms(user.teacher_id, this.unity).then(result => {
         this.classrooms = result;
+        this.resetSelectedValues();
         loader.dismiss();
       }).catch(error => {
         console.log(error);
@@ -92,11 +94,15 @@ export class FrequencyPage implements OnInit{
   }
 
   frequencyForm(form: NgForm){
+    console.log(form);
     const unityId = form.value.unity;
     const classroomId = form.value.classroom;
     const date = form.value.date;
     const disciplineId = form.value.discipline;
-    const classes = form.value.classes.join();
+    let classes:any[] = []
+    if(form.value.classes){
+      classes = form.value.classes;
+    }
 
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
@@ -110,15 +116,20 @@ export class FrequencyPage implements OnInit{
         classroomId,
         date,
         disciplineId,
-        classes
+        classes.join()
       ).then(result => {
         loader.dismiss();
-        this.navCtrl.push(StudentsFrequencyPage, { "students": result, "classes": classes });
+        this.navCtrl.push(StudentsFrequencyPage, { "students": result, "classes": classes, "global": this.globalAbsence });
       }).catch(error => {
         loader.dismiss();
         console.log(error);
       });
     });
-
+  }
+  resetSelectedValues(){
+    this.globalAbsence = true;
+    this.classroom = null;
+    this.discipline = null;
+    this.selectedClasses = [];
   }
 }
