@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { LoadingController, NavController, NavParams } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
@@ -53,18 +54,20 @@ export class FrequencyPage{
   }
 
   onChangeUnity(){
+    if(!this.unityId){ return }
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     });
     loader.present();
     this.auth.currentUser().then((user) => {
       this.classroomsService.getClassrooms(user.teacher_id, this.unityId).subscribe(
-        (classrooms: Classroom[]) => {
-          this.schoolCalendarsService.getSchoolCalendar(this.unityId).then(schoolCalendar => {
-            this.resetSelectedValues();
-            this.classrooms = classrooms;
-            loader.dismiss();
-            this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.number_of_classes);
+        (classrooms: any) => {
+          this.schoolCalendarsService.getSchoolCalendar(this.unityId).subscribe(
+            (schoolCalendar) => {
+              this.resetSelectedValues();
+              this.classrooms = classrooms.data;
+              loader.dismiss();
+              this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.data.number_of_classes);
           });
       },
       (error) => {
@@ -75,6 +78,7 @@ export class FrequencyPage{
   }
 
   onChangeClassroom(){
+    if(!this.classroomId){ return }
     this.disciplineId = null;
     this.selectedClasses = [];
 
@@ -84,17 +88,18 @@ export class FrequencyPage{
     loader.present();
 
     this.auth.currentUser().then((user) => {
+
       this.examRulesService.getExamRules(user.teacher_id, this.classroomId).subscribe(
         (result) => {
-          if(result.exam_rule && result.exam_rule.allow_frequency_by_discipline){
-            this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).then(result => {
-              this.disciplines = result;
-              this.globalAbsence = false;
+          if(result.data.exam_rule && result.data.exam_rule.allow_frequency_by_discipline){
+            this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).subscribe(
+              (result) => {
+                this.disciplines = result.data;
+                this.globalAbsence = false;
             });
           }else{
             this.globalAbsence = true;
           }
-          loader.dismiss();
         },
         (error) => {
           console.log(error)

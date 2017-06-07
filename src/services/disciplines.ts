@@ -14,7 +14,10 @@ export class DisciplinesService {
     const url = "http://localhost:3000/api/v1/teacher_disciplines.json";
     const request = this.http.get(url, { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
-      return response.json();
-    }).toPromise();
+      return {
+        data: response.json(),
+        classroomId: classroomId
+      };
+    });
   }
 }

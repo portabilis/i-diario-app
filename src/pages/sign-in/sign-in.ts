@@ -1,4 +1,3 @@
-import { OfflineDataService } from './../../services/offline_data';
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
@@ -24,13 +23,8 @@ export class SignIn {
     private alertCtrl: AlertController,
     private navCtrl: NavController,
     private connection: ConnectionService,
-    private unitiesService: UnitiesService,
-    private offlineData: OfflineDataService
-  ){
-    auth.currentUser().then((user: User) => {
-      offlineData.persistAll(user);
-    });
-  }
+    private unitiesService: UnitiesService
+  ){}
   loginForm(form: NgForm ){
     const credential = form.value.credential;
     const password = form.value.password;
@@ -49,7 +43,6 @@ export class SignIn {
         (error) => {
           console.log(error)
         }
-        
       );
     })
     .catch(error => {

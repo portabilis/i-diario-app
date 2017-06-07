@@ -14,7 +14,10 @@ export class ExamRulesService {
     const url = "http://localhost:3000/api/v1/exam_rules.json";
     const request = this.http.get(url, { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
-      return response.json();
+      return {
+        data: response.json(),
+        classroomId: classroomId
+      }
     });
   }
 }
