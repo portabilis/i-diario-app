@@ -58,14 +58,16 @@ export class FrequencyPage{
     });
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.classroomsService.getClassrooms(user.teacher_id, this.unityId).then((classrooms: Classroom[]) => {
-        this.schoolCalendarsService.getSchoolCalendar(this.unityId).then(schoolCalendar => {
-          this.resetSelectedValues();
-          this.classrooms = classrooms;
-          loader.dismiss();
-          this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.number_of_classes);
-        });
-      }).catch(error => {
+      this.classroomsService.getClassrooms(user.teacher_id, this.unityId).subscribe(
+        (classrooms: Classroom[]) => {
+          this.schoolCalendarsService.getSchoolCalendar(this.unityId).then(schoolCalendar => {
+            this.resetSelectedValues();
+            this.classrooms = classrooms;
+            loader.dismiss();
+            this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.number_of_classes);
+          });
+      },
+      (error) => {
         console.log(error);
         loader.dismiss();
       });
@@ -73,26 +75,35 @@ export class FrequencyPage{
   }
 
   onChangeClassroom(){
+    this.disciplineId = null;
+    this.selectedClasses = [];
+
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     });
     loader.present();
+
     this.auth.currentUser().then((user) => {
-      this.examRulesService.getExamRules(user.teacher_id, this.classroomId).then(result => {
-        if(result.exam_rule && result.exam_rule.allow_frequency_by_discipline){
-          this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).then(result => {
-            this.disciplines = result;
-            this.globalAbsence = false;
-          });
-        }else{
-          this.globalAbsence = true;
+      this.examRulesService.getExamRules(user.teacher_id, this.classroomId).subscribe(
+        (result) => {
+          if(result.exam_rule && result.exam_rule.allow_frequency_by_discipline){
+            this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).then(result => {
+              this.disciplines = result;
+              this.globalAbsence = false;
+            });
+          }else{
+            this.globalAbsence = true;
+          }
+          loader.dismiss();
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          loader.dismiss()
         }
-        loader.dismiss();
-      }).catch(error => {
-        console.log(error);
-        loader.dismiss();
-      });
-    });
+      )
+    })
   }
 
   frequencyForm(form: NgForm){

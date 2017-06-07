@@ -1,3 +1,4 @@
+import { OfflineDataService } from './../../services/offline_data';
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
@@ -23,8 +24,12 @@ export class SignIn {
     private alertCtrl: AlertController,
     private navCtrl: NavController,
     private connection: ConnectionService,
-    private unitiesService: UnitiesService
+    private unitiesService: UnitiesService,
+    private offlineData: OfflineDataService
   ){
+    auth.currentUser().then((user: User) => {
+      offlineData.persistAll(user);
+    });
   }
   loginForm(form: NgForm ){
     const credential = form.value.credential;
@@ -36,12 +41,16 @@ export class SignIn {
     loading.present();
     this.auth.signIn(credential, password).then((user: User) => {
       loading.dismiss();
-      this.unitiesService.getUnities(user.teacher_id).then((unities: Unity[]) => {
-        this.auth.setCurrentUser(user);
-        this.navCtrl.push(FrequencyPage, { "unities": unities });
-      }).catch(error => {
-        console.log(error);
-      });
+      this.unitiesService.getUnities(user.teacher_id).subscribe(
+        (unities: Unity[]) => {
+          this.auth.setCurrentUser(user);
+          this.navCtrl.push(FrequencyPage, { "unities": unities });
+        },
+        (error) => {
+          console.log(error)
+        }
+        
+      );
     })
     .catch(error => {
       loading.dismiss();

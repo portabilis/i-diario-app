@@ -11,10 +11,10 @@ export class ExamRulesService {
   ){}
 
   getExamRules(teacherId: number, classroomId: number){
-    const url = "http://***REMOVED***/api/v1/exam_rules.json";
+    const url = "http://localhost:3000/api/v1/exam_rules.json";
     const request = this.http.get(url, { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
       return response.json();
-    }).toPromise();
+    });
   }
 }

@@ -11,10 +11,10 @@ export class UnitiesService {
   ){}
 
   getUnities(teacherId: number){
-    const url = "http://***REMOVED***/api/v1/teacher_unities.json";
+    const url = "http://localhost:3000/api/v1/teacher_unities.json";
     const request = this.http.get(url, { params: { teacher_id: teacherId } } );
     return request.map((response: Response) => {
       return response.json();
-    }).toPromise();
+    });
   }
 }
