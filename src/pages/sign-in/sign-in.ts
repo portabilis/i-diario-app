@@ -33,26 +33,32 @@ export class SignIn {
       content: 'Carregando...'
     });
     loading.present();
-    this.auth.signIn(credential, password).then((user: User) => {
-      loading.dismiss();
-      this.unitiesService.getUnities(user.teacher_id).subscribe(
-        (unities: Unity[]) => {
-          this.auth.setCurrentUser(user);
-          this.navCtrl.push(FrequencyPage, { "unities": unities });
-        },
-        (error) => {
-          console.log(error)
-        }
-      );
-    })
-    .catch(error => {
-      loading.dismiss();
+    this.auth.signIn(credential, password).subscribe(
+      (user: User) => {
+        this.unitiesService.getUnities(user.teacher_id).subscribe(
+          (unities: Unity[]) => {
+            this.auth.setCurrentUser(user);
+            this.navCtrl.push(FrequencyPage, { "unities": unities });
+          },
+          (error) => {
+            console.log(error)
+          },
+          () => {
+            loading.dismiss();
+          }
+        )
+      },
+    (error) => {
       const alert = this.alertCtrl.create({
         title: 'Dados inválidos.',
         message: "Não foi possível efetuar login",
         buttons: ['Ok']
       });
       alert.present();
-    });
+    },
+    () => {
+      loading.dismiss();
+    }
+  )
   }
 }

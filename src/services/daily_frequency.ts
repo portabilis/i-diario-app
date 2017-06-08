@@ -11,7 +11,7 @@ export class DailyFrequencyService {
   ){}
 
   getStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
-    const url = "http://localhost:3000/api/v1/diario-de-frequencia.json";
+    const url = "http://***REMOVED***/api/v1/diario-de-frequencia.json";
     const request = this.http.post(url,
       {
         user_id: userId,

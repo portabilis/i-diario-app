@@ -1,10 +1,7 @@
 import { User } from '../data/user.interface';
 import { SchoolCalendarsService } from './school_calendars';
 import { ExamRulesService } from './exam_rules';
-import { Discipline } from './../data/discipline.interface';
 import { DisciplinesService } from './disciplines';
-import { Classroom } from './../data/classroom.interface';
-import { Unity } from './../data/unity.interface';
 import { ClassroomsService } from './classrooms';
 import { UnitiesService } from './unities';
 import { Storage } from '@ionic/storage';
@@ -21,11 +18,14 @@ export class OfflineDataPersisterService {
     private classrooms: ClassroomsService,
     private disciplines: DisciplinesService,
     private examRules: ExamRulesService,
-    private schoolCalendars: SchoolCalendarsService
-  ){}
+    private schoolCalendars: SchoolCalendarsService) {}
 
   private clearStorage(){
-    this.storage.clear();
+    // this.storage.remove('unities')
+    // this.storage.remove('classrooms')
+    // this.storage.remove('examRules')
+    // this.storage.remove('schoolCalendars')
+    // this.storage.remove('disciplines')
   }
 
   persist(user: User){
@@ -47,7 +47,6 @@ export class OfflineDataPersisterService {
   private persistClassrooms(user){
     this.storage.get('unities').then((unities) => {
       let classroomsObservables = []
-      let unitiesIds = []
       unities.forEach((unity) => {
         classroomsObservables.push(this.classrooms.getClassrooms(user.teacher_id, unity.id))
       })
@@ -125,7 +124,7 @@ export class OfflineDataPersisterService {
         },
         () => {
           this.storage.get('disciplines').then((disciplines) => {
-            console.log('completed')
+            console.log("completo")
           })
         }
       )

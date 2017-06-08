@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+import { User } from './../../data/user.interface';
+import { OfflineDataPersisterService } from './../../services/offline_data_persister';
 import { LoadingController, NavController, NavParams } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
@@ -45,40 +46,51 @@ export class FrequencyPage{
     private schoolCalendarsService: SchoolCalendarsService,
     private navCtrl: NavController,
     private connectionService: ConnectionService,
-    private navParams: NavParams){
-    }
+    private navParams: NavParams,
+    private offlineDataPersister: OfflineDataPersisterService) {}
 
   ionViewWillEnter(){
     this.date = new Date().toISOString();
     this.unities = this.navParams.get('unities');
+    if(this.connectionService.isOnline){
+      this.auth.currentUser().then((user) => {
+        this.offlineDataPersister.persist(user)
+      })
+    }
   }
 
   onChangeUnity(){
-    if(!this.unityId){ return }
+    if(!this.unityId) { return }
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     });
     loader.present();
-    this.auth.currentUser().then((user) => {
+    this.auth.currentUser().then((user: User) => {
       this.classroomsService.getClassrooms(user.teacher_id, this.unityId).subscribe(
         (classrooms: any) => {
           this.schoolCalendarsService.getSchoolCalendar(this.unityId).subscribe(
-            (schoolCalendar) => {
+            (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
-              loader.dismiss();
               this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.data.number_of_classes);
-          });
+            },
+            (error) => {
+              console.log(error)
+            },
+            () => {
+              loader.dismiss()
+            }
+        )
       },
-      (error) => {
-        console.log(error);
-        loader.dismiss();
-      });
+        (error) => {
+          console.log(error);
+        }
+      );
     });
   }
 
   onChangeClassroom(){
-    if(!this.classroomId){ return }
+    if(!this.classroomId) { return }
     this.disciplineId = null;
     this.selectedClasses = [];
 
@@ -90,10 +102,10 @@ export class FrequencyPage{
     this.auth.currentUser().then((user) => {
 
       this.examRulesService.getExamRules(user.teacher_id, this.classroomId).subscribe(
-        (result) => {
+        (result:any) => {
           if(result.data.exam_rule && result.data.exam_rule.allow_frequency_by_discipline){
             this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).subscribe(
-              (result) => {
+              (result: any) => {
                 this.disciplines = result.data;
                 this.globalAbsence = false;
             });
