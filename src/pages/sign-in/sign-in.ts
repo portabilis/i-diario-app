@@ -55,9 +55,6 @@ export class SignIn {
         buttons: ['Ok']
       });
       alert.present();
-    },
-    () => {
-      loading.dismiss();
     }
   )
   }

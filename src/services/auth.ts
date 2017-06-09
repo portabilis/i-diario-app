@@ -11,7 +11,7 @@ export class AuthService {
   ) {}
 
   signIn(credential, password){
-    const url = "http://***REMOVED***/usuarios/logar.json";
+    const url = "http://localhost:3000/usuarios/logar.json";
     const request = this.http.post(url, { user: { credentials: credential, password: password } });
     return request.map((response: Response) => {
       return response.json();

@@ -4,6 +4,7 @@ import { ExamRulesService } from './exam_rules';
 import { DisciplinesService } from './disciplines';
 import { ClassroomsService } from './classrooms';
 import { UnitiesService } from './unities';
+import { StudentsService } from './students';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
@@ -18,19 +19,10 @@ export class OfflineDataPersisterService {
     private classrooms: ClassroomsService,
     private disciplines: DisciplinesService,
     private examRules: ExamRulesService,
-    private schoolCalendars: SchoolCalendarsService) {}
-
-  private clearStorage(){
-    // this.storage.remove('unities')
-    // this.storage.remove('classrooms')
-    // this.storage.remove('examRules')
-    // this.storage.remove('schoolCalendars')
-    // this.storage.remove('disciplines')
-  }
+    private schoolCalendars: SchoolCalendarsService,
+    private students: StudentsService) {}
 
   persist(user: User){
-    this.clearStorage()
-
     this.unities.getUnities(user.teacher_id).subscribe(
       (unities) => {
         this.storage.set('unities', unities)
@@ -123,8 +115,31 @@ export class OfflineDataPersisterService {
           console.log(error)
         },
         () => {
-          this.storage.get('disciplines').then((disciplines) => {
-            console.log("completo")
+          this.persistStudents()
+        }
+      )
+    })
+  }
+
+  private persistStudents(){
+    this.storage.get('disciplines').then((disciplines) => {
+      let studentsObservables = []
+      disciplines.forEach((disciplineList) => {
+        disciplineList.data.forEach((discipline) => {
+          studentsObservables.push(this.students.getStudents(disciplineList.classroomId, discipline.id))
+        })
+      })
+
+      Observable.forkJoin(studentsObservables).subscribe(
+        (result) => {
+          this.storage.set('students', result)
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          this.storage.get('students').then((result) => {
+            console.log(result)
           })
         }
       )

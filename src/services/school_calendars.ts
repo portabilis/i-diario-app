@@ -22,7 +22,7 @@ export class SchoolCalendarsService {
   }
 
   private getOnlineSchoolCalendar(unityId: number){
-    const url = "http://***REMOVED***/api/v1/calendarios-letivo.json";
+    const url = "http://localhost:3000/api/v1/calendarios-letivo.json";
     const request = this.http.get(url, { params: { unity_id: unityId } } );
     return request.map((response: Response) => {
       return {

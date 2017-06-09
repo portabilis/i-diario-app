@@ -22,7 +22,7 @@ export class ClassroomsService {
   }
 
   private getOnlineClassrooms(teacherId: number, unityId: number){
-    const url = "http://***REMOVED***/api/v1/teacher_classrooms.json";
+    const url = "http://localhost:3000/api/v1/teacher_classrooms.json";
     const request = this.http.get(url, { params: { teacher_id: teacherId, unity_id: unityId } } );
     return request.map((response: Response) => {
       return {

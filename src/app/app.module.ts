@@ -27,6 +27,7 @@ import { SchoolCalendarsService } from '../services/school_calendars';
 import { ConnectionService } from '../services/connection';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
 import { OfflineDataPersisterService } from '../services/offline_data_persister';
+import { StudentsService } from '../services/students';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { OfflineDataPersisterService } from '../services/offline_data_persister'
     ConnectionService,
     Network,
     OfflineDataPersisterService,
+    StudentsService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

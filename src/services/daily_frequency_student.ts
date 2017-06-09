@@ -11,7 +11,7 @@ export class DailyFrequencyStudentService {
   ){}
 
   updateFrequency(id, present, userId){
-    const url = "http://***REMOVED***/api/v1/daily_frequency_students/" + id + ".json";
+    const url = "http://localhost:3000/api/v1/daily_frequency_students/" + id + ".json";
     const request = this.http.put(url,
       {
         present: present,
