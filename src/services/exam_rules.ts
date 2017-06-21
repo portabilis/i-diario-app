@@ -33,7 +33,7 @@ export class ExamRulesService {
     })
   }
 
-  private getOfflineExamRules(classroomId: number){
+  getOfflineExamRules(classroomId: number){
     return new Observable((observer) => {
       this.storage.get('examRules').then((examRules) => {
         examRules.forEach((examRule) => {

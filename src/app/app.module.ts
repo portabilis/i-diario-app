@@ -23,11 +23,17 @@ import { ClassroomsService } from '../services/classrooms';
 import { DailyFrequencyService } from '../services/daily_frequency';
 import { ExamRulesService } from '../services/exam_rules';
 import { DisciplinesService } from '../services/disciplines';
-import { SchoolCalendarsService } from '../services/school_calendars';
+import { SchoolCalendarsService } from './../services/school_calendars';
 import { ConnectionService } from '../services/connection';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
-import { OfflineDataPersisterService } from '../services/offline_data_persister';
+import { OfflineDataPersisterService } from './../services/offline_data_persistence/offline_data_persister';
+import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
+import { ExamRulesPersisterService } from './../services/offline_data_persistence/exam_rules_persister';
+import { UnitiesPersisterService } from './../services/offline_data_persistence/unities_persister';
 import { StudentsService } from '../services/students';
+import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
+import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
+import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
 
 @NgModule({
   declarations: [
@@ -66,6 +72,12 @@ import { StudentsService } from '../services/students';
     Network,
     OfflineDataPersisterService,
     StudentsService,
+    UnitiesPersisterService,
+    ClassroomsPersisterService,
+    ExamRulesPersisterService,
+    SchoolCalendarsPersisterService,
+    DisciplinesPersisterService,
+    FrequenciesPersisterService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

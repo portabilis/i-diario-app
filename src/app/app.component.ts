@@ -1,3 +1,5 @@
+import { FrequencyPage } from './../pages/frequency/frequency';
+import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,7 +20,8 @@ export class MyApp {
               statusBar: StatusBar,
               splashScreen: SplashScreen,
               network: Network,
-              connectionService: ConnectionService) {
+              connectionService: ConnectionService,
+              auth: AuthService) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -28,6 +31,12 @@ export class MyApp {
       network.onDisconnect().subscribe(() => {
         connectionService.setStatus(false);
       });
+
+      // auth.currentUser().then((result) => {
+      //   if(result){
+      //     this.rootPage = FrequencyPage
+      //   }
+      // })
 
     });
   }

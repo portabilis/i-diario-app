@@ -1,5 +1,4 @@
 import { User } from './../../data/user.interface';
-import { OfflineDataPersisterService } from './../../services/offline_data_persister';
 import { LoadingController, NavController, NavParams } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
@@ -13,8 +12,11 @@ import { ExamRulesService } from '../../services/exam_rules';
 import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
 import { ConnectionService } from '../../services/connection';
+import { StudentsService } from '../../services/students';
+import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
+import { OfflineStudentsFrequency } from '../offline-students-frequency/offline-students-frequency';
 
 import { Unity } from '../../data/unity.interface';
 import { Classroom } from '../../data/classroom.interface';
@@ -47,7 +49,8 @@ export class FrequencyPage{
     private navCtrl: NavController,
     private connectionService: ConnectionService,
     private navParams: NavParams,
-    private offlineDataPersister: OfflineDataPersisterService) {}
+    private offlineDataPersister: OfflineDataPersisterService,
+    private studentsService: StudentsService) {}
 
   ionViewWillEnter(){
     this.date = new Date().toISOString();
@@ -146,13 +149,19 @@ export class FrequencyPage{
         date,
         disciplineId,
         classes.join()
-      ).then(result => {
-        loader.dismiss();
-        this.navCtrl.push(StudentsFrequencyPage, { "students": result, "classes": classes, "global": this.globalAbsence });
-      }).catch(error => {
-        loader.dismiss();
-        console.log(error);
-      });
+      ).subscribe(
+        (result) => {
+          this.navCtrl.push(StudentsFrequencyPage, {
+              "frequencies": result,
+              "global": this.globalAbsence })
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          loader.dismiss();
+        }
+      );
     });
   }
   resetSelectedValues(){

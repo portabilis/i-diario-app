@@ -1,3 +1,4 @@
+import { ServiceTest } from './../../services/service_test';
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
@@ -25,6 +26,7 @@ export class SignIn {
     private connection: ConnectionService,
     private unitiesService: UnitiesService
   ){}
+
   loginForm(form: NgForm ){
     const credential = form.value.credential;
     const password = form.value.password;
@@ -49,6 +51,7 @@ export class SignIn {
         )
       },
     (error) => {
+      loading.dismiss();
       const alert = this.alertCtrl.create({
         title: 'Dados inválidos.',
         message: "Não foi possível efetuar login",

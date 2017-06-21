@@ -12,9 +12,10 @@ import { AuthService } from '../../services/auth';
 })
 export class StudentsFrequencyPage {
 
-  private studentsFrequency:any = [];
-  private classes:any = [];
-  private globalAbsence:boolean = false;
+  private studentsFrequency:any = []
+  private classes:any = []
+  private globalAbsence:boolean = false
+  private students:any = []
 
   constructor(
     public navCtrl: NavController,
@@ -25,9 +26,9 @@ export class StudentsFrequencyPage {
   }
 
   ionViewDidLoad() {
-    this.studentsFrequency = this.navParams.data.students;
-    this.classes = this.navParams.data.classes;
-    this.globalAbsence = this.navParams.data.global;
+    this.studentsFrequency = this.navParams.data.frequencies.daily_frequencies
+    this.globalAbsence = this.navParams.data.global
+    this.students = this.setStudentList()
   }
 
   updateFrequency(frequency){
@@ -36,13 +37,18 @@ export class StudentsFrequencyPage {
     })
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.dailyFrequencyStudentService.updateFrequency(frequency.id, frequency.present, user.id).then(result => {
-        loader.dismiss();
+      this.dailyFrequencyStudentService.updateFrequency(frequency.id, frequency.present, user.id).then((result) => {
+        loader.dismiss()
       }).catch(error => {
-        console.log(error);
-        loader.dismiss();
+        console.log(error)
+        loader.dismiss()
       });
     });
   }
-
+  setStudentList(){
+    const students = this.studentsFrequency[0].students[0].map((student) => {
+      return student.student
+    })
+    console.log(students)
+  }
 }
