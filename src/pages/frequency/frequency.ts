@@ -53,8 +53,9 @@ export class FrequencyPage{
     private studentsService: StudentsService) {}
 
   ionViewWillEnter(){
-    this.date = new Date().toISOString();
+    this.date = new Date().toISOString()
     this.unities = this.navParams.get('unities');
+
     if(this.connectionService.isOnline){
       this.auth.currentUser().then((user) => {
         this.offlineDataPersister.persist(user)
@@ -111,27 +112,33 @@ export class FrequencyPage{
               (result: any) => {
                 this.disciplines = result.data;
                 this.globalAbsence = false;
-            });
+              },
+              (error) => {
+                console.log(error)
+              },
+              () => {
+                loader.dismiss()
+              }
+            );
           }else{
             this.globalAbsence = true;
           }
         },
         (error) => {
           console.log(error)
-        },
-        () => {
-          loader.dismiss()
         }
       )
     })
   }
 
   frequencyForm(form: NgForm){
-    const unityId = form.value.unity;
-    const classroomId = form.value.classroom;
-    const date = form.value.date;
+    const unityId = form.value.unity
+    const classroomId = form.value.classroom
+    const date = new Date(form.value.date)
+    const stringDate = this.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     let classes:any[] = []
+
     if(form.value.classes){
       classes = form.value.classes;
     }
@@ -146,7 +153,7 @@ export class FrequencyPage{
         user.teacher_id,
         unityId,
         classroomId,
-        date,
+        stringDate,
         disciplineId,
         classes.join()
       ).subscribe(
@@ -170,4 +177,17 @@ export class FrequencyPage{
     this.disciplineId = null;
     this.selectedClasses = [];
   }
+
+  private toStringWithoutTime(date: Date){
+    return date.getUTCFullYear() +
+        '-' + this.pad(date.getUTCMonth() + 1) +
+        '-' + this.pad(date.getUTCDate())
+  }
+
+  private pad(number) {
+      if (number < 10) {
+        return '0' + number;
+      }
+      return number;
+    }
 }

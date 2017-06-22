@@ -26,9 +26,10 @@ export class StudentsFrequencyPage {
   }
 
   ionViewDidLoad() {
-    this.studentsFrequency = this.navParams.data.frequencies.daily_frequencies
-    this.globalAbsence = this.navParams.data.global
-    this.students = this.setStudentList()
+    this.studentsFrequency = this.navParams.get('frequencies').daily_frequencies
+    this.globalAbsence = this.navParams.get('global')
+    this.students = this.mountStudentList()
+    this.classes = this.mountClassNumbers()
   }
 
   updateFrequency(frequency){
@@ -45,10 +46,32 @@ export class StudentsFrequencyPage {
       });
     });
   }
-  setStudentList(){
-    const students = this.studentsFrequency[0].students[0].map((student) => {
+
+  private mountStudentList(){
+    let students = this.studentsFrequency[0].students.map((student) => {
       return student.student
     })
-    console.log(students)
+
+    students.forEach((student) => {
+      let studentFrequencies = []
+      this.studentsFrequency.forEach((dailyFrequency) => {
+        dailyFrequency.students.map((dailyFrequencyStudent) => {
+          if(dailyFrequencyStudent.student.id == student.id){
+            studentFrequencies.push(dailyFrequencyStudent)
+          }
+        })
+      })
+
+      student["frequencies"] = studentFrequencies
+    });
+
+    return students
   }
+
+  private mountClassNumbers(){
+    return this.studentsFrequency.map((studentFrequency) => {
+      return studentFrequency.class_number
+    })
+  }
+
 }

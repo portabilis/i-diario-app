@@ -45,24 +45,7 @@ export class OfflineDataPersisterService {
       () => {},
       () => {},
       () => {
-        this.storage.get('unities').then((unities) => {
-          console.log(unities)
-        })
-        this.storage.get('classrooms').then((classrooms) => {
-          console.log(classrooms)
-        })
-        this.storage.get('examRules').then((examRules) => {
-          console.log(examRules)
-        })
-        this.storage.get('schoolCalendars').then((schoolCalendars) => {
-          console.log(schoolCalendars)
-        })
-        this.storage.get('disciplines').then((disciplines) => {
-          console.log(disciplines)
-        })
-        this.storage.get('frequencies').then((frequencies) => {
-          console.log(frequencies)
-        })
+        console.log('completed')
       }
     )
   }

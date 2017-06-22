@@ -17,7 +17,7 @@ export class DailyFrequencyService {
     if(this.connection.isOnline){
       return this.getOnlineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers)
     }else{
-      return this.getOfflineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers)
+      return this.getOfflineStudents(classroomId, frequencyDate, disciplineId, classNumbers)
     }
   }
 
@@ -39,16 +39,22 @@ export class DailyFrequencyService {
     });
   }
 
-   getOfflineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
+   getOfflineStudents(classroomId, frequencyDate, disciplineId, classNumbers){
+    const splitedClassNumbers = classNumbers.split(",")
+
     return new Observable((observer) => {
       this.storage.get('frequencies').then((frequencies) => {
-        frequencies.forEach((frequency) => {
-          console.log(frequency)
-          // if(frequency.classroomId == classroomId){
-          //   observer.next(classroom)
-          // }
+        console.log(frequencies)
+        let filteredFrequencies = frequencies.filter((frequency) => {
+          return (frequency.classroomId == classroomId &&
+                  frequency.disciplineId == disciplineId)
         })
-          //   observer.complete()
+        filteredFrequencies[0].data.daily_frequencies = filteredFrequencies[0].data.daily_frequencies.filter((daily_frequency) => {
+          return (splitedClassNumbers.includes(daily_frequency.class_number.toString()) &&
+                  daily_frequency.frequency_date == frequencyDate)
+        })
+        observer.next(filteredFrequencies[0].data)
+        observer.complete()
       })
     })
   }
@@ -56,13 +62,13 @@ export class DailyFrequencyService {
   getFrequencies(classroomId, disciplineId,teacherId){
     const url = "http://localhost:3000/api/v1/daily_frequencies.json";
     const request = this.http.get(url,
-    { params:
       {
-        classroom_id: classroomId,
-        discipline_id: disciplineId,
-        teacher_id: teacherId
+        params: {
+          classroom_id: classroomId,
+          discipline_id: disciplineId,
+          teacher_id: teacherId
+        }
       }
-    }
     );
     return request.map((response: Response) => {
       return {
