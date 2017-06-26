@@ -23,7 +23,15 @@ export class FrequenciesPersisterService{
 
       Observable.forkJoin(frequenciesObservables).subscribe(
         (results) => {
-          observer.next(this.storage.set('frequencies', results))
+          const notEmptyResults = results.filter((result: any) => {
+            return result.data.daily_frequencies.length > 1
+          })
+
+          const resultsData = notEmptyResults.map((result: any) => {
+            return result.data
+          })
+
+          observer.next(this.storage.set('frequencies', resultsData))
         },
         (error) => {
           console.log(error)

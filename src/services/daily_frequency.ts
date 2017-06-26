@@ -19,7 +19,7 @@ export class DailyFrequencyService {
     if(this.connection.isOnline){
       return this.getOnlineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers)
     }else{
-      return this.getOfflineStudents(classroomId, frequencyDate, disciplineId, classNumbers)
+      return this.getOfflineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers)
     }
   }
 
@@ -40,24 +40,55 @@ export class DailyFrequencyService {
     });
   }
 
-   getOfflineStudents(classroomId, frequencyDate, disciplineId, classNumbers){
+   getOfflineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
     const splitedClassNumbers = classNumbers.split(",")
 
     return new Observable((observer) => {
       this.storage.get('frequencies').then((frequencies) => {
-        console.log(frequencies)
-        let filteredFrequencies = frequencies.filter((frequency) => {
-          return (frequency.classroomId == classroomId &&
-                  frequency.disciplineId == disciplineId)
-        })
-        filteredFrequencies[0].data.daily_frequencies = filteredFrequencies[0].data.daily_frequencies.filter((daily_frequency) => {
-          return (splitedClassNumbers.includes(daily_frequency.class_number.toString()) &&
-                  daily_frequency.frequency_date == frequencyDate)
-        })
-        observer.next(filteredFrequencies[0].data)
+
+        let filteredFrequencies = []
+        frequencies.forEach((frequency) => {
+          const filteredItem = frequency.daily_frequencies.filter((dailyFrequency) => {
+            return (dailyFrequency.classroom_id == classroomId &&
+                    dailyFrequency.discipline_id == disciplineId &&
+                    splitedClassNumbers.includes(dailyFrequency.class_number.toString()) &&
+                    dailyFrequency.frequency_date == frequencyDate)
+          })
+
+          if(filteredItem.length > 0){
+            filteredFrequencies.push(filteredItem)
+          }
+
+        });
+
+        observer.next({daily_frequencies: filteredFrequencies[0]})
         observer.complete()
       })
     })
+  }
+
+  private createOfflineFrequency(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers, frequencies){
+
+    let dailyFrequency = []
+    const dailyFrequencies = classNumbers.map((classNumber) => {
+      return {
+        class_number: classNumber,
+        classroom_id: classroomId,
+        discipline_id: disciplineId,
+        id: null,
+        students: null,
+        unity_id: unityId
+      }
+    })
+
+    return {
+      classroomId: classroomId,
+      disciplineId: disciplineId,
+      teacherId: teacherId,
+      data: {
+        daily_frequencies: dailyFrequencies
+      }
+    }
   }
 
   getFrequencies(classroomId, disciplineId,teacherId){

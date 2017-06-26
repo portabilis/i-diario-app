@@ -30,7 +30,6 @@ import { OfflineDataPersisterService } from './../services/offline_data_persiste
 import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
 import { ExamRulesPersisterService } from './../services/offline_data_persistence/exam_rules_persister';
 import { UnitiesPersisterService } from './../services/offline_data_persistence/unities_persister';
-import { StudentsService } from '../services/students';
 import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
@@ -72,7 +71,6 @@ import { ServerService } from './../services/server';
     ConnectionService,
     Network,
     OfflineDataPersisterService,
-    StudentsService,
     UnitiesPersisterService,
     ClassroomsPersisterService,
     ExamRulesPersisterService,

@@ -12,7 +12,6 @@ import { ExamRulesService } from '../../services/exam_rules';
 import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
 import { ConnectionService } from '../../services/connection';
-import { StudentsService } from '../../services/students';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
@@ -49,8 +48,7 @@ export class FrequencyPage{
     private navCtrl: NavController,
     private connectionService: ConnectionService,
     private navParams: NavParams,
-    private offlineDataPersister: OfflineDataPersisterService,
-    private studentsService: StudentsService) {}
+    private offlineDataPersister: OfflineDataPersisterService){}
 
   ionViewWillEnter(){
     this.date = new Date().toISOString()
@@ -158,6 +156,7 @@ export class FrequencyPage{
         classes.join()
       ).subscribe(
         (result) => {
+          console.log(result)
           this.navCtrl.push(StudentsFrequencyPage, {
               "frequencies": result,
               "global": this.globalAbsence })
