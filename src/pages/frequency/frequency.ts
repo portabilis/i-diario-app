@@ -15,7 +15,6 @@ import { ConnectionService } from '../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
-import { OfflineStudentsFrequency } from '../offline-students-frequency/offline-students-frequency';
 
 import { Unity } from '../../data/unity.interface';
 import { Classroom } from '../../data/classroom.interface';
@@ -53,7 +52,9 @@ export class FrequencyPage{
   ionViewWillEnter(){
     this.date = new Date().toISOString()
     this.unities = this.navParams.get('unities');
+  }
 
+  startSync(){
     if(this.connectionService.isOnline){
       this.auth.currentUser().then((user) => {
         this.offlineDataPersister.persist(user)
@@ -120,6 +121,7 @@ export class FrequencyPage{
             );
           }else{
             this.globalAbsence = true;
+            loader.dismiss()
           }
         },
         (error) => {
@@ -155,8 +157,7 @@ export class FrequencyPage{
         disciplineId,
         classes.join()
       ).subscribe(
-        (result) => {
-          console.log(result)
+        (result:any) => {
           this.navCtrl.push(StudentsFrequencyPage, {
               "frequencies": result,
               "global": this.globalAbsence })

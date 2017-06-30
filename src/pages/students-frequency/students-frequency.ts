@@ -26,8 +26,16 @@ export class StudentsFrequencyPage {
   }
 
   ionViewDidLoad() {
-    this.studentsFrequency = this.navParams.get('frequencies').daily_frequencies
+    console.log("params", this.navParams)
     this.globalAbsence = this.navParams.get('global')
+
+    if(this.globalAbsence){
+      this.studentsFrequency = this.navParams.get('frequencies').daily_frequency
+    }else{
+      this.studentsFrequency = this.navParams.get('frequencies').daily_frequencies
+    }
+
+    console.log("this.studentsFrequency", this.studentsFrequency)
     this.students = this.mountStudentList()
     this.classes = this.mountClassNumbers()
   }
@@ -48,6 +56,11 @@ export class StudentsFrequencyPage {
   }
 
   private mountStudentList(){
+
+    if(this.globalAbsence){
+      return this.studentsFrequency.students
+    }
+
     let students = this.studentsFrequency[0].students.map((student) => {
       return student.student
     })
@@ -69,6 +82,8 @@ export class StudentsFrequencyPage {
   }
 
   private mountClassNumbers(){
+    if(this.globalAbsence){ return [] }
+
     return this.studentsFrequency.map((studentFrequency) => {
       return studentFrequency.class_number
     })

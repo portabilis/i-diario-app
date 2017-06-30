@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Frequência</ion-title>
+    <button ion-button (click)="startSync()">
+      Sincronizar
+    </button>
     <ion-buttons end>
       <button ion-button color="primary" [hidden]="!connectionService.isOnline">Online</button>
       <button ion-button color="danger" [hidden]="connectionService.isOnline">Offline</button>

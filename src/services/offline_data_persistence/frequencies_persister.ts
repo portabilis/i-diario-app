@@ -11,6 +11,11 @@ export class FrequenciesPersisterService{
     private storage: Storage,
     private frequencies: DailyFrequencyService
   ){}
+
+  private notEmptyDailyFrequencies(dailyFrequencies){
+    return dailyFrequencies.data.daily_frequencies.length > 0
+  }
+
   persist(user){
    return new Observable((observer) => {
     this.storage.get('disciplines').then((disciplines) => {
@@ -23,15 +28,15 @@ export class FrequenciesPersisterService{
 
       Observable.forkJoin(frequenciesObservables).subscribe(
         (results) => {
-          const notEmptyResults = results.filter((result: any) => {
-            return result.data.daily_frequencies.length > 1
+
+          const notEmptyResults = results.filter(this.notEmptyDailyFrequencies)
+          const mergedResults = notEmptyResults.map((result: any) => {
+            return result.data.daily_frequencies
+          }).reduce((a:any,b:any) => {
+            return a.concat(b)
           })
 
-          const resultsData = notEmptyResults.map((result: any) => {
-            return result.data
-          })
-
-          observer.next(this.storage.set('frequencies', resultsData))
+          observer.next(this.storage.set('frequencies', { daily_frequencies: mergedResults }))
         },
         (error) => {
           console.log(error)

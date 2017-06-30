@@ -42,7 +42,8 @@ export class OfflineDataPersisterService {
       this.disciplinePersister.persist(user),
       this.frequenciesPersister.persist(user)
     ).subscribe(
-      () => {},
+      () => {
+      },
       (error) => {
         console.log("Error on persist", error)
       },

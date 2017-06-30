@@ -10,11 +10,11 @@
     <ion-row>
       <ion-col col-6>Alunos</ion-col>
       <ion-col text-center *ngFor="let class of classes" [hidden]="globalAbsence" >{{class}}ª Aula</ion-col>
-      <ion-col text-center [hidden]="!globalAbsence" >Presença</ion-col>
+      <ion-col text-center [hidden]="!globalAbsence">Presença</ion-col>
     </ion-row>
     <ion-row *ngFor="let student of students">
       <ion-col col-6>
-        {{student.name | uppercase}}
+        {{student.name || student.student.name | uppercase}}
       </ion-col>
 
       <ion-col *ngFor="let frequency of student.frequencies" text-center [hidden]="globalAbsence">
