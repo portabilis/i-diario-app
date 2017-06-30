@@ -34,6 +34,7 @@ import { StudentsService } from '../services/students';
 import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
+import { ServerService } from './../services/server';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { SchoolCalendarsPersisterService } from './../services/offline_data_pers
     SchoolCalendarsPersisterService,
     DisciplinesPersisterService,
     FrequenciesPersisterService,
+    ServerService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

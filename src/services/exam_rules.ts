@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable'
 import { ConnectionService } from './connection'
+import { ServerService } from './server'
 import { Http, Response } from '@angular/http'
 import { Storage } from '@ionic/storage'
 import { Injectable } from '@angular/core'
@@ -10,7 +11,8 @@ export class ExamRulesService {
   constructor(
     private http: Http,
     private storage: Storage,
-    private connection: ConnectionService
+    private connection: ConnectionService,
+    private server: ServerService
   ){}
 
   getExamRules(teacherId: number, classroomId: number){
@@ -23,8 +25,7 @@ export class ExamRulesService {
 
   }
   private getOnlineExamRules(teacherId: number, classroomId: number){
-    const url = "http://localhost:3000/api/v1/exam_rules.json"
-    const request = this.http.get(url, { params: { teacher_id: teacherId, classroom_id: classroomId } } )
+    const request = this.http.get(this.server.getExamRulesUrl(), { params: { teacher_id: teacherId, classroom_id: classroomId } } )
     return request.map((response: Response) => {
       return {
         data: response.json(),
