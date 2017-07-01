@@ -1,3 +1,58 @@
-page-sign-in {
+.content {
+  background-color: #5947b3;
+}
 
+.background-content {
+    background-image: url('../assets/img/login/ilusta@3x.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 90.6%;
+    min-height: 41.7%;
+    margin-top: 11%;
+    margin-left: 4.7%;
+}
+
+.background-content .saudacao {
+    font-family: 'NunitoLight';
+    color: white;
+    text-align: center;
+    font-size: 32pt;
+    padding-top: 3.8%;
+}
+
+ion-content form {
+    background-color: #fff;
+    border-radius: 5pt;
+    margin: 23.2% 0 0 0;
+    font-family: 'NunitoBold';
+    color: #3f3d4d;
+    font-size: 26.3%;
+    opacity: 70%;
+}
+
+ion-content form button {
+    background-color: #3fd4b4 !important;
+    height: 75pt !important;
+}
+
+ion-content form ion-img {
+    width: 25pt;
+    height: 25pt;
+    background-color: transparent;
+}
+
+.inputs {
+    margin-left: 8.6%;
+    width: 82.8%;
+    height: 60pt;
+    padding-left: 0pt !important;
+    padding-right: 0pt !important;
+}
+
+.background-content .contato {
+    font-family: 'NunitoRegular';
+    color: white;
+    font-size: 14pt;
+    text-align: center;
+    margin-top: 25pt;
 }

@@ -14,3 +14,22 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+ion-app .scroll-content {
+    padding: 0pt !important;
+}
+
+@font-face {
+    font-family: 'NunitoLight';
+    src:url('../assets/fonts/Nunito/Nunito-Light.ttf');
+}
+
+@font-face {
+    font-family: 'NunitoBold';
+    src:url('../assets/fonts/Nunito/Nunito-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'NunitoRegular';
+    src:url('../assets/fonts/Nunito/Nunito-Regular.ttf');
+}

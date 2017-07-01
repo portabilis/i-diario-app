@@ -14,7 +14,7 @@ import { User } from '../../data/user.interface';
 
 @Component({
   selector: 'page-sign-in',
-  templateUrl: 'sign-in.html',
+  templateUrl: 'sign-in.html'
 })
 export class SignIn {
   constructor(
