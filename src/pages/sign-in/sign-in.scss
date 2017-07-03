@@ -6,10 +6,11 @@
     background-image: url('../assets/img/login/ilusta@3x.png');
     background-repeat: no-repeat;
     background-size: 100%;
+    margin: 0 auto;
+    max-width: 320pt;
     width: 90.6%;
     min-height: 41.7%;
     margin-top: 11%;
-    margin-left: 4.7%;
 }
 
 .background-content .saudacao {
@@ -18,22 +19,45 @@
     text-align: center;
     font-size: 32pt;
     padding-top: 3.8%;
+    margin-bottom: 25%;
 }
 
 .form-login {
     background-color: #fff;
     border-radius: 5pt;
-    margin: 23.2% 0 0 0;
-    font-family: 'NunitoBold';
-    color: #3f3d4d;
-    font-size: 26.3%;
+    margin: 15pt auto;
+    max-width: 290pt;
     opacity: 70%;
 }
 
 .button-login {
+    font-family: 'NunitoBold';
+    font-size: 18pt;
     background-color: #3fd4b4;
-    height: 75pt;
+    height: 65pt;
+    border-top-left-radius: 0pt;
+    border-top-right-radius: 0pt;
+    border-bottom-left-radius: 5pt;
+    border-bottom-right-radius: 5pt;
+    margin-bottom: 0;
 }
+
+.item-md.item-block .item-inner {
+    padding-right: 0;
+}
+
+.button-login:hover {
+    background-color: #3fd4b4;
+}
+
+.select-md {
+    padding: 0;
+}
+
+.select-ios {
+    padding: 0;
+}
+
 
 ion-content form ion-img {
     width: 25pt;
@@ -42,20 +66,25 @@ ion-content form ion-img {
 }
 
 .inputs {
-    margin-left: 8.6%;
+    margin-left: 25pt;
     width: 82.8%;
-    height: 60pt;
-    padding-left: 0pt;
-    padding-right: 0pt;
+    height: 50pt;
+    font-family: 'NunitoBold';
+    color: #3f3d4d;
+    font-size: 14pt;
+    padding: 0pt;
 }
 
-.select-city {
-    padding: 0px;
-    size: 100%;
+.text-input-md {
+    margin: 0;
 }
 
-.select-city  .select-icon{
+.select-city .select-icon {
     visibility: hidden;
+}
+
+.input-login-img {
+    margin-right: 0px !important;
 }
 
 .background-content .contato {
