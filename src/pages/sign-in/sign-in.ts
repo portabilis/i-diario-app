@@ -8,6 +8,7 @@ import { FrequencyPage } from '../frequency/frequency';
 import { AuthService } from '../../services/auth';
 import { ConnectionService } from '../../services/connection';
 import { UnitiesService } from '../../services/unities';
+import { ApiService } from './../../services/api';
 
 import { Unity } from '../../data/unity.interface';
 import { User } from '../../data/user.interface';
@@ -17,18 +18,30 @@ import { User } from '../../data/user.interface';
   templateUrl: 'sign-in.html'
 })
 export class SignIn {
+  private cities = [];
+  private serverUrl: string;
+
   constructor(
     private auth: AuthService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private navCtrl: NavController,
     private connection: ConnectionService,
-    private unitiesService: UnitiesService
+    private unitiesService: UnitiesService,
+    private api: ApiService
   ){}
+
+  ionViewWillEnter(){
+    this.cities = this.api.allHosts;
+  }
 
   loginForm(form: NgForm ){
     const credential = form.value.credential;
     const password = form.value.password;
+
+    this.api.serverUrl = form.value.serverUrl;
+
+    console.log(form.value);
 
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'

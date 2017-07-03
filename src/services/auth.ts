@@ -13,6 +13,7 @@ export class AuthService {
   ) {}
 
   signIn(credential, password){
+    console.log(this.api.getLoginUrl());
     const request = this.http.post(this.api.getLoginUrl() , { user: { credentials: credential, password: password } });
     return request.map((response: Response) => {
       return response.json();
