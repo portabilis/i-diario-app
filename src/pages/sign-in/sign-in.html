@@ -3,12 +3,13 @@
     <ion-label class="saudacao">Olá, bom dia!</ion-label>
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
-        <ion-item>
-          <ion-select [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" required>
+        <ion-item  class="inputs">
+          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" required>
             <ion-option *ngFor="let city of cities" value={{city.value}}>
               {{ city.name }}
             </ion-option>
           </ion-select>
+          <ion-img item-right src="assets/img/login/chevronDown@2x.png"></ion-img>
         </ion-item>
         <ion-item class="inputs">
           <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" required></ion-input>
