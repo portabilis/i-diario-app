@@ -36,7 +36,7 @@ export class ApiService {
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
-        {value: "http://prefeitura.educacao.local:3000/", name: "Portabilis Local"},
+        {value: "http://prefeitura.educacao.local:3000", name: "Portabilis Local"},
         {value: "http://***REMOVED***", name: "Portabilis 1"},
         {value: "http://***REMOVED***", name: "Portabilis 2"},
         {value: "http://***REMOVED***", name: "Portabilis 3"},
@@ -60,30 +60,30 @@ export class ApiService {
   }
 
   getTeatcherClassroomsUrl() {
-    return this.serverUrl + 'api/v1/teacher_classrooms.json'
+    return this.serverUrl + '/api/v1/teacher_classrooms.json'
   }
   getLoginUrl() {
-    return this.serverUrl + 'usuarios/logar.json'
+    return this.serverUrl + '/usuarios/logar.json'
   }
   getDailyFrequencyStudentsUrl(id: number) {
-    return this.serverUrl + 'api/v1/daily_frequency_students/' + id + '.json';
+    return this.serverUrl + '/api/v1/daily_frequency_students/' + id + '.json';
   }
   getDailyFrequencyUrl() {
-    return this.serverUrl + 'api/v1/daily_frequencies.json'
+    return this.serverUrl + '/api/v1/daily_frequencies.json'
   }
   getTeacherDisciplinesUrl() {
-    return this.serverUrl + 'api/v1/teacher_disciplines.json'
+    return this.serverUrl + '/api/v1/teacher_disciplines.json'
   }
   getExamRulesUrl() {
-    return this.serverUrl + 'api/v1/exam_rules.json'
+    return this.serverUrl + '/api/v1/exam_rules.json'
   }
   getSchoolCalendarUrl() {
-    return this.serverUrl + 'api/v1/calendarios-letivo.json'
+    return this.serverUrl + '/api/v1/calendarios-letivo.json'
   }
   getClassroomStudentsUrl() {
-    return this.serverUrl + 'api/v1/classroom_students.json'
+    return this.serverUrl + '/api/v1/classroom_students.json'
   }
   getTeacherUnitiesUrl() {
-    return this.serverUrl + 'api/v1/teacher_unities.json'
+    return this.serverUrl + '/api/v1/teacher_unities.json'
   }
 }
