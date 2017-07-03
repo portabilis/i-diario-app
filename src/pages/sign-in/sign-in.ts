@@ -19,7 +19,6 @@ import { User } from '../../data/user.interface';
 })
 export class SignIn {
   private cities = [];
-  private serverUrl: string;
 
   constructor(
     private auth: AuthService,
