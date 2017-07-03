@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content class="login-background" padding>
   <div class="background-content">
     <ion-label class="saudacao">Olá, bom dia!</ion-label>
     <form #f="ngForm" (ngSubmit)="loginForm(f)">
@@ -14,7 +14,7 @@
         </ion-item>
       </ion-list>
 
-      <button ion-button block [disabled]="!f.valid">Entrar</button>
+      <button class="button-login" ion-button block [disabled]="!f.valid">Entrar</button>
     </form>
     <ion-label class="contato">
       Você não lembra o acesso?<br>
