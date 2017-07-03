@@ -50,9 +50,14 @@ ion-content form ion-img {
 }
 
 .background-content .contato {
-    font-family: 'NunitoRegular';
+    font-family: 'NunitoLight';
     color: white;
     font-size: 14pt;
     text-align: center;
     margin-top: 25pt;
+}
+
+.background-content .contato a {
+    color: white;
+    text-decoration: underline;
 }
