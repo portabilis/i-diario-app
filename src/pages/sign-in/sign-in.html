@@ -1,7 +1,7 @@
 <ion-content class="login-background" padding>
   <div class="background-content">
     <ion-label class="saudacao">Olá, bom dia!</ion-label>
-    <form #f="ngForm" (ngSubmit)="loginForm(f)">
+    <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
           <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" required></ion-input>
