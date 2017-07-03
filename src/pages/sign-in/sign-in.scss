@@ -75,8 +75,28 @@ ion-content form ion-img {
     padding: 0pt;
 }
 
+#serverUrl {
+    background: url('../assets/img/login/chevronDown@2x.png') no-repeat right;
+    background-size: 25pt;
+}
+
+#credential {
+    background: url('../assets/img/login/icoUser@2x.png') no-repeat right;
+    background-size: 25pt;
+}
+
+#password {
+    background: url('../assets/img/login/icoSenha@2x.png') no-repeat right;
+    background-size: 25pt;
+}
+
 .text-input-md {
     margin: 0;
+}
+
+.select-city {
+    width: 100%;
+    max-width: 100%;
 }
 
 .select-city .select-icon {

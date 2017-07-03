@@ -4,21 +4,18 @@
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
-          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" required>
+          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" id="serverUrl" required>
             <ion-option *ngFor="let city of cities" value={{city.value}}>
               {{ city.name }}
             </ion-option>
           </ion-select>
-          <ion-img class="input-login-img" item-right src="assets/img/login/chevronDown@3x.png"></ion-img>
         </ion-item>
         <ion-item class="inputs">
-          <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" required></ion-input>
-          <ion-img class="input-login-img" item-right src="assets/img/login/icoUser@3x.png"></ion-img>
+          <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" id="credential" required></ion-input>
         </ion-item>
 
         <ion-item class="inputs">
-          <ion-input ngModel type="password" name="password" placeholder="Senha" required></ion-input>
-          <ion-img class="input-login-img" item-right src="assets/img/login/icoSenha@3x.png"></ion-img>
+          <ion-input ngModel type="password" name="password" id="password" placeholder="Senha" required></ion-input>
         </ion-item>
       </ion-list>
 
