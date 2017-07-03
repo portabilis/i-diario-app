@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class ServerService {
+export class ApiService {
   public server_url:string = 'http://prefeitura.educacao.local:3000/';
 
   getTeatcherClassroomsUrl() {

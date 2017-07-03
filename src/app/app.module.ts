@@ -33,7 +33,7 @@ import { UnitiesPersisterService } from './../services/offline_data_persistence/
 import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
-import { ServerService } from './../services/server';
+import { ApiService } from './../services/api';
 
 @NgModule({
   declarations: [
@@ -77,7 +77,7 @@ import { ServerService } from './../services/server';
     SchoolCalendarsPersisterService,
     DisciplinesPersisterService,
     FrequenciesPersisterService,
-    ServerService,
+    ApiService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

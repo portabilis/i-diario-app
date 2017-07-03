@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { ConnectionService } from './connection';
-import { ServerService } from './server';
+import { ApiService } from './api';
 import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
@@ -12,7 +12,7 @@ export class SchoolCalendarsService {
     private http: Http,
     private storage: Storage,
     private connection: ConnectionService,
-    private server: ServerService
+    private api: ApiService
   ){}
 
   getSchoolCalendar(unityId: number){
@@ -24,7 +24,7 @@ export class SchoolCalendarsService {
   }
 
   private getOnlineSchoolCalendar(unityId: number){
-    const request = this.http.get(this.server.getSchoolCalendarUrl(), { params: { unity_id: unityId } } );
+    const request = this.http.get(this.api.getSchoolCalendarUrl(), { params: { unity_id: unityId } } );
     return request.map((response: Response) => {
       return {
         data: response.json(),

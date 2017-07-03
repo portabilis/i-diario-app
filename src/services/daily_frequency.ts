@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { ConnectionService } from './connection';
-import { ServerService } from './server';
+import { ApiService } from './api';
 import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
@@ -12,7 +12,7 @@ export class DailyFrequencyService {
     private http: Http,
     private storage: Storage,
     private connection: ConnectionService,
-    private server: ServerService
+    private api: ApiService
   ){}
 
   getStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
@@ -24,7 +24,7 @@ export class DailyFrequencyService {
   }
 
   getOnlineStudents(userId, teacherId, unityId, classroomId, frequencyDate, disciplineId, classNumbers){
-    const request = this.http.post(this.server.getDailyFrequencyUrl(),
+    const request = this.http.post(this.api.getDailyFrequencyUrl(),
       {
         user_id: userId,
         teacher_id: teacherId,
@@ -189,7 +189,7 @@ export class DailyFrequencyService {
   }
 
   getFrequencies(classroomId, disciplineId,teacherId){
-    const request = this.http.get(this.server.getDailyFrequencyUrl(),
+    const request = this.http.get(this.api.getDailyFrequencyUrl(),
       {
         params: {
           classroom_id: classroomId,

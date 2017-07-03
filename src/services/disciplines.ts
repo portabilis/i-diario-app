@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { ConnectionService } from './connection';
-import { ServerService } from './server';
+import { ApiService } from './api';
 import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
@@ -12,7 +12,7 @@ export class DisciplinesService {
     private http: Http,
     private storage: Storage,
     private connection: ConnectionService,
-    private server: ServerService
+    private api: ApiService
   ){}
 
   getDisciplines(teacherId: number, classroomId: number){
@@ -23,7 +23,7 @@ export class DisciplinesService {
     }
   }
   getOnlineDisciplines(teacherId: number, classroomId: number){
-    const request = this.http.get(this.server.getTeacherDisciplinesUrl(), { params: { teacher_id: teacherId, classroom_id: classroomId } } );
+    const request = this.http.get(this.api.getTeacherDisciplinesUrl(), { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
       return {
         data: response.json(),
