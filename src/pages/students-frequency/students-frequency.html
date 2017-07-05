@@ -17,8 +17,8 @@
         {{student.name || student.student.name | uppercase}}
       </ion-col>
 
-      <ion-col *ngFor="let frequency of student.frequencies" text-center [hidden]="globalAbsence">
-        <ion-checkbox [(ngModel)]="frequency.present" (ionChange)="updateFrequency(frequency)"></ion-checkbox>
+      <ion-col *ngFor="let frequency of student.frequencies;let i = index" text-center [hidden]="globalAbsence">
+        <ion-checkbox [(ngModel)]="frequency.present" (ionChange)="updateFrequency(frequency, i+1)"></ion-checkbox>
       </ion-col>
 
       <ion-col text-center [hidden]="!globalAbsence">

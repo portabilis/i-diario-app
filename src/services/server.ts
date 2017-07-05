@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ServerService {
-  public server_url:string = 'http://prefeitura.educacao.local:3000/';
+  public server_url:string = 'http://localhost:3000/';
 
   getTeatcherClassroomsUrl() {
     return this.server_url + 'api/v1/teacher_classrooms.json'
