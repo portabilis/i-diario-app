@@ -38,9 +38,7 @@ export class SignIn {
     const credential = form.value.credential;
     const password = form.value.password;
 
-    this.api.serverUrl = form.value.serverUrl;
-
-    console.log(form.value);
+    this.api.setServerUrl(form.value.serverUrl);
 
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
