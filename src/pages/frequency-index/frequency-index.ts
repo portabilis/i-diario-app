@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
 import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
@@ -21,11 +22,14 @@ export class FrequencyIndexPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private loadingCtrl: LoadingController,
-              private unitiesService: UnitiesService,) {
+              private unitiesService: UnitiesService,
+              private auth: AuthService) {
   }
 
   ionViewWillEnter(){
-    this.user = this.navParams.get('user');
+    this.auth.currentUser().then((user) => {
+      this.user = user;
+    })
   }
 
   newFrequency() {
