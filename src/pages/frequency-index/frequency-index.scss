@@ -1,0 +1,34 @@
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+    padding-top: 30px;
+}
+
+.toolbar-title {
+    font-size: 24px;
+    font-family: "NunitoBold";
+    padding-right: 10px;
+}
+
+.frequency-day {
+    font-family: "NunitoRegular";
+    font-size: 16pt;
+    color: #868499;
+    padding-left: 12px;
+}
+
+.frequency-empty-today {
+    width: auto;
+    height: 70pt;
+    background-color: #E5DEEC;
+    border-radius: 5pt;
+    margin: 0 10px 0 10px;
+}
+
+.frequency-empty-today p {
+    font-family: "NunitoBold";
+    font-size: 14pt;
+    color: #87878c;
+    text-align: center;
+    padding-top: 24pt;
+}

@@ -1,3 +1,4 @@
+import { FrequencyPage } from './../pages/frequency/frequency';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -8,6 +9,8 @@ import { Network } from '@ionic-native/network';
 import { SignIn } from '../pages/sign-in/sign-in';
 
 import { ConnectionService } from './../services/connection';
+
+import { AppIndexPage } from "../pages/app-index/app-index";
 
 @Component({
   templateUrl: 'app.html'
@@ -31,11 +34,11 @@ export class MyApp {
         connectionService.setStatus(false);
       });
 
-      // auth.currentUser().then((result) => {
-      //   if(result){
-      //     this.rootPage = FrequencyPage
-      //   }
-      // })
+      auth.currentUser().then((result) => {
+        if(result){
+          this.rootPage = AppIndexPage
+        }
+      })
 
     });
   }

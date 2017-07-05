@@ -15,6 +15,8 @@ import { MyApp } from './app.component';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
+import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
+import { AppIndexPage } from "../pages/app-index/app-index";
 
 //Services
 import { AuthService } from '../services/auth';
@@ -40,7 +42,9 @@ import { ApiService } from './../services/api';
     MyApp,
     SignIn,
     FrequencyPage,
-    StudentsFrequencyPage
+    StudentsFrequencyPage,
+    FrequencyIndexPage,
+    AppIndexPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,9 @@ import { ApiService } from './../services/api';
     MyApp,
     SignIn,
     FrequencyPage,
-    StudentsFrequencyPage
+    StudentsFrequencyPage,
+    FrequencyIndexPage,
+    AppIndexPage
   ],
   providers: [
     StatusBar,

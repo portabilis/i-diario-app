@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 import { LoadingController, AlertController, NavController } from 'ionic-angular';
 
-import { FrequencyPage } from '../frequency/frequency';
+import { AppIndexPage } from "../app-index/app-index";
 
 import { AuthService } from '../../services/auth';
 import { ConnectionService } from '../../services/connection';
@@ -48,18 +48,8 @@ export class SignIn {
     loading.present();
     this.auth.signIn(credential, password).subscribe(
       (user: User) => {
-        this.unitiesService.getUnities(user.teacher_id).subscribe(
-          (unities: Unity[]) => {
-            this.auth.setCurrentUser(user);
-            this.navCtrl.push(FrequencyPage, { "unities": unities });
-          },
-          (error) => {
-            console.log(error)
-          },
-          () => {
-            loading.dismiss();
-          }
-        )
+        this.auth.setCurrentUser(user);
+        this.navCtrl.push(AppIndexPage, {'user': user});
       },
     (error) => {
       loading.dismiss();
@@ -69,6 +59,9 @@ export class SignIn {
         buttons: ['Ok']
       });
       alert.present();
+    },
+    () => {
+      loading.dismiss();
     }
   )
   }
