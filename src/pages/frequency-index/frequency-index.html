@@ -5,7 +5,7 @@
 
       <ion-buttons end>
         <button ion-button icon-only (click)="newFrequency()">
-           <img width="50px" src="../assets/img/icoAdicionar@3x.png" >
+           <img width="50px" src="assets/img/icoAdicionar@3x.png" >
         </button>
       </ion-buttons>
     </ion-navbar>
@@ -13,9 +13,8 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="page-content" padding>
 
-  <div class="page-content">
   <h3 class="frequency-day">01 de Julho</h3>
 
   <div class="frequency-empty-today">
@@ -23,16 +22,17 @@
   </div>
 
   <h3 class="frequency-day">31 de Maio</h3>
-<!--
-<ion-list>
-  <ion-list-header>
-    Action
-  </ion-list-header>
-  <ion-item>Terminator II</ion-item>
-  <ion-item>The Empire Strikes Back</ion-item>
-  <ion-item>Blade Runner</ion-item>
-</ion-list>-->
 
-</div>
+  <ion-list class="list-school">
+    <ion-list-header class="list-school-header" no-lines>
+      E.E.B. Antônio Guglielme Sobilinaldo
+    </ion-list-header>
+    <ion-item class="list-school-item"><p>Maternal 01</p></ion-item>
+    <ion-item class="list-school-item"><p>Maternal 02</p></ion-item>
+
+    <ion-list-header class="list-school-header" no-lines>
+      E.E.B. Salete Scott Santos
+    </ion-list-header>
+  </ion-list>
 
 </ion-content>
