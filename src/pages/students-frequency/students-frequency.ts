@@ -12,10 +12,13 @@ import { AuthService } from '../../services/auth';
 })
 export class StudentsFrequencyPage {
 
-  private studentsFrequency:any = []
-  private classes:any = []
-  private globalAbsence:boolean = false
-  private students:any = []
+  private studentsFrequency: any = []
+  private classes: any = []
+  private globalAbsence: boolean = false
+  private students: any = []
+  private classroomId: number = null
+  private disciplineId: number = null
+  private frequencyDate: string = null
 
   constructor(
     public navCtrl: NavController,
@@ -26,7 +29,6 @@ export class StudentsFrequencyPage {
   }
 
   ionViewDidLoad() {
-    console.log("params", this.navParams)
     this.globalAbsence = this.navParams.get('global')
 
     if(this.globalAbsence){
@@ -35,23 +37,39 @@ export class StudentsFrequencyPage {
       this.studentsFrequency = this.navParams.get('frequencies').daily_frequencies
     }
 
-    console.log("this.studentsFrequency", this.studentsFrequency)
     this.students = this.mountStudentList()
     this.classes = this.mountClassNumbers()
+    this.classroomId = this.findCurrentClassroom()
+    this.disciplineId = this.findCurrentDiscipline()
+    this.frequencyDate = this.findCurrentFrequencyDate()
   }
 
-  updateFrequency(frequency){
+  updateFrequency(frequency, classNumber){
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     })
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.dailyFrequencyStudentService.updateFrequency(frequency.id, frequency.present, user.id).then((result) => {
-        loader.dismiss()
-      }).catch(error => {
-        console.log(error)
-        loader.dismiss()
-      });
+      const params = {
+        id: frequency.id,
+        present: frequency.present,
+        classroomId: this.classroomId,
+        disciplineId: this.disciplineId,
+        studentId: frequency.student.id,
+        classNumber: classNumber,
+        userId: user.id,
+        frequencyDate: this.frequencyDate
+      }
+      this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
+        (result) => {
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          loader.dismiss()
+        }
+      )
     });
   }
 
@@ -74,8 +92,7 @@ export class StudentsFrequencyPage {
           }
         })
       })
-
-      student["frequencies"] = studentFrequencies
+      student["frequencies"] = JSON.parse(JSON.stringify(studentFrequencies))
     });
 
     return students
@@ -89,4 +106,26 @@ export class StudentsFrequencyPage {
     })
   }
 
+  private findCurrentDiscipline(){
+    if(this.globalAbsence){
+      return this.studentsFrequency.discipline_id
+    }else{
+      return this.studentsFrequency[0].discipline_id
+    }
+  }
+
+  private findCurrentClassroom(){
+    if(this.globalAbsence){
+      return this.studentsFrequency.classroom_id
+    }else{
+      return this.studentsFrequency[0].classroom_id
+    }
+  }
+  private findCurrentFrequencyDate(){
+    if(this.globalAbsence){
+      return this.studentsFrequency.frequency_date
+    }else{
+      return this.studentsFrequency[0].frequency_date
+    }
+  }
 }

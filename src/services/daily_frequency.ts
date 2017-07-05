@@ -53,30 +53,40 @@ export class DailyFrequencyService {
   private getOfflineStudentsGlobalAbsence(classroomId, frequencyDate){
     return new Observable((observer) => {
       this.storage.get('frequencies').then((frequencies) => {
+        this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
+          dailyFrequenciesToSync = dailyFrequenciesToSync || []
 
-        let filteredDailyFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
-          return (dailyFrequency.classroom_id == classroomId &&
-                  dailyFrequency.frequency_date == frequencyDate &&
-                  dailyFrequency.discipline_id == null &&
-                  dailyFrequency.class_number == null)
-        })
+          let filteredDailyFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
+            return (dailyFrequency.classroom_id == classroomId &&
+                    dailyFrequency.frequency_date == frequencyDate &&
+                    dailyFrequency.discipline_id == null &&
+                    dailyFrequency.class_number == null)
+          })
 
         if(filteredDailyFrequencies.length == 0){
           let filteredFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
-          return (dailyFrequency.classroom_id == classroomId &&
-                  dailyFrequency.discipline_id == null &&
-                  dailyFrequency.class_number == null)
-        })
+            return (dailyFrequency.classroom_id == classroomId &&
+                    dailyFrequency.discipline_id == null &&
+                    dailyFrequency.class_number == null)
+          })
 
           const lastFrequency = this.getLastFrequency(filteredFrequencies)
           const newFrequencies = this.createOfflineGlobalFrequencies(filteredDailyFrequencies[0], frequencyDate, lastFrequency)
           filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
+          this.saveNewOfflineFrequencies(frequencies, newFrequencies)
+          this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
         }
 
-        observer.next({daily_frequency: filteredDailyFrequencies[0]})
-        observer.complete()
-      });
+          observer.next({daily_frequency: filteredDailyFrequencies[0]})
+          observer.complete()
+        })
+      })
     })
+  }
+
+  private saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies){
+    dailyFrequenciesToSync = dailyFrequenciesToSync.concat(newFrequencies)
+    this.storage.set('dailyFrequenciesToSync', dailyFrequenciesToSync)
   }
 
   private createOfflineGlobalFrequencies(frequency, frequencyDate, frequencyToCopy){
@@ -89,46 +99,63 @@ export class DailyFrequencyService {
   private getOfflineStudentsDisciplineAbsence(classroomId, disciplineId, splitedClassNumbers, frequencyDate){
     return new Observable((observer) => {
       this.storage.get('frequencies').then((frequencies) => {
+        this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
+          dailyFrequenciesToSync = dailyFrequenciesToSync || []
 
-        let filteredDailyFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
-          return (dailyFrequency.classroom_id == classroomId &&
-                  dailyFrequency.discipline_id == disciplineId &&
-                  splitedClassNumbers.includes(dailyFrequency.class_number.toString()) &&
-                  dailyFrequency.frequency_date == frequencyDate)
-        })
-
-        if(filteredDailyFrequencies.length == 0){
-          let filteredFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
+          let filteredDailyFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
             return (dailyFrequency.classroom_id == classroomId &&
-                    dailyFrequency.discipline_id == disciplineId)
+                    dailyFrequency.discipline_id == disciplineId &&
+                    splitedClassNumbers.includes(dailyFrequency.class_number.toString()) &&
+                    dailyFrequency.frequency_date == frequencyDate)
           })
 
-          const lastFrequency = this.getLastFrequency(filteredFrequencies)
-          const newFrequencies = this.createOfflineFrequenciesWithDate(splitedClassNumbers, frequencyDate, lastFrequency)
+          if(filteredDailyFrequencies.length == 0){
+            let filteredFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
+              return (dailyFrequency.classroom_id == classroomId &&
+                      dailyFrequency.discipline_id == disciplineId)
+            })
 
-          filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
-          this.saveNewOfflineFrequencies(frequencies, newFrequencies)
-        }
-        else if(filteredDailyFrequencies.length < splitedClassNumbers.length){
+            const lastFrequency = this.getLastFrequency(filteredFrequencies)
+            const newFrequencies = this.createOfflineFrequenciesWithDate(splitedClassNumbers, frequencyDate, lastFrequency)
 
-          const frequencyClasses = filteredDailyFrequencies.map((frequency) => {
-            return frequency.class_number.toString()
-          })
+            filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
+            this.saveNewOfflineFrequencies(frequencies, newFrequencies)
+            this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
+          }
+          else if(filteredDailyFrequencies.length < splitedClassNumbers.length){
 
-          const missingClasses = splitedClassNumbers.filter((classNumber) => {
-            return !frequencyClasses.includes(classNumber)
-          })
+            const frequencyClasses = filteredDailyFrequencies.map((frequency) => {
+              return frequency.class_number.toString()
+            })
 
-          const newFrequencies = this.createOfflineFrequenciesWithClasses(missingClasses, filteredDailyFrequencies[0])
-          filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
+            const missingClasses = splitedClassNumbers.filter((classNumber) => {
+              return !frequencyClasses.includes(classNumber)
+            })
 
-          this.saveNewOfflineFrequencies(frequencies, newFrequencies)
-        }
+            const newFrequencies = this.createOfflineFrequenciesWithClasses(missingClasses, filteredDailyFrequencies[0])
+            filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
 
-        observer.next({daily_frequencies: filteredDailyFrequencies})
-        observer.complete()
+            this.saveNewOfflineFrequencies(frequencies, newFrequencies)
+            this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
+          }
+
+          filteredDailyFrequencies = filteredDailyFrequencies.sort(this.byClassNumber)
+
+          observer.next({daily_frequencies: filteredDailyFrequencies})
+          observer.complete()
+        })
       })
     })
+  }
+
+  private byClassNumber(a,b){
+    if (a.class_number > b.class_number) {
+      return 1;
+    }
+    if (a.class_number < b.class_number) {
+      return -1;
+    }
+    return 0;
   }
 
   private saveNewOfflineFrequencies(existingFrequencies, newFrequencies){
@@ -180,6 +207,7 @@ export class DailyFrequencyService {
     frequency.students.forEach((element) => {
       element.id = null
       element.present = true
+      element.daily_frequency_id = null
     })
     return frequency
   }
