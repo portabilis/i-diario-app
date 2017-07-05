@@ -1,3 +1,4 @@
+import { UserIndexPage } from './../pages/user-index/user-index';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -44,7 +45,8 @@ import { ApiService } from './../services/api';
     FrequencyPage,
     StudentsFrequencyPage,
     FrequencyIndexPage,
-    AppIndexPage
+    AppIndexPage,
+    UserIndexPage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { ApiService } from './../services/api';
     FrequencyPage,
     StudentsFrequencyPage,
     FrequencyIndexPage,
-    AppIndexPage
+    AppIndexPage,
+    UserIndexPage
   ],
   providers: [
     StatusBar,
