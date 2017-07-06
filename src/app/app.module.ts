@@ -38,6 +38,7 @@ import { DisciplinesPersisterService } from './../services/offline_data_persiste
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
 import { ApiService } from './../services/api';
+import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { ApiService } from './../services/api';
     DisciplinesPersisterService,
     FrequenciesPersisterService,
     ApiService,
+    DailyFrequenciesSynchronizer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
