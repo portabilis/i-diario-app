@@ -36,59 +36,7 @@
     padding-top: 24pt;
 }
 
-.general-list {
-    border-radius: 5px;
-    margin: 0 10px 0px;
-    background-color: white;
-    border: 1px solid #E5DEEC !important;
-    border-bottom: 0 !important;
-}
-
-.list-school {
-    background-color: transparent;
-    border-bottom: 1px solid #E5DEEC !important;
-}
-
-.list-school-header {
-    width: auto;
-    background-color: transparent;
-    padding-left: 0px;
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
-}
-
-.list-school-header p {
-    font-family: "NunitoBold";
-    font-size: 16px;
-    text-transform: capitalize;
-    color: #3f3d4d;
-    background: url('../assets/img/chevronDown@2x.png') no-repeat right;
-    background-size: 12pt 6pt;
-    margin: 13pt 10pt;
-}
-
-.list-school-header.item.item-md.list-header.list-header-md.active {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
-}
-
-.list-school-header.item.item-md.list-header.list-header-md.active p {
-    font-family: "NunitoBold";
-    font-size: 16px;
-    text-transform: capitalize;
-    color: #3f3d4d;
-    background: url('../assets/img/chevronUp@2x.png') no-repeat right;
-    background-size: 12pt 6pt;
-    margin: 13pt 10pt;
-}
-
-.list-school-item {
-    width: auto;
-    height: 60pt;
-    padding-left: 0px;
-    background-color: transparent;
-}
-
-.list-school-item p {
+.accordion-list-item .view-eye {
     font-family: "NunitoRegular";
     font-size: 16px;
     text-transform: uppercase;
@@ -97,8 +45,4 @@
     background: url('../assets/img/iconView@2x.png') no-repeat right;
     background-size: 19pt 14pt;
     margin-right: 10pt;
-}
-
-.list-school.list.list-md {
-    margin: 0;
 }

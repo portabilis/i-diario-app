@@ -1,3 +1,4 @@
+import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
 import { UserIndexPage } from './../pages/user-index/user-index';
 // Imports from angular
 import { HttpModule } from '@angular/http';
@@ -46,7 +47,8 @@ import { ApiService } from './../services/api';
     StudentsFrequencyPage,
     FrequencyIndexPage,
     AppIndexPage,
-    UserIndexPage
+    UserIndexPage,
+    LessonPlanIndexPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { ApiService } from './../services/api';
     StudentsFrequencyPage,
     FrequencyIndexPage,
     AppIndexPage,
-    UserIndexPage
+    UserIndexPage,
+    LessonPlanIndexPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,43 @@
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
+
+.accordion-lessons-plan {
+    margin-top: 30px;
+}
+
+.accordion-list-item-lesson p  {
+    float: left;
+}
+
+.accordion-list-item-lesson a {
+    font-family: "NunitoRegular";
+    font-size: 12pt;
+    float: right;
+}
+
+.text-view {
+    text-transform: none;
+    text-align: right;
+}
+
+.accordion-list-item .text-view {
+    font-family: "NunitoRegular";
+    margin-right: 10pt;
+}
+
+.accordion-list-item-lesson {
+    width: auto;
+    height: 50pt;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.accordion-lessons-plan {
+    background-color: #F9F5FC;
+}
+
+.accordion-list-header-lessons {
+    background-color: white;
+}

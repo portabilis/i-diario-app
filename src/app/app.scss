@@ -33,3 +33,67 @@ ion-app .scroll-content {
     font-family: 'NunitoRegular';
     src:url('../assets/fonts/Nunito/Nunito-Regular.ttf');
 }
+
+.accordion-list-border {
+    border-radius: 5px;
+    margin: 0 10px 0px;
+    background-color: white;
+    border: 1px solid #E5DEEC !important;
+    border-bottom: 0 !important;
+}
+.accordion-list {
+    background-color: transparent;
+    border-bottom: 1px solid #E5DEEC !important;
+}
+
+.accordion-list-header {
+    width: auto;
+    background-color: transparent;
+    padding-left: 0px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.accordion-list-header p {
+    font-family: "NunitoBold";
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #3f3d4d;
+    background: url('../assets/img/chevronDown@2x.png') no-repeat right;
+    background-size: 12pt 6pt;
+    margin: 13pt 10pt;
+}
+
+.accordion-list-header.item.item-md.list-header.list-header-md.active {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+}
+
+.accordion-list-header.item.item-md.list-header.list-header-md.active p {
+    font-family: "NunitoBold";
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #3f3d4d;
+    background: url('../assets/img/chevronUp@2x.png') no-repeat right;
+    background-size: 12pt 6pt;
+    margin: 13pt 10pt;
+}
+
+.accordion-list-item {
+    width: auto;
+    height: 60pt;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.accordion-list.list.list-md {
+    margin: 0;
+}
+
+.accordion-list-item p {
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #3f3d4d;
+    padding-left: 15px;
+    margin-right: 10pt;
+}
