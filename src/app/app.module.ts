@@ -18,6 +18,7 @@ import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
 import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
 import { AppIndexPage } from "../pages/app-index/app-index";
+import { SynchronizationPage } from './../pages/synchronization/synchronization';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -46,7 +47,8 @@ import { ApiService } from './../services/api';
     StudentsFrequencyPage,
     FrequencyIndexPage,
     AppIndexPage,
-    UserIndexPage
+    UserIndexPage,
+    SynchronizationPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { ApiService } from './../services/api';
     StudentsFrequencyPage,
     FrequencyIndexPage,
     AppIndexPage,
-    UserIndexPage
+    UserIndexPage,
+    SynchronizationPage
   ],
   providers: [
     StatusBar,
