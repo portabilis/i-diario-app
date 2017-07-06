@@ -30,8 +30,7 @@
               text-wrap
               (click)="toggleGroup(i)"
               [ngClass]="{active: isGroupShown(i)}">
-      {{frequency.school}}
-      <ion-icon color="success" item-right [name]="isGroupShown(i) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+      <p>{{frequency.school}}</p>
     </ion-list-header>
 
     <div *ngFor="let class of frequency.classes;">
