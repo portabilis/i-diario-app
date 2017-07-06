@@ -18,6 +18,13 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 })
 export class FrequencyIndexPage {
   private user: any;
+  shownGroup = null;
+
+  frequencies = [
+    { school: "E.E.B. Antônio Guglielme Sobilinaldo", classes: ["Maternal 1", "Maternal 2"] },
+    { school: "E.E.B. Salete Scott Santos", classes: "" }
+  ];
+
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -48,5 +55,16 @@ export class FrequencyIndexPage {
         loading.dismiss();
       });
   }
+
+  toggleGroup(group) {
+    if (this.isGroupShown(group)) {
+        this.shownGroup = null;
+    } else {
+        this.shownGroup = group;
+    }
+  };
+  isGroupShown(group) {
+      return this.shownGroup === group;
+  };
 
 }
