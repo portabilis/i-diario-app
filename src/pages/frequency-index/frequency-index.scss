@@ -36,17 +36,25 @@
     padding-top: 24pt;
 }
 
-.list-school {
-    border-radius: 5pt;
-    margin: 0 10px 10px;
+.general-list {
+    border-radius: 5px;
+    margin: 0 10px 0px;
     background-color: white;
+    border: 1px solid #E5DEEC !important;
+    border-bottom: 0 !important;
+}
+
+.list-school {
+    background-color: transparent;
+    border-bottom: 1px solid #E5DEEC !important;
 }
 
 .list-school-header {
     width: auto;
-    height: 70pt;
     background-color: transparent;
-    margin: 0;
+    padding-left: 0px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .list-school-header p {
@@ -56,11 +64,11 @@
     color: #3f3d4d;
     background: url('../assets/img/chevronDown@2x.png') no-repeat right;
     background-size: 12pt 6pt;
-    margin-right: 13pt;
+    margin: 13pt 10pt;
 }
 
 .list-school-header.item.item-md.list-header.list-header-md.active {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
 }
 
 .list-school-header.item.item-md.list-header.list-header-md.active p {
@@ -70,7 +78,7 @@
     color: #3f3d4d;
     background: url('../assets/img/chevronUp@2x.png') no-repeat right;
     background-size: 12pt 6pt;
-    margin-right: 13pt;
+    margin: 13pt 10pt;
 }
 
 .list-school-item {
@@ -89,4 +97,8 @@
     background: url('../assets/img/iconView@2x.png') no-repeat right;
     background-size: 19pt 14pt;
     margin-right: 10pt;
+}
+
+.list-school.list.list-md {
+    margin: 0;
 }

@@ -22,7 +22,9 @@ export class FrequencyIndexPage {
 
   frequencies = [
     { school: "E.E.B. Antônio Guglielme Sobilinaldo", classes: ["Maternal 1", "Maternal 2"] },
-    { school: "E.E.B. Salete Scott Santos", classes: "" }
+    { school: "E.E.B. Salete Scott Santos", classes: "" },
+    { school: "Escola Portabilis", classes: ["Turma A"] },
+    { school: "Escola Portabilis", classes: ["Turma A"] },
   ];
 
 

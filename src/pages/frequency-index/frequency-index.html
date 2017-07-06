@@ -23,21 +23,22 @@
 
   <h3 class="frequency-day">31 de Maio</h3>
 
-  <ion-list class="list-school"
-            *ngFor="let frequency of frequencies; let i=index">
-    <ion-list-header class="list-school-header"
-              no-lines
-              text-wrap
-              (click)="toggleGroup(i)"
-              [ngClass]="{active: isGroupShown(i)}">
-      <p>{{frequency.school}}</p>
-    </ion-list-header>
+  <div class="general-list">
+    <ion-list class="list-school"
+              *ngFor="let frequency of frequencies; let i=index">
+      <ion-list-header class="list-school-header"
+                no-lines
+                text-wrap
+                (click)="toggleGroup(i)"
+                [ngClass]="{active: isGroupShown(i)}">
+        <p>{{frequency.school}}</p>
+      </ion-list-header>
 
-    <div *ngFor="let class of frequency.classes;">
-      <ion-item *ngIf="isGroupShown(i)" class="list-school-item" >
-        <p>{{class}}</p>
-      </ion-item>
-    </div>
-  </ion-list>
-
+      <div *ngFor="let class of frequency.classes;">
+        <ion-item *ngIf="isGroupShown(i)" class="list-school-item" >
+          <p>{{class}}</p>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
 </ion-content>
