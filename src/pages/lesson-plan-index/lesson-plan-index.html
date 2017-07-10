@@ -1,12 +1,14 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Planos de aula</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content class="page-content" padding>
+  <ion-refresher (ionRefresh)="updateLessonPlans($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="accordion-list-border accordion-lessons-plan">
     <ion-list class="accordion-list"
               *ngFor="let lesson of lessons; let i=index">
@@ -15,7 +17,7 @@
                 text-wrap
                 (click)="toggleGroup(i)"
                 [ngClass]="{active: isGroupShown(i)}">
-        <p>{{lesson.school}}</p>
+        <p>{{lesson.unity}}</p>
       </ion-list-header>
 
       <div *ngFor="let discipline of lesson.disciplines;">

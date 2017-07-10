@@ -1,12 +1,8 @@
+import { AuthService } from './../../services/auth';
+import { LessonPlansService } from './../../services/lesson_plans';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the LessonPlanIndexPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-lesson-plan-index',
@@ -15,20 +11,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class LessonPlanIndexPage {
   shownGroup = null;
 
-  lessons = [
-    { school: "Antônio Guglielme Sobrinho", disciplines: ["Filosofia - 5º ano 3",
-                                                          "Filosofia - 5º ano 2",
-                                                          "Filosofia - 5º ano 1",
-                                                          "Filosofia - 6º ano 2",
-                                                          "Filosofia - 6º ano 1"] },
-    { school: "E.E.B. Salete Scott Santos", disciplines: "" }
-  ];
+  lessons = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private auth: AuthService,
+              private lessonPlansService: LessonPlansService) {
   }
+  // ionViewDidLoad() {
+  //   atualizar lessonplans offline
+  // }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LessonPlanIndexPage');
+  updateLessonPlans(refresher) {
+    this.auth.currentUser().then((user) => {
+      this.lessonPlansService.getLessonPlans(
+        user.teacher_id
+      ).subscribe(
+        (lessonPlans:any) => {
+          lessonPlans.forEach(lessonPlan => {
+            this.lessons = [{ unity: lessonPlan.unity_name,
+                              disciplines: [lessonPlan.description + ' - ' + lessonPlan.classroom_name] }]
+          });
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          refresher.complete();
+        }
+      );
+    });
   }
 
   toggleGroup(group) {

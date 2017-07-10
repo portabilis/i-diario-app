@@ -103,4 +103,7 @@ export class ApiService {
   getTeacherUnitiesUrl() {
     return this.getServerUrl() + '/api/v1/teacher_unities.json'
   }
+  getTeacherLessonPlansUrl() {
+    return this.getServerUrl() + '/api/v1/lesson_plans.json'
+  }
 }

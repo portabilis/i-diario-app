@@ -29,6 +29,7 @@ import { ExamRulesService } from '../services/exam_rules';
 import { DisciplinesService } from '../services/disciplines';
 import { SchoolCalendarsService } from './../services/school_calendars';
 import { ConnectionService } from '../services/connection';
+import { LessonPlansService } from './../services/lesson_plans';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
 import { OfflineDataPersisterService } from './../services/offline_data_persistence/offline_data_persister';
 import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
@@ -81,6 +82,7 @@ import { ApiService } from './../services/api';
     SchoolCalendarsService,
     DailyFrequencyStudentService,
     ConnectionService,
+    LessonPlansService,
     Network,
     OfflineDataPersisterService,
     UnitiesPersisterService,
