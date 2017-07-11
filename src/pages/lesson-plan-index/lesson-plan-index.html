@@ -5,22 +5,22 @@
 </ion-header>
 
 <ion-content class="page-content" padding>
-  <ion-refresher (ionRefresh)="updateLessonPlans($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <div class="accordion-list-border accordion-lessons-plan">
     <ion-list class="accordion-list"
-              *ngFor="let lesson of lessons; let i=index">
+              *ngFor="let plan of plans; let i=index">
       <ion-list-header class="accordion-list-header accordion-list-header-lessons"
                 no-lines
                 text-wrap
                 (click)="toggleGroup(i)"
                 [ngClass]="{active: isGroupShown(i)}">
-        <p>{{lesson.unity}}</p>
+        <p>{{plan.unity}}</p>
       </ion-list-header>
 
-      <div *ngFor="let discipline of lesson.disciplines;">
+      <div *ngFor="let discipline of plan.disciplines;">
         <ion-item *ngIf="isGroupShown(i)" class="accordion-list-item accordion-list-item-lesson" >
           <p text-capitalize>{{discipline}}</p><a class="text-view">Ver plano</a>
         </ion-item>
