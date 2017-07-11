@@ -19,6 +19,7 @@ import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
 import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
 import { AppIndexPage } from "../pages/app-index/app-index";
+import { SynchronizationPage } from './../pages/synchronization/synchronization';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -39,6 +40,7 @@ import { DisciplinesPersisterService } from './../services/offline_data_persiste
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
 import { ApiService } from './../services/api';
+import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { ApiService } from './../services/api';
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
-    LessonPlanIndexPage
+    LessonPlanIndexPage,
+    SynchronizationPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { ApiService } from './../services/api';
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
-    LessonPlanIndexPage
+    LessonPlanIndexPage,
+    SynchronizationPage
   ],
   providers: [
     StatusBar,
@@ -92,6 +96,7 @@ import { ApiService } from './../services/api';
     DisciplinesPersisterService,
     FrequenciesPersisterService,
     ApiService,
+    DailyFrequenciesSynchronizer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
