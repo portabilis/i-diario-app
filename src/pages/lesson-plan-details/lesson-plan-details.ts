@@ -17,6 +17,7 @@ export class LessonPlanDetailsPage {
   evaluation: string;
   bibliography: string;
   contents: string;
+  knowledge_areas: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -36,22 +37,9 @@ export class LessonPlanDetailsPage {
       this.evaluation = details.evaluation;
       this.bibliography = details.bibliography;
       this.contents = details.contents;
-      // this.contents = this.arrayDescriptionToString(details.contents);
-
-
-      // console.log(this.arrayDescriptionToString(details.contents));
+      this.knowledge_areas = details.knowledge_areas;
     });
   }
-
-  // arrayDescriptionToString(elements) {
-  //   let text: string = "";
-
-  //   elements.forEach(element => {
-  //     text += "<br />- " + element.description;
-  //   });
-
-  //   return text;
-  // }
 
   getLessonPlanDetail(lessonPlan){
     let response;

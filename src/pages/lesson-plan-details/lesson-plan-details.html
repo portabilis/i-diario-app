@@ -10,6 +10,14 @@
 
 <ion-content class="page-content" padding>
   <div class="details-panel">
+    <div *ngIf="knowledge_areas" class="detail">
+      <h3 class="detail-title">Áreas de conhecimento</h3>
+      <ul class="contents-list">
+        <li *ngFor="let knowledge_area of knowledge_areas;" class="contents-list-item">
+          {{"- " + knowledge_area.description}}
+        </li>
+      </ul>
+    </div>
     <div class="detail">
       <h3 class="detail-title">Período escolar</h3>
       <p class="detail-text">{{period}}</p>
@@ -20,12 +28,11 @@
     </div>
     <div class="detail">
       <h3 class="detail-title">Conteúdos</h3>
-      <!-- <p class="detail-text">{{contents}}</p> -->
-    <ul class="contents-list">
-      <li *ngFor="let content of contents;" class="contents-list-item">
-        {{"- " + content.description}}
-      </li>
-    </ul>
+      <ul class="contents-list">
+        <li *ngFor="let content of contents;" class="contents-list-item">
+          {{"- " + content.description}}
+        </li>
+      </ul>
     </div>
     <div class="detail">
       <h3 class="detail-title">Metodologia</h3>
