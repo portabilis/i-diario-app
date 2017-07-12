@@ -1,5 +1,3 @@
-import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
-import { UserIndexPage } from './../pages/user-index/user-index';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,7 +16,10 @@ import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
 import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
+import { UserIndexPage } from './../pages/user-index/user-index';
 import { AppIndexPage } from "../pages/app-index/app-index";
+import { LessonPlanDetailsPage } from './../pages/lesson-plan-details/lesson-plan-details';
+import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
 import { SynchronizationPage } from './../pages/synchronization/synchronization';
 
 //Services
@@ -52,6 +53,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
     AppIndexPage,
     UserIndexPage,
     LessonPlanIndexPage,
+    LessonPlanDetailsPage,
     SynchronizationPage
   ],
   imports: [
@@ -72,6 +74,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
     AppIndexPage,
     UserIndexPage,
     LessonPlanIndexPage,
+    LessonPlanDetailsPage,
     SynchronizationPage
   ],
   providers: [

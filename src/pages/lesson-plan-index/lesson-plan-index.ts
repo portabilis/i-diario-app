@@ -1,3 +1,4 @@
+import { LessonPlanDetailsPage } from './../lesson-plan-details/lesson-plan-details';
 import { ConnectionService } from './../../services/connection';
 import { Storage } from '@ionic/storage';
 import { AuthService } from './../../services/auth';
@@ -14,7 +15,7 @@ import { ToastController } from 'ionic-angular';
 export class LessonPlanIndexPage {
   shownGroup = null;
 
-  plans = [];
+  unities = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -67,13 +68,14 @@ export class LessonPlanIndexPage {
 
   updateLessonPlans() {
     this.storage.get('lesson_plans').then((lesson_plans) => {
-    this.plans = [];
+    this.unities = [];
       lesson_plans.unities.forEach(unity => {
-        let plan_disciplines = [];
+        let lessonPlans = [];
         unity.plans.forEach(plan => {
-          plan_disciplines.push(plan.description + ' - ' + plan.classroom_name);
+          lessonPlans.push({ id: plan.id,
+                             description: plan.description + ' - ' + plan.classroom_name });
         });
-        this.plans.push({ unity: unity.unity_name, disciplines: plan_disciplines});
+        this.unities.push({ name: unity.unity_name, lessonPlans: lessonPlans});
       });
     });
   }
@@ -85,7 +87,12 @@ export class LessonPlanIndexPage {
         this.shownGroup = group;
     }
   };
+
   isGroupShown(group) {
       return this.shownGroup === group;
   };
+
+  openDetail(lessonPlanId) {
+    this.navCtrl.push(LessonPlanDetailsPage, { "lessonPlanId": lessonPlanId });
+  }
 }
