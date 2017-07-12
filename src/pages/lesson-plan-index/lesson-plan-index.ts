@@ -36,7 +36,6 @@ export class LessonPlanIndexPage {
       ).subscribe(
         (lesson_plans:any) => {
           this.storage.set('lesson_plans', lesson_plans);
-          this.updateLessonPlans();
         },
         (error) => {
           this.presentErrorToast();
@@ -44,6 +43,7 @@ export class LessonPlanIndexPage {
         },
         () => {
           refresher.complete();
+          this.updateLessonPlans();
         }
       );
     });
