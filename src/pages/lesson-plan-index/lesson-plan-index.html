@@ -17,12 +17,13 @@
                 text-wrap
                 (click)="toggleGroup(i)"
                 [ngClass]="{active: isGroupShown(i)}">
-        <p>{{unity.name}}</p>
+        <p class="unity_name">{{unity.name}}</p>
       </ion-list-header>
 
       <div *ngFor="let lessonPlan of unity.lessonPlans;">
         <ion-item *ngIf="isGroupShown(i)" class="accordion-list-item accordion-list-item-lesson" >
-          <p text-capitalize>{{lessonPlan.description}}</p><a (click)="openDetail(lessonPlan.id)" class="text-view">Ver plano</a>
+          <p text-capitalize class="item-lesson-text">{{lessonPlan.description}}</p>
+            <a (click)="openDetail(lessonPlan.id)" class="text-view">Ver plano</a>
         </ion-item>
       </div>
     </ion-list>
