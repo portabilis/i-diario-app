@@ -4,9 +4,18 @@ ion-title {
     color: white;
 }
 
+.header-lesson-plan {
+    display: block;
+    overflow: hidden;
+}
+
 .page-content {
     background-color: #F0EBF8;
     height: 100%;
+}
+
+.header-lesson-plan {
+    height: 180px;
 }
 
 .unity-name {
@@ -40,7 +49,7 @@ ion-title {
 
 .details-panel {
     background-color: white;
-    margin: 20px 10px 20px 10px;
+    margin: 10px 10px 20px 10px;
     border: 1px solid #e7e6f0 !important;
     border-radius: 5px;
 }
@@ -55,12 +64,15 @@ ion-title {
     font-family: "NunitoBold";
     font-size: 16px;
     color: #3f3d4d;
+    margin: 0;
+    margin-bottom: 2px;
 }
 
 .detail-text {
     font-family: "NunitoRegular";
     font-size: 14px;
     color: #3f3d4d;
+    text-transform: capitalize;
     margin: 0px;
 }
 
