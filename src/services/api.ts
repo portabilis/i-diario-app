@@ -106,4 +106,7 @@ export class ApiService {
   getTeacherLessonPlansUrl() {
     return this.getServerUrl() + '/api/v1/lesson_plans.json'
   }
+  getTeacherTeachingPlansUrl() {
+    return this.getServerUrl() + '/api/v1/teaching_plans.json'
+  }
 }

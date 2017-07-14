@@ -1,3 +1,4 @@
+import { TeachingPlansPersisterService } from './teaching_plans_persister';
 import { LessonPlansPersisterService } from './lesson_plans_persister';
 import { FrequenciesPersisterService } from './frequencies_persister';
 import { DisciplinesPersisterService } from './disciplines_persister';
@@ -22,7 +23,8 @@ export class OfflineDataPersisterService {
     private schoolCalendarPersister: SchoolCalendarsPersisterService,
     private disciplinePersister: DisciplinesPersisterService,
     private frequenciesPersister: FrequenciesPersisterService,
-    private lessonPlansPersister: LessonPlansPersisterService) {}
+    private lessonPlansPersister: LessonPlansPersisterService,
+    private teachingPlansPersister: TeachingPlansPersisterService) {}
 
   private clearStorage(){
     this.storage.remove('unities')
@@ -45,7 +47,8 @@ export class OfflineDataPersisterService {
       this.schoolCalendarPersister.persist(user),
       this.disciplinePersister.persist(user),
       this.frequenciesPersister.persist(user),
-      this.lessonPlansPersister.persist(user)
+      this.lessonPlansPersister.persist(user),
+      this.teachingPlansPersister.persist(user)
     ).subscribe(
       () => {
       },

@@ -1,3 +1,64 @@
-page-teaching-plan-index {
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
 
+.accordion-teaching-plan {
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #E5DEEC !important;
+    border-bottom: 0 !important;
+}
+
+.accordion-list-item-teaching p  {
+    float: left;
+}
+
+.accordion-list-item-teaching a {
+    float: right;
+}
+
+.unity_name {
+    font-family: "NunitoRegular";
+    font-size: 14px !important;
+}
+
+.item-teaching-text {
+    font-family: "NunitoRegular";
+    font-size: 14px !important;
+}
+
+.text-view {
+    text-transform: none;
+    text-align: right;
+    font-family: "NunitoRegular";
+    font-size: 12px !important;
+    margin-right: 10px;
+    margin-top: 1px;
+}
+
+.accordion-list-item-plan {
+    width: auto;
+    height: 50pt;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.accordion-list-item  {
+    background-color: #F9F5FC;
+}
+
+.accordion-list-header.accordion-list-header-teaching.item.item-md.list-header.list-header-md.active.item.item-md {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    z-index: 9;
+}
+
+.accordion-list-header.accordion-list-header-teaching.item.item-md.list-header.list-header-md {
+    height: 70px;
+}
+
+.accordion-list-item.accordion-list-item-teaching.item.item-block.item-md {
+    height: 60px;
 }

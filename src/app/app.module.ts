@@ -34,6 +34,7 @@ import { DisciplinesService } from '../services/disciplines';
 import { SchoolCalendarsService } from './../services/school_calendars';
 import { ConnectionService } from '../services/connection';
 import { LessonPlansService } from './../services/lesson_plans';
+import { TeachingPlansService } from './../services/teaching_plans';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
 import { OfflineDataPersisterService } from './../services/offline_data_persistence/offline_data_persister';
 import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
@@ -96,6 +97,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
     DailyFrequencyStudentService,
     ConnectionService,
     LessonPlansService,
+    TeachingPlansService,
     Network,
     OfflineDataPersisterService,
     UnitiesPersisterService,
