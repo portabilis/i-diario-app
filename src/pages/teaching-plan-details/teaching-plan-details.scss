@@ -1,3 +1,90 @@
-page-teaching-plan-details {
+ion-title {
+    font-family: "NunitoBold";
+    font-size: 24px;
+    color: white;
+}
 
+.header-teaching-plan {
+    display: block;
+    overflow: hidden;
+}
+
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
+
+.header-teaching-plan {
+    height: 180px;
+}
+
+.unity-name {
+    font-family: "NunitoRegular";
+    font-size: 14px;
+    color: white;
+    margin: 6px 0 6px 0;
+}
+
+.description {
+    font-family: "NunitoBold";
+    font-size: 14px;
+    color: white;
+    margin: 6px 0 12px 0;
+}
+
+.teaching-plan-img {
+    width: 67px;
+    height: 50px;
+    display: block;
+    margin: 10px auto 20px;
+}
+
+.toolbar-content.toolbar-content-md {
+    margin-left: 0px !important;
+}
+
+.back-button.show-back-button {
+    display: none;
+}
+
+.details-panel {
+    background-color: white;
+    margin: 10px 10px 20px 10px;
+    border: 1px solid #e7e6f0 !important;
+    border-radius: 5px;
+}
+
+.detail {
+    padding: 15px;
+    background-color: transparent;
+    border-bottom: 1px solid #E5DEEC !important;
+}
+
+.detail-title {
+    font-family: "NunitoBold";
+    font-size: 16px;
+    color: #3f3d4d;
+    margin: 0;
+    margin-bottom: 2px;
+}
+
+.detail-text {
+    font-family: "NunitoRegular";
+    font-size: 14px;
+    color: #3f3d4d;
+    text-transform: capitalize;
+    margin: 0px;
+}
+
+.contents-list-item {
+    font-family: "NunitoRegular";
+    font-size: 14px;
+    color: #3f3d4d;
+    margin: 0px;
+    list-style-type: none;
+}
+
+.contents-list {
+    padding: 0;
+    margin: 0;
 }
