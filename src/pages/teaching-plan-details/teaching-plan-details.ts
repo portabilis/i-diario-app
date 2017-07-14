@@ -32,6 +32,7 @@ export class TeachingPlanDetailsPage {
       this.description = details.description + ' - ' + details.grade_name;
       this.unity_name = details.unity_name;
       this.period = details.period;
+      this.objectives = details.objectives;
       this.activities = details.activities;
       this.evaluation = details.evaluation;
       this.bibliography = details.bibliography;
