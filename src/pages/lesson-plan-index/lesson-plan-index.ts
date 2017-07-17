@@ -68,6 +68,7 @@ export class LessonPlanIndexPage {
 
   updateLessonPlans() {
     this.storage.get('lesson_plans').then((lesson_plans) => {
+    if (!lesson_plans) return;
     this.unities = [];
       lesson_plans.unities.forEach(unity => {
         let lessonPlans = [];
