@@ -1,3 +1,164 @@
-page-frequency {
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
 
+.form-frequency {
+    margin: 20px 10px 0 10px;
+}
+
+.form-item {
+    margin-bottom: 24px;
+}
+
+.form-item-title {
+    font-family: "NunitoBold";
+    color: #3f3e4d;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.form-item-radio {
+    border-radius: 5px;
+    background-color: white;
+}
+
+.form-item-radio-item {
+    height: 70px;
+
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    color: #3f3e4d;
+    background-color: transparent;
+}
+
+.form-item-radio-item .radio-icon {
+  visibility: hidden;
+  position: absolute;
+}
+
+.form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked {
+    background-color: #3fd4b4;
+}
+
+.form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked ion-label {
+    font-family: "NunitoBold";
+    font-size: 16px;
+    color: white !important;
+}
+
+.item-empty {
+    width: auto;
+    height: 70px;
+    background-color: #E5DEEC;
+    border-radius: 5px;
+}
+
+.item-empty p {
+    font-family: "NunitoBold";
+    font-size: 14px;
+    color: #87878c;
+    text-align: center;
+    padding-top: 26px;
+}
+
+.button-frequency {
+    height: 70px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    text-transform: none;
+    font-size: 18px;
+    font-family: "NunitoBold";
+}
+
+.date-frequency {
+    background-color: white;
+    height: 70px;
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    color: #3f3d4d;
+    border-radius: 5px;
+}
+
+.datetime.datetime-md {
+    height: 70px;
+    width: 100%;
+    float: left;
+    position: relative;
+    z-index: 9;
+}
+
+.datetime-text {
+    margin: auto;
+}
+
+.text-mudar {
+    float: right;
+    padding-top: 8px;
+    margin: 0;
+    padding: 0;
+    padding-top: 23px;
+    padding-right: 20px;
+    font-family: "NunitoRegular";
+    color: #6E00B5;
+    position: absolute;
+    z-index: 8;
+    right: 10px;
+}
+
+.itens-checkbox {
+    height: 70px;
+    display: flex;
+    position: none;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.form-item-check-item {
+    background-color: transparent;
+}
+
+.checkbox-icon {
+    visibility: hidden;
+    position: absolute;
+}
+
+ion-checkbox.checkbox.checkbox-md {
+    margin: 0 !important;
+}
+
+.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
+    background-color: #3fd4b4;
+}
+
+.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked .form-item-check-item-label{
+    color: white;
+    font-family: "NunitoBold";
+}
+
+
+.form-item-check-item-label {
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    color: #3f3d4d;
 }
