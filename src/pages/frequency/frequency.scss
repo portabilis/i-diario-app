@@ -21,6 +21,7 @@
 .form-item-radio {
     border-radius: 5px;
     background-color: white;
+    border: 1px solid #dddce6 !important;
 }
 
 .form-item-radio-item {
@@ -30,6 +31,7 @@
     font-size: 16px;
     color: #3f3e4d;
     background-color: transparent;
+    border-bottom: 1px solid #dddce6 !important;
 }
 
 .form-item-radio-item .radio-icon {
@@ -39,6 +41,10 @@
 
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked {
     background-color: #3fd4b4;
+}
+
+.form-item-radio-item.item.item-block.item-md.item-radio:last-child {
+    border-bottom: 0px !important;
 }
 
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked:first-child {
@@ -87,6 +93,7 @@
     font-family: "NunitoRegular";
     font-size: 16px;
     color: #3f3d4d;
+    border: 1px solid #dddce6 !important;
     border-radius: 5px;
 }
 
@@ -121,11 +128,13 @@
     display: flex;
     position: none;
     border-radius: 5px;
+    border: 1px solid #dddce6;
     background-color: white;
 }
 
 .form-item-check-item {
     background-color: transparent;
+    border-right: 1px solid #dddce6 !important;
 }
 
 .checkbox-icon {
@@ -135,6 +144,10 @@
 
 ion-checkbox.checkbox.checkbox-md {
     margin: 0 !important;
+}
+
+.form-item-check-item.item.item-block.item-md.item-checkbox:last-child {
+    border-right: 0 !important;
 }
 
 .form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
@@ -155,7 +168,6 @@ ion-checkbox.checkbox.checkbox-md {
     color: white;
     font-family: "NunitoBold";
 }
-
 
 .form-item-check-item-label {
     font-family: "NunitoRegular";
