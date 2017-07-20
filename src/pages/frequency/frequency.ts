@@ -1,5 +1,5 @@
 import { User } from './../../data/user.interface';
-import { LoadingController, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
@@ -47,7 +47,8 @@ export class FrequencyPage{
     private navCtrl: NavController,
     private connectionService: ConnectionService,
     private navParams: NavParams,
-    private offlineDataPersister: OfflineDataPersisterService){}
+    private offlineDataPersister: OfflineDataPersisterService,
+    public toastCtrl: ToastController){}
 
   ionViewWillEnter(){
     this.date = new Date().toISOString()
@@ -75,6 +76,11 @@ export class FrequencyPage{
             (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
+              if (!schoolCalendar.data) {
+                this.presentToastSchoolCalendarError();
+                return;
+              }
+
               this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.data.number_of_classes);
             },
             (error) => {
@@ -185,9 +191,18 @@ export class FrequencyPage{
   }
 
   private pad(number) {
-      if (number < 10) {
-        return '0' + number;
-      }
-      return number;
+    if (number < 10) {
+      return '0' + number;
     }
+    return number;
+  }
+
+  presentToastSchoolCalendarError() {
+    let toast = this.toastCtrl.create({
+      message: 'Calendário escolar não encontrado.',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
+  }
 }
