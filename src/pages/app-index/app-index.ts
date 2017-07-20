@@ -2,7 +2,6 @@ import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-in
 import { LessonPlanIndexPage } from './../lesson-plan-index/lesson-plan-index';
 import { SynchronizationPage } from './../synchronization/synchronization';
 import { UserIndexPage } from './../user-index/user-index';
-import { SignIn } from './../sign-in/sign-in';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';

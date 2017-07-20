@@ -1,4 +1,3 @@
-import { Storage } from '@ionic/storage';
 import { User } from './../../data/user.interface';
 import { LoadingController, NavController, NavParams } from 'ionic-angular';
 

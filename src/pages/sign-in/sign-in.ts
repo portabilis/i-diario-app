@@ -10,7 +10,6 @@ import { ConnectionService } from '../../services/connection';
 import { UnitiesService } from '../../services/unities';
 import { ApiService } from './../../services/api';
 
-import { Unity } from '../../data/unity.interface';
 import { User } from '../../data/user.interface';
 
 @Component({
