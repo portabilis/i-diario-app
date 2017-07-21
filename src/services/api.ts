@@ -85,7 +85,7 @@ export class ApiService {
     return this.getServerUrl() + '/api/v1/daily_frequency_students/' + id + '.json';
   }
   getDailyFrequencyUrl() {
-    return this.getServerUrl() + '/api/v1/daily_frequencies.json'
+    return this.getServerUrl() + '/api/v1/diario-de-frequencia.json'
   }
   getTeacherDisciplinesUrl() {
     return this.getServerUrl() + '/api/v1/teacher_disciplines.json'

@@ -79,8 +79,6 @@ export class StudentsFrequencyPage {
       return this.studentsFrequency.students
     }
 
-    console.log(this.studentsFrequency);
-    
     let students = this.studentsFrequency[0].students.map((student) => {
       return student.student
     })
