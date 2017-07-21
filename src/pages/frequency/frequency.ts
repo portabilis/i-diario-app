@@ -215,4 +215,8 @@ export class FrequencyPage{
       this.selectedClasses.splice(index,1);
     }
   }
+
+  goBack() {
+    this.navCtrl.pop();
+  }
 }
