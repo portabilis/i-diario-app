@@ -51,9 +51,11 @@
       <div class=form-item *ngIf="!globalAbsence">
         <h3 class="form-item-title">Aulas</h3>
         <ion-list class="itens-checkbox" name="classes">
-          <ion-item class="form-item-check-item" *ngFor="let class of classes;let i = index" no-lines>
-            <ion-label class="form-item-check-item-label"> {{ class }}ª</ion-label>
-            <ion-checkbox checked="selectedClasses[i]"></ion-checkbox>
+          <ion-item class="form-item-check-item" *ngFor="let class of classes;" no-lines>
+             <ion-label class="form-item-check-item-label"> {{ class }}ª</ion-label>
+            <ion-checkbox type="checkbox"
+                          [checked]="selectedClasses[class]"
+                          (ionChange)="updateSelectedClasses(class)"></ion-checkbox>
           </ion-item>
         </ion-list>
       </div>

@@ -145,8 +145,8 @@ export class FrequencyPage{
     const disciplineId = form.value.discipline;
     let classes:any[] = []
 
-    if(form.value.classes){
-      classes = form.value.classes;
+    if(this.selectedClasses){
+      classes = this.selectedClasses;
     }
 
     const loader = this.loadingCtrl.create({
@@ -204,5 +204,15 @@ export class FrequencyPage{
       position: 'middle'
     });
     toast.present();
+  }
+
+  updateSelectedClasses(selectedClass) {
+    var index = this.selectedClasses.indexOf(selectedClass);
+
+    if(index < 0) {
+      this.selectedClasses.push(selectedClass);
+    } else {
+      this.selectedClasses.splice(index,1);
+    }
   }
 }
