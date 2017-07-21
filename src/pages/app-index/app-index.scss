@@ -12,7 +12,7 @@
 }
 
 .ion-md-contentregistrationicon[ng-reflect-is-active=false] {
-  content: url("../assets/img/tabs/iconTabbarLcInactive@3x.png");
+  content: url("../assets/img/tabs/iconTabbarLcInactive@2x.png");
 }
 
 .ion-md-contentregistrationicon[ng-reflect-is-active=true] {
@@ -35,9 +35,12 @@
   content: url("../assets/img/tabs/iconTabbarCpeActive@2x.png");
 }
 
-.ion-ios-userico-outline,
-.ion-ios-userico,.ion-md-userico,.ion-md-userico-outline {
+.ion-md-userico[ng-reflect-is-active=false] {
   content: url("../assets/img/tabs/iconTabbarPerfilInactive@2x.png");
+}
+
+.ion-md-userico[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarPerfilActive@2x.png");
 }
 
 .tabs-md .tab-button[aria-selected=true] {
