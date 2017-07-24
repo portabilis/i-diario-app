@@ -65,6 +65,7 @@ export class FrequencyIndexPage {
         this.shownGroup = group;
     }
   };
+
   isGroupShown(group) {
       return this.shownGroup === group;
   };

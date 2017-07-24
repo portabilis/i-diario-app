@@ -54,4 +54,8 @@ export class LessonPlanDetailsPage {
     return response;
   }
 
+  goBack() {
+    this.navCtrl.pop();
+  }
+
 }
