@@ -60,7 +60,7 @@
           <ion-item class="form-item-check-item" *ngFor="let class of classes;" no-lines>
             <ion-label class="form-item-check-item-label"> {{ class }}ª</ion-label>
             <ion-checkbox type="checkbox"
-                          [checked]="selectedClasses[class]"
+                          [checked]="selectedClasses.indexOf(class) > -1"
                           (ionChange)="updateSelectedClasses(class)"></ion-checkbox>
           </ion-item>
         </ion-list>
