@@ -128,4 +128,8 @@ export class StudentsFrequencyPage {
       return this.studentsFrequency[0].frequency_date
     }
   }
+
+  goBack() {
+    this.navCtrl.pop();
+  }
 }

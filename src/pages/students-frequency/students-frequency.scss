@@ -1,8 +1,97 @@
-page-students-frequency {
-  ion-col {
-    border-bottom: 1px solid black;
-  }
-  ion-row {
-    margin: 10px;
-  }
+.button-left {
+    height: 30px;
+}
+
+.students-frequency-title {
+  padding-left: 40px;
+}
+
+.img-close-frequency {
+  margin-top: 0 !important;
+  margin-left: 10px;
+  width: 25px;
+}
+
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
+
+.page-content-title {
+  font-family: "NunitoBold";
+  font-size: 20px;
+  color: #3f3d4d;
+  padding-top: 20px;
+  padding-left: 10px;
+}
+
+.grid {
+  background-color: white;
+  margin: 10px 10px 10px 10px;
+  border-radius: 5px;
+  border: 1px solid #dddce6 !important;
+  width: auto !important;
+  padding: 0;
+}
+
+.grid-row {
+  border-bottom: 1px solid #dddce6;
+  margin: 0px;
+  padding: 5px 10px;
+}
+
+.student-picture {
+  width: 70px;
+}
+
+.student-name {
+  font-family: "NunitoBold";
+  font-size: 16px;
+  color: #3f3d4d;
+}
+
+.frequency-checkbox {
+    display: flex;
+    border-radius: 5px;
+    background-color: white;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+
+.frequency-checkbox-item {
+    background-color: #ff8870;
+    border-radius: 5px;
+    height: 40px;
+    width: 48px;
+    margin-right: 5px;
+}
+
+.checkbox-icon {
+    visibility: hidden;
+    position: absolute;
+}
+
+.frequency-checkbox-item .checkbox-md .checkbox-icon {
+    position: absolute !important;
+}
+
+.frequency-checkbox-item.item.item-block.item-md.item-checkbox {
+    padding-left: 0px !important;
+}
+
+ion-checkbox.checkbox.checkbox-md {
+    margin: 0 !important;
+}
+
+.frequency-checkbox-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
+    background-color: #3fd4b4;
+}
+
+.frequency-checkbox-item-label {
+    color: white !important;
+    font-family: "NunitoBold";
+    font-size: 16px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
 }
