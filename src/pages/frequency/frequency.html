@@ -13,7 +13,7 @@
 <ion-content class="page-content" padding>
   <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
     <div class="form-frequency">
-      <div class=form-item>
+      <div class=form-item *ngIf="unities">
         <h3 class="form-item-title">Qual a escola?</h3>
         <ion-list [(ngModel)]="unityId"
                   name="unity"
@@ -25,7 +25,11 @@
             <ion-label>{{ unity.description }}</ion-label>
             <ion-radio value="{{unity.id}}"></ion-radio>
           </ion-item>
+
         </ion-list>
+      </div>
+      <div *ngIf="!unities" class="unity-empty">
+        <p margin>Nenhuma escola encontrada.</p>
       </div>
       <div class=form-item *ngIf="classrooms">
         <h3 class="form-item-title">Turma</h3>
@@ -72,7 +76,11 @@
           <p class="text-mudar">mudar</p>
         </div>
       </div>
-      <button class="button-frequency" ion-button block [disabled]="!f.valid">Carregar lista de frequência</button>
+      <button class="button-frequency"
+              ion-button
+              block
+              *ngIf="unities"
+              [disabled]="!f.valid">Carregar lista de frequência</button>
     </div>
   </form>
 </ion-content>

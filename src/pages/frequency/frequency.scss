@@ -3,6 +3,22 @@
     height: 100%;
 }
 
+.unity-empty {
+    width: auto;
+    height: 50pt;
+    background-color: #E5DEEC;
+    border-radius: 5pt;
+    margin: 0 10px 0 10px;
+}
+
+.unity-empty p {
+    font-family: "NunitoBold";
+    font-size: 14pt;
+    color: #87878c;
+    text-align: center;
+    padding-top: 14pt;
+}
+
 .img-close-frequency {
     width: 22px;
     margin-right: 10px;
