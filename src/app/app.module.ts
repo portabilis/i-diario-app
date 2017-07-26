@@ -69,7 +69,10 @@ import { TeachingPlansPersisterService } from './../services/offline_data_persis
       backButtonText: ""
     }),
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot({
+      name: '__appfrequencia',
+         driverOrder: ['indexeddb']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
