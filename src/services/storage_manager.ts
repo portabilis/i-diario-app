@@ -1,9 +1,13 @@
 import { Storage } from '@ionic/storage';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class StorageManagerService {
-  constructor( private _storage: Storage ) {}
+  constructor(
+    private _storage: Storage
+  ){}
 
-  public clearStorage(){
+  clearStorage(){
     this._storage.remove('unities');
     this._storage.remove('classrooms');
     this._storage.remove('disciplines');
