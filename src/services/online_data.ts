@@ -145,8 +145,8 @@ export class OnlineDataService {
 
   private retrieveLessonPlans(user: User) {
     this._lessonPlans.getLessonPlans(user.teacher_id).subscribe(
-      (lesson_plans) => {
-        this._storage.set('lesson_plans', lesson_plans)
+      (lessonPlans) => {
+        this._storage.set('lessonPlans', lessonPlans)
       },
       (error) => {
         console.log(error)
@@ -156,8 +156,8 @@ export class OnlineDataService {
 
   private retrieveTeachinPlans(user: User) {
     this._teachinPlans.getTeachingPlans(user.teacher_id).subscribe(
-      (teachin_plans) => {
-        this._storage.set('teachin_plans', teachin_plans)
+      (teachinPlans) => {
+        this._storage.set('teachinPlans', teachinPlans)
       },
       (error) => {
         console.log(error)

@@ -16,7 +16,7 @@ export class StorageManagerService {
     this._storage.remove('frequencies');
     this._storage.remove('dailyFrequencyStudentsToSync');
     this._storage.remove('dailyFrequenciesToSync');
-    this._storage.remove('lesson_plans');
-    this._storage.remove('teachin_plans');
+    this._storage.remove('lessonPlans');
+    this._storage.remove('teachinPlans');
   }
 }

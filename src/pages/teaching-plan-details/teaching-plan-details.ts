@@ -27,8 +27,8 @@ export class TeachingPlanDetailsPage {
   ionViewDidLoad() {
     this.teachingPlanId = this.navParams.get('teachingPlanId');
 
-    this.storage.get('teaching_plans').then((teaching_plans) => {
-      let details = this.getTeachingPlanDetail(teaching_plans);
+    this.storage.get('teachingPlans').then((teachingPlans) => {
+      let details = this.getTeachingPlanDetail(teachingPlans);
       this.description = details.description + ' - ' + details.grade_name;
       this.unity_name = details.unity_name;
       this.period = details.period;

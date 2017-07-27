@@ -9,15 +9,15 @@ import { Injectable } from '@angular/core';
 
 export class LessonPlansPersisterService{
   constructor(
-    private lesson_plans: LessonPlansService,
+    private lessonPlans: LessonPlansService,
     private storage: Storage
   ){}
 
   persist(user: User){
     return new Observable((observer) => {
-      this.lesson_plans.getLessonPlans(user.teacher_id).subscribe(
-        (lesson_plans) => {
-          observer.next(this.storage.set('lesson_plans', lesson_plans))
+      this.lessonPlans.getLessonPlans(user.teacher_id).subscribe(
+        (lessonPlans) => {
+          observer.next(this.storage.set('lessonPlans', lessonPlans))
         },
         (error) => {
           console.log(error)

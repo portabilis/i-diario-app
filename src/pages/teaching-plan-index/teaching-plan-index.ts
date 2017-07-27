@@ -35,8 +35,8 @@ export class TeachingPlanIndexPage {
       this.teachingPlansService.getTeachingPlans(
         user.teacher_id
       ).subscribe(
-        (teaching_plans:any) => {
-          this.storage.set('teaching_plans', teaching_plans);
+        (teachingPlans:any) => {
+          this.storage.set('teachingPlans', teachingPlans);
         },
         (error) => {
           this.presentErrorToast();
@@ -67,10 +67,10 @@ export class TeachingPlanIndexPage {
   }
 
   updateTeachingPlans() {
-    this.storage.get('teaching_plans').then((teaching_plans) => {
-      if (!teaching_plans) return;
+    this.storage.get('teachingPlans').then((teachingPlans) => {
+      if (!teachingPlans) return;
       this.unities = [];
-      teaching_plans.unities.forEach(unity => {
+      teachingPlans.unities.forEach(unity => {
         let teachingPlans = [];
         unity.plans.forEach(plan => {
           teachingPlans.push({ id: plan.id,

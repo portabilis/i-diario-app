@@ -60,7 +60,7 @@ export class ApiService {
     private storage: Storage
   ){
     if (this.serverUrl == "") {
-      this.storage.get('server_url').then(url => {
+      this.storage.get('serverUrl').then(url => {
         this.serverUrl = url;
       })
     }
@@ -71,7 +71,7 @@ export class ApiService {
   }
 
   setServerUrl(serverUrl: string) {
-    this.storage.set('server_url', serverUrl);
+    this.storage.set('serverUrl', serverUrl);
     this.serverUrl = serverUrl;
   }
 
