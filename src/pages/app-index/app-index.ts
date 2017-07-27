@@ -1,3 +1,5 @@
+import { AuthService } from './../../services/auth';
+import { OnlineDataService } from './../../services/online_data';
 import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-index';
 import { LessonPlanIndexPage } from './../lesson-plan-index/lesson-plan-index';
 import { SynchronizationPage } from './../synchronization/synchronization';
@@ -18,7 +20,11 @@ export class AppIndexPage {
   tab5: any;
   tab6: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private _onlineData: OnlineDataService,
+              private _auth: AuthService
+             ){
     this.tab1 = FrequencyIndexPage;
     this.tab3 = LessonPlanIndexPage;
     this.tab4 = TeachingPlanIndexPage
@@ -26,4 +32,9 @@ export class AppIndexPage {
     this.tab6 = SynchronizationPage;
   }
 
+  ionViewDidLoad() {
+    this._auth.currentUser().then((user) => {
+      this._onlineData.retrieve(user);
+    });
+  }
 }

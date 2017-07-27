@@ -48,6 +48,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
 import { LessonPlansPersisterService } from './../services/offline_data_persistence/lesson_plans_persister';
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
 import { StorageManagerService } from './../services/storage_manager';
+import { OnlineDataService } from './../services/online_data';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { StorageManagerService } from './../services/storage_manager';
     TeachingPlansPersisterService,
     ApiService,
     StorageManagerService,
+    OnlineDataService,
     DailyFrequenciesSynchronizer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
