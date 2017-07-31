@@ -21,7 +21,7 @@
         </div>
         <ion-list [hidden]="globalAbsence" class="frequency-checkbox" name="classes">
           <ion-item class="frequency-checkbox-item" *ngFor="let frequency of student.frequencies;let i = index" no-lines>
-            <ion-label class="frequency-checkbox-item-label"> {{ i+1 }}ª</ion-label>
+            <ion-label class="frequency-checkbox-item-label"> {{ classes[i] }}ª</ion-label>
             <ion-checkbox type="checkbox"
                           [(ngModel)]="frequency.present"
                           (ionChange)="updateFrequency(frequency, i+1)"></ion-checkbox>
@@ -29,7 +29,7 @@
         </ion-list>
         <ion-list [hidden]="!globalAbsence" class="frequency-checkbox" name="classes">
           <ion-item class="frequency-checkbox-item" no-lines>
-            <ion-label class="frequency-checkbox-item-label"> {{ i+1 }}ª</ion-label>
+            <ion-label class="frequency-checkbox-item-label"> {{ classes[i] }}ª</ion-label>
             <ion-checkbox type="checkbox"
                           [(ngModel)]="student.present"
                           (ionChange)="updateFrequency(student)"></ion-checkbox>
