@@ -67,6 +67,7 @@ ion-app .scroll-content {
 
 .accordion-list-header.item.item-md.list-header.list-header-md.active {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
+    z-index: 99;
 }
 
 .accordion-list-header.item.item-md.list-header.list-header-md.active p {
