@@ -49,6 +49,7 @@ import { LessonPlansPersisterService } from './../services/offline_data_persiste
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
 import { StorageManagerService } from './../services/storage_manager';
 import { OnlineDataService } from './../services/online_data';
+import { UtilsService } from './../services/utils';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { OnlineDataService } from './../services/online_data';
     ApiService,
     StorageManagerService,
     OnlineDataService,
+    UtilsService,
     DailyFrequenciesSynchronizer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

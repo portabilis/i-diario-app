@@ -12,33 +12,37 @@
   </div>
 </ion-header>
 
-
 <ion-content class="page-content" padding>
+  <div *ngFor="let frequencyDay of lastFrequencyDays; let i=index">
 
-  <h3 class="frequency-day">01 de Julho</h3>
-
-  <div class="frequency-empty-today">
-    <p margin>Ainda não há nenhuma chamada hoje.</p>
-  </div>
-
-  <h3 class="frequency-day">31 de Maio</h3>
-
-  <div class="accordion-list-border">
-    <ion-list class="accordion-list"
-              *ngFor="let frequency of frequencies; let i=index">
-      <ion-list-header class="accordion-list-header"
-                no-lines
-                text-wrap
-                (click)="toggleGroup(i)"
-                [ngClass]="{active: isGroupShown(i)}">
-        <p>{{frequency.school}}</p>
-      </ion-list-header>
-
-      <div *ngFor="let class of frequency.classes;">
-        <ion-item *ngIf="isGroupShown(i)" class="accordion-list-item accordion-list-item-frequency-index" >
-          <p class="view-eye">{{class}}</p>
-        </ion-item>
+    <div *ngIf="i==0">
+      <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
+      <div class="frequency-empty-today">
+        <p margin>Ainda não há nenhuma chamada hoje.</p>
       </div>
-    </ion-list>
+    </div>
+    <div *ngIf="i>0">
+      <div *ngIf="frequencyDay.exists">
+        <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
+        <div class="accordion-list-border">
+          <ion-list class="accordion-list"
+                    *ngFor="let unity of frequencyDay.unities; let i=index">
+            <ion-list-header class="accordion-list-header"
+                      no-lines
+                      text-wrap
+                      (click)="toggleGroup(i)"
+                      [ngClass]="{active: isGroupShown(i)}">
+              <p>{{unity.name}}</p>
+            </ion-list-header>
+
+            <div *ngFor="let classroom of unity.classes;">
+              <ion-item *ngIf="isGroupShown(i)" class="accordion-list-item accordion-list-item-frequency-index" >
+                <p class="view-eye">{{classroom.name}}</p>
+              </ion-item>
+            </div>
+          </ion-list>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>

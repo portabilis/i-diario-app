@@ -13,6 +13,7 @@ import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
 import { ConnectionService } from '../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
+import { UtilsService } from './../../services/utils';
 
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
 
@@ -48,6 +49,7 @@ export class FrequencyPage{
     private connectionService: ConnectionService,
     private navParams: NavParams,
     private offlineDataPersister: OfflineDataPersisterService,
+    private utilsService: UtilsService,
     public toastCtrl: ToastController){}
 
   ionViewWillEnter(){
@@ -141,7 +143,7 @@ export class FrequencyPage{
     const unityId = form.value.unity
     const classroomId = form.value.classroom
     const date = new Date(form.value.date)
-    const stringDate = this.toStringWithoutTime(date)
+    const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     let classes:any[] = []
 
@@ -182,19 +184,6 @@ export class FrequencyPage{
     this.classroomId = null;
     this.disciplineId = null;
     this.selectedClasses = [];
-  }
-
-  private toStringWithoutTime(date: Date){
-    return date.getUTCFullYear() +
-        '-' + this.pad(date.getUTCMonth() + 1) +
-        '-' + this.pad(date.getUTCDate())
-  }
-
-  private pad(number) {
-    if (number < 10) {
-      return '0' + number;
-    }
-    return number;
   }
 
   presentToastSchoolCalendarError() {
