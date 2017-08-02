@@ -1,3 +1,5 @@
+import { SchoolCalendarsPersisterService } from './school_calendars_persister';
+import { ClassroomsPersisterService } from './classrooms_persister';
 import { User } from './../../data/user.interface';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
@@ -10,6 +12,8 @@ import { Injectable } from '@angular/core';
 export class UnitiesPersisterService{
   constructor(
     private unities: UnitiesService,
+    private classroomsPersister: ClassroomsPersisterService,
+    private schoolCalendarsPersister: SchoolCalendarsPersisterService,
     private storage: Storage
   ){}
 
@@ -17,13 +21,23 @@ export class UnitiesPersisterService{
     return new Observable((observer) => {
       this.unities.getUnities(user.teacher_id).subscribe(
         (unities) => {
-          observer.next(this.storage.set('unities', unities))
+          this.storage.set('unities', unities)
+
+          Observable.forkJoin(
+            this.classroomsPersister.persist(user, unities),
+            this.schoolCalendarsPersister.persist(user, unities)
+          ).subscribe(
+            (result) => {
+            },
+            (error) => {
+            },
+            () => {
+              observer.complete()
+            }
+          )
         },
         (error) => {
           console.log(error)
-        },
-        () => {
-          observer.complete()
         }
       )
     })

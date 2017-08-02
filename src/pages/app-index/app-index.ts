@@ -1,3 +1,4 @@
+import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { AuthService } from './../../services/auth';
 import { OnlineDataService } from './../../services/online_data';
 import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-index';
@@ -6,7 +7,7 @@ import { SynchronizationPage } from './../synchronization/synchronization';
 import { UserIndexPage } from './../user-index/user-index';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -23,7 +24,9 @@ export class AppIndexPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private _onlineData: OnlineDataService,
-              private _auth: AuthService
+              private _auth: AuthService,
+              private _offlineDataPersister: OfflineDataPersisterService,
+              private loadingCtrl: LoadingController
              ){
     this.tab1 = FrequencyIndexPage;
     this.tab3 = LessonPlanIndexPage;
@@ -33,8 +36,21 @@ export class AppIndexPage {
   }
 
   ionViewDidLoad() {
+    const loading = this.loadingCtrl.create({
+      content: 'Carregando...'
+    })
+    loading.present()
+
     this._auth.currentUser().then((user) => {
-      this._onlineData.retrieve(user);
+      this._offlineDataPersister.persist(user).subscribe(
+        (result) => {
+        },
+        (error) => {
+        },
+        () => {
+          loading.dismiss();
+        }
+      )
     });
   }
 }

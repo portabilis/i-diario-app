@@ -14,27 +14,25 @@ export class ExamRulesPersisterService{
     private examRules: ExamRulesService
   ){}
 
-  persist(user){
+  persist(user, classrooms){
     return new Observable((observer) => {
-      this.storage.get('classrooms').then((results) => {
-        let examRulesObservables = []
-        results.forEach(classroomList => {
-          classroomList.data.forEach((classroom) => {
-            examRulesObservables.push(this.examRules.getExamRules(user.teacher_id, classroom.id))
-          })
+      let examRulesObservables = []
+      classrooms.forEach(classroomList => {
+        classroomList.data.forEach((classroom) => {
+          examRulesObservables.push(this.examRules.getExamRules(user.teacher_id, classroom.id))
         })
-        Observable.forkJoin(examRulesObservables).subscribe(
-          (results) => {
-            observer.next(this.storage.set('examRules', results))
-          },
-          (error) => {
-            console.log(error)
-          },
-          () => {
-            observer.complete()
-          }
-        )
       })
+      Observable.forkJoin(examRulesObservables).subscribe(
+        (results) => {
+          observer.next(this.storage.set('examRules', results))
+        },
+        (error) => {
+          console.log(error)
+        },
+        () => {
+          observer.complete()
+        }
+      )
     })
   }
 }

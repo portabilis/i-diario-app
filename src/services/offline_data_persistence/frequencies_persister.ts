@@ -16,9 +16,8 @@ export class FrequenciesPersisterService{
     return dailyFrequencies.data.daily_frequencies.length > 0
   }
 
-  persist(user){
+  persist(user, disciplines){
    return new Observable((observer) => {
-    this.storage.get('disciplines').then((disciplines) => {
       let frequenciesObservables = []
       disciplines.forEach((disciplineList) => {
         disciplineList.data.forEach((discipline) => {
@@ -46,6 +45,5 @@ export class FrequenciesPersisterService{
         }
       )
     })
-   })
   }
 }

@@ -38,26 +38,23 @@ export class OfflineDataPersisterService {
   }
 
   persist(user: User){
-    this.clearStorage();
+    return new Observable((observer) => {
+      this.clearStorage();
 
-    Observable.concat(
-      this.unitiesPersister.persist(user),
-      this.classroomsPersister.persist(user),
-      this.examRulesPersister.persist(user),
-      this.schoolCalendarPersister.persist(user),
-      this.disciplinePersister.persist(user),
-      this.frequenciesPersister.persist(user),
-      this.lessonPlansPersister.persist(user),
-      this.teachingPlansPersister.persist(user)
-    ).subscribe(
-      () => {
-      },
-      (error) => {
-        console.log("Error on persist", error)
-      },
-      () => {
-        console.log('completed')
-      }
-    )
+      Observable.forkJoin(
+        this.unitiesPersister.persist(user),
+        this.lessonPlansPersister.persist(user),
+        this.teachingPlansPersister.persist(user)
+      ).subscribe(
+        () => {
+        },
+        (error) => {
+          console.log("Error on persist", error)
+        },
+        () => {
+          observer.complete()
+        }
+      )
+    })
   }
 }

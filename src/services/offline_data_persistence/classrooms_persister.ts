@@ -1,3 +1,5 @@
+import { DisciplinesPersisterService } from './disciplines_persister';
+import { ExamRulesPersisterService } from './exam_rules_persister';
 import { ClassroomsService } from './../classrooms';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
@@ -7,28 +9,35 @@ import { Injectable } from '@angular/core';
 export class ClassroomsPersisterService{
   constructor(
     private classrooms: ClassroomsService,
+    private examRulesPersister: ExamRulesPersisterService,
+    private disciplinesPersister: DisciplinesPersisterService,
     private storage: Storage
   ){}
-  persist(user){
-   return new Observable((observer) => {
-    this.storage.get('unities').then((unities) => {
+  persist(user, unities){
+    return new Observable((observer) => {
       let classroomsObservables = []
       unities.forEach((unity) => {
         classroomsObservables.push(this.classrooms.getClassrooms(user.teacher_id, unity.id))
       })
 
       Observable.forkJoin(classroomsObservables).subscribe(
-        (results) => {
-          observer.next(this.storage.set('classrooms', results))
-        },
-        (error) => {
-          console.log(error)
-        },
-        () => {
-          observer.complete()
+        (classrooms) => {
+          this.storage.set('classrooms', classrooms)
+
+          Observable.forkJoin(
+            this.examRulesPersister.persist(user, classrooms),
+            this.disciplinesPersister.persist(user, classrooms)
+          ).subscribe(
+            (result) => {
+            },
+            (error) => {
+            },
+            () => {
+              observer.complete()
+            }
+          )
         }
       )
     })
-   })
   }
 }
