@@ -34,8 +34,6 @@ export class FrequencyIndexPage {
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {
         this.lastFrequencyDays = this.lastTenDays(frequencies.daily_frequencies);
-      } else {
-        console.log("Não encontrou frequências.");
       }
     });
   }
