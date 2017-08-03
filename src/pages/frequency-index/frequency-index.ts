@@ -1,3 +1,5 @@
+import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
+import { ConnectionService } from './../../services/connection';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
 import { AuthService } from './../../services/auth';
@@ -5,7 +7,7 @@ import { FrequencyPage } from './../frequency/frequency';
 import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,20 +19,28 @@ export class FrequencyIndexPage {
   shownGroup = null;
   lastFrequencyDays = null;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private loadingCtrl: LoadingController,
-              private unitiesService: UnitiesService,
-              private auth: AuthService,
-              private utilsService: UtilsService,
-              private storage: Storage) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private loadingCtrl: LoadingController,
+    private unitiesService: UnitiesService,
+    private auth: AuthService,
+    private utilsService: UtilsService,
+    private storage: Storage,
+    private unitiesPersister: UnitiesPersisterService,
+    private connectionService: ConnectionService,
+    private toastCtrl: ToastController
+  ) {}
 
   ionViewWillEnter(){
     this.auth.currentUser().then((user) => {
       this.user = user;
     });
 
+    this.loadFrequencies();
+  }
+
+  loadFrequencies() {
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {
         this.lastFrequencyDays = this.lastTenDays(frequencies.daily_frequencies);
@@ -118,5 +128,36 @@ export class FrequencyIndexPage {
       }
     });
     return classes;
+  }
+
+  doRefresh(refresher) {
+    this.unitiesPersister.persist(this.user).subscribe(
+      () => {
+      },
+      (error) => {
+        this.presentErrorToast();
+        refresher.cancel();
+      },
+      () => {
+        this.loadFrequencies();
+        refresher.complete();
+      }
+    );
+  }
+
+  presentErrorToast() {
+    let offlineMessage = "";
+
+    if(!this.connectionService.isOnline){
+      offlineMessage = " Parece que você está offline";
+    }
+
+    let toast = this.toastCtrl.create({
+      message: 'Não foi possível completar a atualização.' + offlineMessage,
+      duration: 3000,
+      position: 'down'
+    });
+
+    toast.present();
   }
 }

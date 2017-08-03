@@ -13,6 +13,9 @@
 </ion-header>
 
 <ion-content class="page-content" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="frequency-space">
     <div *ngFor="let frequencyDay of lastFrequencyDays; let i=index">
       <div *ngIf="i==0">
