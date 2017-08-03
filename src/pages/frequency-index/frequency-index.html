@@ -18,33 +18,31 @@
   </ion-refresher>
   <div class="frequency-space">
     <div *ngFor="let frequencyDay of lastFrequencyDays; let i=index">
-      <div *ngIf="i==0">
+      <div *ngIf="i==0 && !frequencyDay.exists">
         <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
         <div class="frequency-empty-today">
           <p margin>Ainda não há nenhuma chamada hoje.</p>
         </div>
       </div>
-      <div *ngIf="i>0">
-        <div *ngIf="frequencyDay.exists">
-          <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
-          <div class="accordion-list-border">
-            <ion-list class="accordion-list"
-                      *ngFor="let unity of frequencyDay.unities; let y=index">
-              <ion-list-header class="accordion-list-header"
-                        no-lines
-                        text-wrap
-                        (click)="toggleGroup(i+''+y)"
-                        [ngClass]="{active: isGroupShown(i+''+y)}">
-                <p>{{unity.name}}</p>
-              </ion-list-header>
+      <div *ngIf="frequencyDay.exists">
+        <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
+        <div class="accordion-list-border">
+          <ion-list class="accordion-list"
+                    *ngFor="let unity of frequencyDay.unities; let y=index">
+            <ion-list-header class="accordion-list-header"
+                      no-lines
+                      text-wrap
+                      (click)="toggleGroup(i+''+y)"
+                      [ngClass]="{active: isGroupShown(i+''+y)}">
+              <p>{{unity.name}}</p>
+            </ion-list-header>
 
-              <div *ngFor="let classroom of unity.classes;">
-                <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-item-frequency-index" >
-                  <p class="view-eye">{{classroom.name}}</p>
-                </ion-item>
-              </div>
-            </ion-list>
-          </div>
+            <div *ngFor="let classroom of unity.classes;">
+              <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-item-frequency-index" >
+                <p class="view-eye">{{classroom.name}}</p>
+              </ion-item>
+            </div>
+          </ion-list>
         </div>
       </div>
     </div>
