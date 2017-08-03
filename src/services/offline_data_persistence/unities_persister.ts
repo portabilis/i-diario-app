@@ -37,6 +37,7 @@ export class UnitiesPersisterService{
           )
         },
         (error) => {
+          observer.error(error);
           console.log(error)
         }
       )
