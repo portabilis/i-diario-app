@@ -1,5 +1,13 @@
+import { Injectable } from '@angular/core';
+import { ToastController } from 'ionic-angular';
+import { ConnectionService } from './connection';
+
+@Injectable()
 export class UtilsService {
-  constructor(){}
+  constructor(
+    private _connectionService: ConnectionService,
+    private _toastCtrl: ToastController
+  ){}
 
   public toStringWithoutTime(date: Date){
     return date.getUTCFullYear() +
@@ -19,5 +27,21 @@ export class UtilsService {
       month: "short", day: "numeric"
     };
     return date.toLocaleDateString('pt-BR', options);
+  }
+
+  public showRefreshPageError() {
+    let offlineMessage = "";
+
+    if(!this._connectionService.isOnline){
+      offlineMessage = " Parece que você está offline";
+    }
+
+    let toast = this._toastCtrl.create({
+      message: 'Não foi possível completar a atualização.' + offlineMessage,
+      duration: 3000,
+      position: 'down'
+    });
+
+    toast.present();
   }
 }

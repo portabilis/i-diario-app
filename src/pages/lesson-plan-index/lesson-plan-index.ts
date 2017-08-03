@@ -1,11 +1,10 @@
+import { UtilsService } from './../../services/utils';
 import { LessonPlanDetailsPage } from './../lesson-plan-details/lesson-plan-details';
-import { ConnectionService } from './../../services/connection';
 import { Storage } from '@ionic/storage';
 import { AuthService } from './../../services/auth';
 import { LessonPlansService } from './../../services/lesson_plans';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -22,8 +21,7 @@ export class LessonPlanIndexPage {
               private auth: AuthService,
               private lessonPlansService: LessonPlansService,
               private storage: Storage,
-              private toastCtrl: ToastController,
-              private connectionService: ConnectionService) {
+              private utilsService: UtilsService) {
   }
 
   ionViewDidLoad() {
@@ -39,7 +37,7 @@ export class LessonPlanIndexPage {
           this.storage.set('lessonPlans', lessonPlans);
         },
         (error) => {
-          this.presentErrorToast();
+          this.utilsService.showRefreshPageError();
           refresher.cancel();
         },
         () => {
@@ -48,22 +46,6 @@ export class LessonPlanIndexPage {
         }
       );
     });
-  }
-
-  presentErrorToast() {
-    let offlineMessage = "";
-
-    if(!this.connectionService.isOnline){
-      offlineMessage = " Parece que você está offline";
-    }
-
-    let toast = this.toastCtrl.create({
-      message: 'Não foi possível completar a atualização.' + offlineMessage,
-      duration: 3000,
-      position: 'down'
-    });
-
-    toast.present();
   }
 
   updateLessonPlans() {

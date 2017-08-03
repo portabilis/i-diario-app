@@ -1,5 +1,4 @@
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
-import { ConnectionService } from './../../services/connection';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
 import { AuthService } from './../../services/auth';
@@ -7,7 +6,7 @@ import { FrequencyPage } from './../frequency/frequency';
 import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -27,9 +26,7 @@ export class FrequencyIndexPage {
     private auth: AuthService,
     private utilsService: UtilsService,
     private storage: Storage,
-    private unitiesPersister: UnitiesPersisterService,
-    private connectionService: ConnectionService,
-    private toastCtrl: ToastController
+    private unitiesPersister: UnitiesPersisterService
   ) {}
 
   ionViewWillEnter(){
@@ -135,7 +132,7 @@ export class FrequencyIndexPage {
       () => {
       },
       (error) => {
-        this.presentErrorToast();
+        this.utilsService.showRefreshPageError();
         refresher.cancel();
       },
       () => {
@@ -143,21 +140,5 @@ export class FrequencyIndexPage {
         refresher.complete();
       }
     );
-  }
-
-  presentErrorToast() {
-    let offlineMessage = "";
-
-    if(!this.connectionService.isOnline){
-      offlineMessage = " Parece que você está offline";
-    }
-
-    let toast = this.toastCtrl.create({
-      message: 'Não foi possível completar a atualização.' + offlineMessage,
-      duration: 3000,
-      position: 'down'
-    });
-
-    toast.present();
   }
 }
