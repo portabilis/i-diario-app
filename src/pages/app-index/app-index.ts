@@ -7,7 +7,7 @@ import { SynchronizationPage } from './../synchronization/synchronization';
 import { UserIndexPage } from './../user-index/user-index';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -26,7 +26,8 @@ export class AppIndexPage {
               private _onlineData: OnlineDataService,
               private _auth: AuthService,
               private _offlineDataPersister: OfflineDataPersisterService,
-              private loadingCtrl: LoadingController
+              private loadingCtrl: LoadingController,
+              private _alertCtrl: AlertController
              ){
     this.tab1 = FrequencyIndexPage;
     this.tab3 = LessonPlanIndexPage;
@@ -37,7 +38,7 @@ export class AppIndexPage {
 
   ionViewDidLoad() {
     const loading = this.loadingCtrl.create({
-      content: 'Carregando...'
+      content: 'Aguarde, estamos deixando tudo pronto para você.'
     })
     loading.present()
 
@@ -46,11 +47,22 @@ export class AppIndexPage {
         (result) => {
         },
         (error) => {
+          loading.dismiss();
+          this.showErrorAlert();
         },
         () => {
           loading.dismiss();
         }
       )
     });
+  }
+
+  showErrorAlert() {
+    let alert = this._alertCtrl.create({
+      title: 'Erro',
+      subTitle: 'Não foi possível realizar a sincronização.',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

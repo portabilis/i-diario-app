@@ -27,6 +27,7 @@ export class ExamRulesPersisterService{
           observer.next(this.storage.set('examRules', results))
         },
         (error) => {
+          observer.error(error);
           console.log(error)
         },
         () => {

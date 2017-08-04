@@ -31,6 +31,7 @@ export class ClassroomsPersisterService{
             (result) => {
             },
             (error) => {
+              observer.error(error);
             },
             () => {
               observer.complete()

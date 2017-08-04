@@ -30,6 +30,7 @@ export class UnitiesPersisterService{
             (result) => {
             },
             (error) => {
+              observer.error(error);
             },
             () => {
               observer.complete()

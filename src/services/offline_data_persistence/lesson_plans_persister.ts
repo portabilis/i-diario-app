@@ -20,6 +20,7 @@ export class LessonPlansPersisterService{
           observer.next(this.storage.set('lessonPlans', lessonPlans))
         },
         (error) => {
+          observer.error(error);
           console.log(error)
         },
         () => {

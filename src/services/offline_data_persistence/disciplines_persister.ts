@@ -26,6 +26,7 @@ export class DisciplinesPersisterService{
             (result) => {
             },
             (error) => {
+              observer.error(error);
             },
             () => {
               observer.complete()

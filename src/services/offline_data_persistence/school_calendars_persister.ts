@@ -22,6 +22,7 @@ export class SchoolCalendarsPersisterService{
           observer.next(this.storage.set('schoolCalendars', results))
         },
         (error) => {
+          observer.error(error);
           console.log(error)
         },
         () => {

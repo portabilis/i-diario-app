@@ -49,6 +49,7 @@ export class OfflineDataPersisterService {
         () => {
         },
         (error) => {
+          observer.error(error);
           console.log("Error on persist", error)
         },
         () => {

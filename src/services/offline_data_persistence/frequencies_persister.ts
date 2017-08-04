@@ -38,6 +38,7 @@ export class FrequenciesPersisterService{
           observer.next(this.storage.set('frequencies', { daily_frequencies: mergedResults }))
         },
         (error) => {
+          observer.error(error);
           console.log(error)
         },
         () => {
