@@ -16,7 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 ion-app .scroll-content {
-    padding: 0pt !important;
+    padding: 0px !important;
 }
 
 @font-face {
@@ -49,6 +49,7 @@ ion-app .scroll-content {
 
 .accordion-list-header {
     width: auto;
+    height: 70px;
     background-color: transparent;
     padding-left: 0px;
     margin-top: 0px !important;
@@ -57,36 +58,39 @@ ion-app .scroll-content {
 
 .accordion-list-header p {
     font-family: "NunitoBold";
-    font-size: 16px;
+    font-size: 14px;
     text-transform: capitalize;
     color: #3f3d4d;
     background: url('../assets/img/chevronDown@2x.png') no-repeat right;
-    background-size: 12pt 6pt;
-    margin: 13pt 10pt;
+    background-size: 12px 6px;
+    margin: auto 10px;
 }
 
+.accordion-list-header.item.item-ios.list-header.list-header-ios.active,
 .accordion-list-header.item.item-md.list-header.list-header-md.active {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
     z-index: 99;
 }
 
+.accordion-list-header.item.item-ios.list-header.list-header-ios.active p,
 .accordion-list-header.item.item-md.list-header.list-header-md.active p {
     font-family: "NunitoBold";
-    font-size: 16px;
+    font-size: 14px;
     text-transform: capitalize;
     color: #3f3d4d;
     background: url('../assets/img/chevronUp@2x.png') no-repeat right;
-    background-size: 12pt 6pt;
-    margin: 13pt 10pt;
+    background-size: 12px 6px;
+    margin: 12px 10px;
 }
 
 .accordion-list-item {
     width: auto;
-    height: 60pt;
+    height: 60px;
     padding-left: 0px;
     background-color: transparent;
 }
 
+.accordion-list.list.list-ios,
 .accordion-list.list.list-md {
     margin: 0;
 }
@@ -97,5 +101,5 @@ ion-app .scroll-content {
     text-transform: uppercase;
     color: #3f3d4d;
     padding-left: 15px;
-    margin-right: 10pt;
+    margin-right: 10px;
 }
