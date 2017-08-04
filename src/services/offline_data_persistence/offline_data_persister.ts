@@ -29,8 +29,6 @@ export class OfflineDataPersisterService {
     this.storage.remove('examRules')
     this.storage.remove('schoolCalendars')
     this.storage.remove('frequencies')
-    this.storage.remove('dailyFrequencyStudentsToSync')
-    this.storage.remove('dailyFrequenciesToSync')
   }
 
   persist(user: User){

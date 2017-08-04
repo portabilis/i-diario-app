@@ -38,7 +38,7 @@ export class ApiService {
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
-        {value: "http://prefeitura.educacao.local:3000", name: "Portabilis Local"},
+        {value: "http://localhost:3000", name: "Portabilis Local"},
         {value: "http://***REMOVED***", name: "Portabilis 1"},
         {value: "http://***REMOVED***", name: "Portabilis 2"},
         {value: "http://***REMOVED***", name: "Portabilis 3"},
@@ -102,5 +102,14 @@ export class ApiService {
   }
   getTeacherUnitiesUrl() {
     return this.getServerUrl() + '/api/v1/teacher_unities.json'
+  }
+  getTeacherLessonPlansUrl() {
+    return this.getServerUrl() + '/api/v1/lesson_plans.json'
+  }
+  getTeacherTeachingPlansUrl() {
+    return this.getServerUrl() + '/api/v1/teaching_plans.json'
+  }
+  getDailyFrequencyStudentsUpdateOrCreateUrl() {
+    return this.getServerUrl() + '/api/v1/daily_frequency_students/update_or_create.json'
   }
 }

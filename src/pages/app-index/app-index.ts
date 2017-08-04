@@ -21,4 +21,22 @@ export class AppIndexPage {
     this.tab6 = SynchronizationPage;
   }
 
+  ionViewDidLoad() {
+    // const loading = this.loadingCtrl.create({
+    //   content: 'Carregando...'
+    // })
+    // loading.present()
+
+    // this._auth.currentUser().then((user) => {
+    //   this._offlineDataPersister.persist(user).subscribe(
+    //     (result) => {
+    //     },
+    //     (error) => {
+    //     },
+    //     () => {
+    //       loading.dismiss();
+    //     }
+    //   )
+    // });
+  }
 }
