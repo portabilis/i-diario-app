@@ -1,3 +1,48 @@
-page-app-index {
+.tabs-md .tab-button-icon {
+  width: 22px;
+  min-width: none !important;
+}
 
+.ion-md-frequencyicon[ng-reflect-is-active=false] {
+  content: url("../assets/img/tabs/iconTabbarLfInactive@2x.png");
+}
+
+.ion-md-frequencyicon[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarLfActive@2x.png");
+}
+
+.ion-md-contentregistrationicon[ng-reflect-is-active=false] {
+  content: url("../assets/img/tabs/iconTabbarLcInactive@2x.png");
+}
+
+.ion-md-contentregistrationicon[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarLcActive@2x.png");
+}
+
+.ion-md-lessonplanicon[ng-reflect-is-active=false] {
+  content: url("../assets/img/tabs/iconTabbarCpaInactive@2x.png");
+}
+
+.ion-md-lessonplanicon[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarCpaActive@2x.png");
+}
+
+.ion-md-teachingplanicon[ng-reflect-is-active=false] {
+  content: url("../assets/img/tabs/iconTabbarCpeInactive@2x.png");
+}
+
+.ion-md-teachingplanicon[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarCpeActive@2x.png");
+}
+
+.ion-md-userico[ng-reflect-is-active=false] {
+  content: url("../assets/img/tabs/iconTabbarPerfilInactive@2x.png");
+}
+
+.ion-md-userico[ng-reflect-is-active=true] {
+  content: url("../assets/img/tabs/iconTabbarPerfilActive@2x.png");
+}
+
+.tabs-md .tab-button[aria-selected=true] {
+    background-color: #5947b3;
 }

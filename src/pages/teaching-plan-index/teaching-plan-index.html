@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Planos de ensino</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-content" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="accordion-list-border accordion-teaching-plan">
+    <ion-list class="accordion-list"
+              *ngFor="let unity of unities; let i=index">
+      <ion-list-header class="accordion-list-header accordion-list-header-teaching"
+                no-lines
+                text-wrap
+                (click)="toggleGroup(i)"
+                [ngClass]="{active: isGroupShown(i)}">
+        <p class="unity_name">{{unity.name}}</p>
+      </ion-list-header>
+
+      <div *ngFor="let teachingPlan of unity.teachingPlans;">
+        <ion-item *ngIf="isGroupShown(i)" class="accordion-list-item accordion-list-item-teaching" >
+          <p text-capitalize class="item-teaching-text">{{teachingPlan.description}}</p>
+            <a (click)="openDetail(teachingPlan.id)" class="text-view">Ver plano</a>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

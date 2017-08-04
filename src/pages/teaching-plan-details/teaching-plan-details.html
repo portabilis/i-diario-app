@@ -1,0 +1,54 @@
+<ion-header class="header-teaching-plan">
+  <ion-navbar>
+    <ion-buttons class="button-left">
+      <button ion-button icon-only (click)="goBack()">
+        <img class="img-close" src="assets/img/arrowLeft@3x.png" >
+      </button>
+    </ion-buttons>
+    <img class="teaching-plan-img" src="assets/img/teaching-plan/ilustraPlanoEnsino@2x.png">
+    <ion-title text-center>Plano de ensino</ion-title>
+    <p class="unity-name" text-center>{{unity_name}}</p>
+    <p class="description" text-center>{{description}}</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <div class="details-panel">
+    <div *ngIf="knowledge_areas" class="detail">
+      <h3 class="detail-title">Áreas de conhecimento</h3>
+      <ul class="contents-list">
+        <li *ngFor="let knowledge_area of knowledge_areas;" class="contents-list-item">
+          {{"- " + knowledge_area.description}}
+        </li>
+      </ul>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Período escolar</h3>
+      <p class="detail-text">{{period}}</p>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Objetivos</h3>
+      <p class="detail-text">{{objectives}}</p>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Conteúdos</h3>
+      <ul class="contents-list">
+        <li *ngFor="let content of contents;" class="contents-list-item">
+          {{"- " + content.description}}
+        </li>
+      </ul>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Metodologia</h3>
+      <p class="detail-text">{{activities}}</p>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Avaliação</h3>
+      <p class="detail-text">{{evaluation}}</p>
+    </div>
+    <div class="detail">
+      <h3 class="detail-title">Referências</h3>
+      <p class="detail-text">{{bibliography}}</p>
+    </div>
+  </div>
+</ion-content>

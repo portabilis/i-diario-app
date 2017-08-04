@@ -1,4 +1,3 @@
-import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 
@@ -61,7 +60,7 @@ export class ApiService {
     private storage: Storage
   ){
     if (this.serverUrl == "") {
-      this.storage.get('server_url').then(url => {
+      this.storage.get('serverUrl').then(url => {
         this.serverUrl = url;
       })
     }
@@ -72,7 +71,7 @@ export class ApiService {
   }
 
   setServerUrl(serverUrl: string) {
-    this.storage.set('server_url', serverUrl);
+    this.storage.set('serverUrl', serverUrl);
     this.serverUrl = serverUrl;
   }
 
@@ -86,7 +85,7 @@ export class ApiService {
     return this.getServerUrl() + '/api/v1/daily_frequency_students/' + id + '.json';
   }
   getDailyFrequencyUrl() {
-    return this.getServerUrl() + '/api/v1/daily_frequencies.json'
+    return this.getServerUrl() + '/api/v1/diario-de-frequencia.json'
   }
   getTeacherDisciplinesUrl() {
     return this.getServerUrl() + '/api/v1/teacher_disciplines.json'

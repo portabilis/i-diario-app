@@ -1,61 +1,86 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Frequência</ion-title>
-    <button ion-button (click)="startSync()">
-      Sincronizar
-    </button>
+    <ion-title>Nova frequência</ion-title>
+
     <ion-buttons end>
-      <button ion-button color="primary" [hidden]="!connectionService.isOnline">Online</button>
-      <button ion-button color="danger" [hidden]="connectionService.isOnline">Offline</button>
+      <button ion-button icon-only (click)="goBack()">
+          <img class="img-close-frequency" src="assets/img/iconNavbarClose@2x.png" >
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="page-content" padding>
   <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
-    <ion-list>
-      <ion-item>
-        <ion-label>Escola</ion-label>
-        <ion-select [(ngModel)]="unityId" name="unity" required (ionChange)="onChangeUnity()">
-          <ion-option *ngFor="let unity of unities" value={{unity.id}}>
-            {{ unity.description }}
-          </ion-option>
-        </ion-select>
-      </ion-item>
+    <div class="form-frequency">
+      <div class=form-item *ngIf="unities">
+        <h3 class="form-item-title">Qual a escola?</h3>
+        <ion-list [(ngModel)]="unityId"
+                  name="unity"
+                  required
+                  class="form-item-radio"
+                  (ionChange)="onChangeUnity()"
+                  radio-group>
+          <ion-item class="form-item-radio-item" *ngFor="let unity of unities" no-lines>
+            <ion-label>{{ unity.description }}</ion-label>
+            <ion-radio value="{{unity.id}}"></ion-radio>
+          </ion-item>
 
-      <ion-item>
-        <ion-label>Turma</ion-label>
-        <ion-select [(ngModel)]="classroomId" name="classroom" (ionChange)="onChangeClassroom()" required>
-          <ion-option *ngFor="let classroom of classrooms" value={{classroom.id}}>
-            {{ classroom.description }}
-          </ion-option>
-        </ion-select>
-      </ion-item>
-
-       <ion-item [hidden]="globalAbsence">
-        <ion-label>Disciplina</ion-label>
-        <ion-select [(ngModel)]="disciplineId" name="discipline" [required]="!globalAbsence">
-          <ion-option *ngFor="let discipline of disciplines" value={{discipline.id}}>
-            {{ discipline.description }}
-          </ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item [hidden]="globalAbsence">
-        <ion-label>Aulas</ion-label>
-        <ion-select [(ngModel)]="selectedClasses" name="classes" multiple="true" [required]="!globalAbsence">
-          <ion-option *ngFor="let class of classes;let i = index" value={{class}}>
-            {{ class }}ª Aula
-          </ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Data</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
-      </ion-item>
-
-    </ion-list>
-    <button ion-button block [disabled]="!f.valid">Acessar</button>
+        </ion-list>
+      </div>
+      <div *ngIf="!unities" class="unity-empty">
+        <p margin>Nenhuma escola encontrada.</p>
+      </div>
+      <div class=form-item *ngIf="classrooms">
+        <h3 class="form-item-title">Turma</h3>
+        <ion-list [(ngModel)]="classroomId"
+                  name="classroom"
+                  required
+                  class="form-item-radio"
+                  (ionChange)="onChangeClassroom()"
+                  radio-group>
+          <ion-item class="form-item-radio-item" *ngFor="let classroom of classrooms" no-lines>
+            <ion-label>{{ classroom.description }}</ion-label>
+            <ion-radio value="{{classroom.id}}"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class=form-item *ngIf="!globalAbsence">
+        <h3 class="form-item-title">Disciplina</h3>
+        <ion-list [(ngModel)]="disciplineId"
+                  name="discipline"
+                  required
+                  class="form-item-radio"
+                  radio-group>
+          <ion-item class="form-item-radio-item" *ngFor="let discipline of disciplines" no-lines>
+            <ion-label>{{ discipline.description }}</ion-label>
+            <ion-radio value="{{discipline.id}}"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class=form-item *ngIf="!globalAbsence">
+        <h3 class="form-item-title">Aulas</h3>
+        <ion-list class="itens-checkbox" name="classes">
+          <ion-item class="form-item-check-item" *ngFor="let class of classes;" no-lines>
+            <ion-label class="form-item-check-item-label"> {{ class }}ª</ion-label>
+            <ion-checkbox type="checkbox"
+                          [checked]="selectedClasses.indexOf(class) > -1"
+                          (ionChange)="updateSelectedClasses(class)"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class=form-item *ngIf="disciplines">
+        <h3 class="form-item-title">Data</h3>
+        <div class="date-frequency">
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
+          <p class="text-mudar">mudar</p>
+        </div>
+      </div>
+      <button class="button-frequency"
+              ion-button
+              block
+              *ngIf="unities"
+              [disabled]="!f.valid">Carregar lista de frequência</button>
+    </div>
   </form>
 </ion-content>

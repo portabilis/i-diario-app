@@ -1,4 +1,3 @@
-import { UserIndexPage } from './../pages/user-index/user-index';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +16,12 @@ import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
 import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
+import { UserIndexPage } from './../pages/user-index/user-index';
 import { AppIndexPage } from "../pages/app-index/app-index";
+import { LessonPlanDetailsPage } from './../pages/lesson-plan-details/lesson-plan-details';
+import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
+import { TeachingPlanDetailsPage } from './../pages/teaching-plan-details/teaching-plan-details';
+import { TeachingPlanIndexPage } from './../pages/teaching-plan-index/teaching-plan-index';
 import { SynchronizationPage } from './../pages/synchronization/synchronization';
 
 //Services
@@ -29,6 +33,8 @@ import { ExamRulesService } from '../services/exam_rules';
 import { DisciplinesService } from '../services/disciplines';
 import { SchoolCalendarsService } from './../services/school_calendars';
 import { ConnectionService } from '../services/connection';
+import { LessonPlansService } from './../services/lesson_plans';
+import { TeachingPlansService } from './../services/teaching_plans';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
 import { OfflineDataPersisterService } from './../services/offline_data_persistence/offline_data_persister';
 import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
@@ -55,6 +61,10 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
+    LessonPlanIndexPage,
+    LessonPlanDetailsPage,
+    TeachingPlanIndexPage,
+    TeachingPlanDetailsPage,
     SynchronizationPage
   ],
   imports: [
@@ -63,7 +73,10 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
       backButtonText: ""
     }),
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot({
+      name: '__appfrequencia',
+         driverOrder: ['indexeddb']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,6 +87,10 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
+    LessonPlanIndexPage,
+    LessonPlanDetailsPage,
+    TeachingPlanIndexPage,
+    TeachingPlanDetailsPage,
     SynchronizationPage
   ],
   providers: [
@@ -88,6 +105,8 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     SchoolCalendarsService,
     DailyFrequencyStudentService,
     ConnectionService,
+    LessonPlansService,
+    TeachingPlansService,
     Network,
     OfflineDataPersisterService,
     UnitiesPersisterService,
@@ -96,7 +115,12 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     SchoolCalendarsPersisterService,
     DisciplinesPersisterService,
     FrequenciesPersisterService,
+    LessonPlansPersisterService,
+    TeachingPlansPersisterService,
     ApiService,
+    StorageManagerService,
+    OnlineDataService,
+    UtilsService,
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

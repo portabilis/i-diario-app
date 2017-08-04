@@ -1,4 +1,3 @@
-import { FrequencyPage } from './../pages/frequency/frequency';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';

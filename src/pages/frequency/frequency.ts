@@ -1,6 +1,5 @@
-import { Storage } from '@ionic/storage';
 import { User } from './../../data/user.interface';
-import { LoadingController, NavController, NavParams } from 'ionic-angular';
+import { LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
@@ -14,6 +13,7 @@ import { DailyFrequencyService } from '../../services/daily_frequency';
 import { SchoolCalendarsService } from '../../services/school_calendars';
 import { ConnectionService } from '../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
+import { UtilsService } from './../../services/utils';
 
 import { StudentsFrequencyPage } from '../students-frequency/students-frequency';
 
@@ -48,7 +48,9 @@ export class FrequencyPage{
     private navCtrl: NavController,
     private connectionService: ConnectionService,
     private navParams: NavParams,
-    private offlineDataPersister: OfflineDataPersisterService){}
+    private offlineDataPersister: OfflineDataPersisterService,
+    private utilsService: UtilsService,
+    public toastCtrl: ToastController){}
 
   ionViewWillEnter(){
     this.date = new Date().toISOString()
@@ -76,6 +78,11 @@ export class FrequencyPage{
             (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
+              if (!schoolCalendar.data) {
+                this.presentToastSchoolCalendarError();
+                return;
+              }
+
               this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.data.number_of_classes);
             },
             (error) => {
@@ -136,12 +143,12 @@ export class FrequencyPage{
     const unityId = form.value.unity
     const classroomId = form.value.classroom
     const date = new Date(form.value.date)
-    const stringDate = this.toStringWithoutTime(date)
+    const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     let classes:any[] = []
 
-    if(form.value.classes){
-      classes = form.value.classes;
+    if(this.selectedClasses){
+      classes = this.selectedClasses;
     }
 
     const loader = this.loadingCtrl.create({
@@ -179,16 +186,26 @@ export class FrequencyPage{
     this.selectedClasses = [];
   }
 
-  private toStringWithoutTime(date: Date){
-    return date.getUTCFullYear() +
-        '-' + this.pad(date.getUTCMonth() + 1) +
-        '-' + this.pad(date.getUTCDate())
+  presentToastSchoolCalendarError() {
+    let toast = this.toastCtrl.create({
+      message: 'Calendário escolar não encontrado.',
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
   }
 
-  private pad(number) {
-      if (number < 10) {
-        return '0' + number;
-      }
-      return number;
+  updateSelectedClasses(selectedClass) {
+    var index = this.selectedClasses.indexOf(selectedClass);
+
+    if(index < 0) {
+      this.selectedClasses.push(selectedClass);
+    } else {
+      this.selectedClasses.splice(index,1);
     }
+  }
+
+  goBack() {
+    this.navCtrl.pop();
+  }
 }

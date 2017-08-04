@@ -1,7 +1,6 @@
 .page-content {
     background-color: #F0EBF8;
     height: 100%;
-    padding-top: 30px;
 }
 
 .toolbar-title {
@@ -15,6 +14,10 @@
     font-size: 16pt;
     color: #868499;
     padding-left: 12px;
+}
+
+.frequency-day:first-of-type {
+    padding-top: 30px;
 }
 
 .frequency-empty-today {
@@ -31,4 +34,23 @@
     color: #87878c;
     text-align: center;
     padding-top: 24pt;
+}
+
+.accordion-list-item .view-eye {
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #3f3d4d;
+    padding-left: 15px;
+    background: url('../assets/img/iconView@2x.png') no-repeat right;
+    background-size: 19pt 14pt;
+    margin-right: 10pt;
+}
+
+.accordion-list-item-frequency-index {
+    background-color: white !important;
+}
+
+.frequency-space {
+    margin-bottom: 20px;
 }

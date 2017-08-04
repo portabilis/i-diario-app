@@ -5,34 +5,46 @@
 
       <ion-buttons end>
         <button ion-button icon-only (click)="newFrequency()">
-           <img width="50px" src="../assets/img/icoAdicionar@3x.png" >
+           <img width="50px" src="assets/img/icoAdicionar@3x.png" >
         </button>
       </ion-buttons>
     </ion-navbar>
   </div>
 </ion-header>
 
+<ion-content class="page-content" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="frequency-space">
+    <div *ngFor="let frequencyDay of lastFrequencyDays; let i=index">
+      <div *ngIf="i==0 && !frequencyDay.exists">
+        <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
+        <div class="frequency-empty-today">
+          <p margin>Ainda não há nenhuma chamada hoje.</p>
+        </div>
+      </div>
+      <div *ngIf="frequencyDay.exists">
+        <h3 class="frequency-day">{{frequencyDay.format_date}}</h3>
+        <div class="accordion-list-border">
+          <ion-list class="accordion-list"
+                    *ngFor="let unity of frequencyDay.unities; let y=index">
+            <ion-list-header class="accordion-list-header"
+                      no-lines
+                      text-wrap
+                      (click)="toggleGroup(i+''+y)"
+                      [ngClass]="{active: isGroupShown(i+''+y)}">
+              <p>{{unity.name}}</p>
+            </ion-list-header>
 
-<ion-content padding>
-
-  <div class="page-content">
-  <h3 class="frequency-day">01 de Julho</h3>
-
-  <div class="frequency-empty-today">
-    <p margin>Ainda não há nenhuma chamada hoje.</p>
+            <div *ngFor="let classroom of unity.classes;">
+              <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-item-frequency-index" >
+                <p class="view-eye">{{classroom.name}}</p>
+              </ion-item>
+            </div>
+          </ion-list>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <h3 class="frequency-day">31 de Maio</h3>
-<!--
-<ion-list>
-  <ion-list-header>
-    Action
-  </ion-list-header>
-  <ion-item>Terminator II</ion-item>
-  <ion-item>The Empire Strikes Back</ion-item>
-  <ion-item>Blade Runner</ion-item>
-</ion-list>-->
-
-</div>
-
 </ion-content>
