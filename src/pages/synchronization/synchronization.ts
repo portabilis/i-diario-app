@@ -24,26 +24,7 @@ export class SynchronizationPage {
   }
 
   syncDailyFrequencies(){
-    this.dailyFrequenciesSynchronizer.sync(this.dailyFrequenciesToSync).subscribe(
-      (result) => {
-        console.log('frequency sent!', result)
-      },
-      (error) => {
-        console.log('an error ocurred!')
-      },
-      () => {
-        console.log('all frequencies completed now lets do the daily frequency students')
-        this.dailyFrequencyStudentsSynchronizer.sync(this.dailyFrequencyStudentsToSync).subscribe(
-          () => {
-          },
-          (error) => {
-          },
-          () => {
-            console.log('all daily frequency students sent')
-          }
-        )
-      }
-    )
+    
   }
 
   private setDailyFrequencies(){

@@ -16,42 +16,28 @@ export class DailyFrequenciesSynchronizer {
 
   public sync(dailyFrequencies){
     return new Observable((observer) => {
+      if(dailyFrequencies){
+        let dailyFrequencyObservables = []
+        dailyFrequencies.forEach(dailyFrequency => {
+          const request = this.mountDailyFrequencyPostRequest(dailyFrequency)
+          dailyFrequencyObservables.push(request)
+        })
 
-      let dailyFrequencyObservables = []
-      dailyFrequencies.forEach(dailyFrequency => {
-        const request = this.mountDailyFrequencyPostRequest(dailyFrequency)
-
-        dailyFrequencyObservables.push(request)
-      })
-
-      Observable.concat(...dailyFrequencyObservables).subscribe(
-        (result) => {
-          observer.next(result)
-          this.removeSyncDailyFrequency(result, dailyFrequencies)
-        },
-        (error) => {
-          observer.next(error)
-        },
-        () => {
-          observer.complete()
-        }
-      )
-    })
-  }
-
-  private removeSyncDailyFrequency(frequencyToRemove, pendingDailyFrequencies){
-    let newPendingDailyFrequencies = []
-
-    pendingDailyFrequencies.forEach((pendingDailyFrequency) => {
-      if (frequencyToRemove.daily_frequency.classroom_id == pendingDailyFrequency.classroom_id &&
-         frequencyToRemove.daily_frequency.frequency_date == pendingDailyFrequency.frequency_date &&
-         frequencyToRemove.daily_frequency.discipline_id == pendingDailyFrequency.discipline_id &&
-         frequencyToRemove.daily_frequency.class_number == pendingDailyFrequency.class_number){
-        newPendingDailyFrequencies.push(pendingDailyFrequency)
+        Observable.concat(...dailyFrequencyObservables).subscribe(
+          (result) => {
+            observer.next(result)
+          },
+          (error) => {
+            observer.next(error)
+          },
+          () => {
+            observer.complete()
+          }
+        )
+      }else{
+        observer.complete()
       }
     })
-
-    this.storage.set('dailyFrequenciesToSync', newPendingDailyFrequencies)
   }
 
   private mountDailyFrequencyPostRequest(dailyFrequency){
