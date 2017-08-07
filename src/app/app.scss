@@ -66,12 +66,14 @@ ion-app .scroll-content {
     margin: auto 10px;
 }
 
+.accordion-list-header.item.item-wp.list-header.list-header-wp.active,
 .accordion-list-header.item.item-ios.list-header.list-header-ios.active,
 .accordion-list-header.item.item-md.list-header.list-header-md.active {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
     z-index: 99;
 }
 
+.accordion-list-header.item.item-wp.list-header.list-header-wp.active p,
 .accordion-list-header.item.item-ios.list-header.list-header-ios.active p,
 .accordion-list-header.item.item-md.list-header.list-header-md.active p {
     font-family: "NunitoBold";
@@ -90,6 +92,7 @@ ion-app .scroll-content {
     background-color: transparent;
 }
 
+.accordion-list.list.list-wp,
 .accordion-list.list.list-ios,
 .accordion-list.list.list-md {
     margin: 0;
