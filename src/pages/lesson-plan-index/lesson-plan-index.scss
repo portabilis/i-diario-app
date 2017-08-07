@@ -49,16 +49,22 @@
     background-color: #F9F5FC;
 }
 
+.accordion-list-header.accordion-list-header-lessons.item.item-wp.list-header.list-header-wp.active.item.item-wp,
+.accordion-list-header.accordion-list-header-lessons.item.item-ios.list-header.list-header-ios.active.item.item-ios,
 .accordion-list-header.accordion-list-header-lessons.item.item-md.list-header.list-header-md.active.item.item-md {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.19);
     position: relative;
     z-index: 9;
 }
 
+.accordion-list-header.accordion-list-header-lessons.item.item-wp.list-header.list-header-wp,
+.accordion-list-header.accordion-list-header-lessons.item.item-ios.list-header.list-header-ios,
 .accordion-list-header.accordion-list-header-lessons.item.item-md.list-header.list-header-md {
     height: 70px;
 }
 
+.accordion-list-item.accordion-list-item-lesson.item.item-block.item-wp,
+.accordion-list-item.accordion-list-item-lesson.item.item-block.item-ios,
 .accordion-list-item.accordion-list-item-lesson.item.item-block.item-md {
     height: 60px;
 }

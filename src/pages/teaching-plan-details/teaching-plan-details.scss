@@ -1,7 +1,12 @@
-ion-title {
+.header-teaching-plan.header.header-ios {
+    height: 200px;
+}
+
+.title-teaching-plan {
     font-family: "NunitoBold";
     font-size: 24px;
     color: white;
+    margin: 0px;
 }
 
 .button-left {
@@ -45,6 +50,8 @@ ion-title {
     margin: 10px auto 20px;
 }
 
+.toolbar-content.toolbar-content-wp,
+.toolbar-content.toolbar-content-ios,
 .toolbar-content.toolbar-content-md {
     margin-left: 0px !important;
 }

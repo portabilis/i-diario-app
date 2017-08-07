@@ -71,18 +71,26 @@
     position: absolute;
 }
 
+.frequency-checkbox-item .checkbox-wp .checkbox-icon,
+.frequency-checkbox-item .checkbox-ios .checkbox-icon,
 .frequency-checkbox-item .checkbox-md .checkbox-icon {
     position: absolute !important;
 }
 
+.frequency-checkbox-item.item.item-block.item-wp.item-checkbox,
+.frequency-checkbox-item.item.item-block.item-ios.item-checkbox,
 .frequency-checkbox-item.item.item-block.item-md.item-checkbox {
     padding-left: 0px !important;
 }
 
+ion-checkbox.checkbox.checkbox-wp,
+ion-checkbox.checkbox.checkbox-ios,
 ion-checkbox.checkbox.checkbox-md {
     margin: 0 !important;
 }
 
+.frequency-checkbox-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked,
+.frequency-checkbox-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked,
 .frequency-checkbox-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
     background-color: #3fd4b4;
 }
