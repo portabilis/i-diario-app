@@ -16,54 +16,39 @@ export class DailyFrequenciesSynchronizer {
 
   public sync(dailyFrequencies){
     return new Observable((observer) => {
+      if(dailyFrequencies){
+        let dailyFrequencyObservables = []
+        dailyFrequencies.forEach(dailyFrequency => {
+          const request = this.mountDailyFrequencyPostRequest(dailyFrequency)
+          dailyFrequencyObservables.push(request)
+        })
 
-      let dailyFrequencyObservables = []
-      dailyFrequencies.forEach(dailyFrequency => {
-        const request = this.http.post(this.api.getDailyFrequencyUrl(),
-          {
-            unity_id: dailyFrequency.unity_id,
-            classroom_id: dailyFrequency.classroom_id,
-            frequency_date: dailyFrequency.frequency_date,
-            discipline_id: dailyFrequency.discipline_id,
-            class_number: dailyFrequency.class_number
-          }).map((response: Response) => {
-            return response.json();
-          });
-
-        dailyFrequencyObservables.push(request)
-      })
-
-      Observable.concat(...dailyFrequencyObservables).subscribe(
-        (result) => {
-          observer.next(result)
-          this.removeSyncDailyFrequency(result, dailyFrequencies)
-        },
-        (error) => {
-          observer.next(error)
-        },
-        () => {
-          observer.complete()
-        }
-      )
+        Observable.concat(...dailyFrequencyObservables).subscribe(
+          (result) => {
+            observer.next(result)
+          },
+          (error) => {
+            observer.next(error)
+          },
+          () => {
+            observer.complete()
+          }
+        )
+      }else{
+        observer.complete()
+      }
     })
   }
 
-  private removeSyncDailyFrequency(frequencyToRemove, pendingDailyFrequencies){
-    console.log("frequencyToRemove", frequencyToRemove)
-    console.log("pendingDailyFrequencies", pendingDailyFrequencies)
-
-    let newPendingDailyFrequencies = []
-
-    pendingDailyFrequencies.forEach((pendingDailyFrequency) => {
-      if (frequencyToRemove.daily_frequency.classroom_id == pendingDailyFrequency.classroom_id &&
-         frequencyToRemove.daily_frequency.frequency_date == pendingDailyFrequency.frequency_date &&
-         frequencyToRemove.daily_frequency.discipline_id == pendingDailyFrequency.discipline_id &&
-         frequencyToRemove.daily_frequency.class_number == pendingDailyFrequency.class_number){
-        newPendingDailyFrequencies.push(pendingDailyFrequency)
-      }
-    })
-    console.log("newPendingDailyFrequencies", newPendingDailyFrequencies)
-
-    // this.storage.set('dailyFrequenciesToSync', newPendingDailyFrequencies)
+  private mountDailyFrequencyPostRequest(dailyFrequency){
+    return this.http.post(this.api.getDailyFrequencyUrl(), {
+      unity_id: dailyFrequency.unity_id,
+      classroom_id: dailyFrequency.classroom_id,
+      frequency_date: dailyFrequency.frequency_date,
+      discipline_id: dailyFrequency.discipline_id,
+      class_number: dailyFrequency.class_number
+    }).map((response: Response) => {
+      return response.json();
+    });
   }
 }
