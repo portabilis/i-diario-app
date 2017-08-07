@@ -233,3 +233,16 @@ ion-checkbox.checkbox.checkbox-md {
     margin: 0;
     text-align: center;
 }
+
+.datetime-wp .datetime-text {
+    border: 0;
+}
+
+.item-wp.item-block .item-inner,
+.item-ios.item-block .item-inner {
+    padding-right: 0;
+}
+
+.form-item-radio-item.item.item-block.item-wp.item-radio {
+    padding-left: 0;
+}
