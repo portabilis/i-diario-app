@@ -60,24 +60,34 @@
   position: absolute;
 }
 
+.form-item-radio-item.item.item-block.item-wp.item-radio.item-radio-checked,
+.form-item-radio-item.item.item-block.item-ios.item-radio.item-radio-checked,
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked {
     background-color: #3fd4b4;
 }
 
+.form-item-radio-item.item.item-block.item-wp.item-radio:last-child,
+.form-item-radio-item.item.item-block.item-ios.item-radio:last-child,
 .form-item-radio-item.item.item-block.item-md.item-radio:last-child {
     border-bottom: 0px !important;
 }
 
+.form-item-radio-item.item.item-block.item-wp.item-radio.item-radio-checked:first-child,
+.form-item-radio-item.item.item-block.item-ios.item-radio.item-radio-checked:first-child,
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
+.form-item-radio-item.item.item-block.item-wp.item-radio.item-radio-checked:last-child,
+.form-item-radio-item.item.item-block.item-ios.item-radio.item-radio-checked:last-child,
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
+.form-item-radio-item.item.item-block.item-wp.item-radio.item-radio-checked ion-label,
+.form-item-radio-item.item.item-block.item-ios.item-radio.item-radio-checked ion-label,
 .form-item-radio-item.item.item-block.item-md.item-radio.item-radio-checked ion-label {
     font-family: "NunitoBold";
     font-size: 16px;
@@ -118,6 +128,8 @@
     border-radius: 5px;
 }
 
+.datetime.datetime-wp,
+.datetime.datetime-ios,
 .datetime.datetime-md {
     height: 70px;
     width: 100%;
@@ -162,37 +174,53 @@
     position: absolute;
 }
 
+.form-item-check-item .checkbox-wp .checkbox-icon,
+.form-item-check-item .checkbox-ios .checkbox-icon,
 .form-item-check-item .checkbox-md .checkbox-icon {
     position: absolute !important;
 }
 
+.form-item-check-item.item.item-block.item-wp.item-checkbox,
+.form-item-check-item.item.item-block.item-ios.item-checkbox,
 .form-item-check-item.item.item-block.item-md.item-checkbox {
     padding-left: 0px !important;
 }
 
+ion-checkbox.checkbox.checkbox-wp,
+ion-checkbox.checkbox.checkbox-ios,
 ion-checkbox.checkbox.checkbox-md {
     margin: 0 !important;
 }
 
+.form-item-check-item.item.item-block.item-wp.item-checkbox:last-child,
+.form-item-check-item.item.item-block.item-ios.item-checkbox:last-child,
 .form-item-check-item.item.item-block.item-md.item-checkbox:last-child {
     border-right: 0 !important;
 }
 
+.form-item-check-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked,
+.form-item-check-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked,
 .form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
     background-color: #3fd4b4;
 }
 
+.form-item-check-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked:first-child,
+.form-item-check-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked:first-child,
 .form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked:first-child {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
 }
 
+.form-item-check-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked:last-child,
+.form-item-check-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked:last-child,
 .form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked:last-child {
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
 }
 
-.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked .form-item-check-item-label{
+.form-item-check-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked .form-item-check-item-label,
+.form-item-check-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked .form-item-check-item-label,
+.form-item-check-item.item.item-block.item-md.item-checkbox.item-checkbox-checked .form-item-check-item-label {
     color: white;
     font-family: "NunitoBold";
 }
