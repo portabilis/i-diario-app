@@ -11,29 +11,29 @@
 
 .frequency-day {
     font-family: "NunitoRegular";
-    font-size: 16pt;
+    font-size: 18px;
     color: #868499;
     padding-left: 12px;
 }
 
 .frequency-day:first-of-type {
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 .frequency-empty-today {
     width: auto;
-    height: 70pt;
+    height: 70px;
     background-color: #E5DEEC;
-    border-radius: 5pt;
+    border-radius: 5px;
     margin: 0 10px 0 10px;
 }
 
 .frequency-empty-today p {
     font-family: "NunitoBold";
-    font-size: 14pt;
+    font-size: 16px;
     color: #87878c;
     text-align: center;
-    padding-top: 24pt;
+    padding-top: 24px;
 }
 
 .accordion-list-item .view-eye {
@@ -44,7 +44,7 @@
     padding-left: 15px;
     background: url('../assets/img/iconView@2x.png') no-repeat right;
     background-size: 19pt 14pt;
-    margin-right: 10pt;
+    margin-right: 10px;
 }
 
 .accordion-list-item-frequency-index {
