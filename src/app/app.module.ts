@@ -22,7 +22,6 @@ import { LessonPlanDetailsPage } from './../pages/lesson-plan-details/lesson-pla
 import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
 import { TeachingPlanDetailsPage } from './../pages/teaching-plan-details/teaching-plan-details';
 import { TeachingPlanIndexPage } from './../pages/teaching-plan-index/teaching-plan-index';
-import { SynchronizationPage } from './../pages/synchronization/synchronization';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -64,8 +63,7 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     LessonPlanIndexPage,
     LessonPlanDetailsPage,
     TeachingPlanIndexPage,
-    TeachingPlanDetailsPage,
-    SynchronizationPage
+    TeachingPlanDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -90,8 +88,7 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     LessonPlanIndexPage,
     LessonPlanDetailsPage,
     TeachingPlanIndexPage,
-    TeachingPlanDetailsPage,
-    SynchronizationPage
+    TeachingPlanDetailsPage
   ],
   providers: [
     StatusBar,

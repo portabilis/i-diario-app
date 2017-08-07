@@ -3,7 +3,6 @@ import { AuthService } from './../../services/auth';
 import { OnlineDataService } from './../../services/online_data';
 import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-index';
 import { LessonPlanIndexPage } from './../lesson-plan-index/lesson-plan-index';
-import { SynchronizationPage } from './../synchronization/synchronization';
 import { UserIndexPage } from './../user-index/user-index';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
@@ -32,7 +31,6 @@ export class AppIndexPage {
     this.tab3 = LessonPlanIndexPage;
     this.tab4 = TeachingPlanIndexPage
     this.tab5 = UserIndexPage;
-    this.tab6 = SynchronizationPage;
   }
 
   ionViewDidLoad() {
