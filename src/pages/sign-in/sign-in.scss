@@ -22,6 +22,40 @@
     margin-bottom: 25%;
 }
 
+ion-grid.form-errors {
+    margin: 0;
+    border: 0 !important;
+}
+
+.form-errors {
+    ion-icon {
+        display: grid;
+        align-items: center;
+        align-content: center;
+        float: left;
+        padding-left: 7%;
+        height: 100%;
+    }
+    ion-row {
+        border-radius: 5pt;
+        padding: 5pt 0;
+        font-size: 30px;
+        color: rgb(63, 61, 77);
+        background-color: salmon;
+    }
+    .form-errors-content {
+        width: 80%;
+        padding: 13px 0;
+        p {
+            font-family: 'NunitoRegular';
+            font-size: 14pt;
+            padding-left: 20%;
+            padding-right: 7%;
+            margin: 0px;
+        }
+    }
+}
+
 .form-login {
     background-color: #fff;
     border-radius: 5pt;
