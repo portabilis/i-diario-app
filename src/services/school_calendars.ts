@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs/Observable';
-import { ConnectionService } from './connection';
 import { ApiService } from './api';
 import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
@@ -11,19 +10,10 @@ export class SchoolCalendarsService {
   constructor(
     private http: Http,
     private storage: Storage,
-    private connection: ConnectionService,
     private api: ApiService
   ){}
 
-  getSchoolCalendar(unityId: number){
-    if(this.connection.isOnline){
-      return this.getOnlineSchoolCalendar(unityId)
-    }else{
-      return this.getOfflineSchoolCalendar(unityId)
-    }
-  }
-
-  private getOnlineSchoolCalendar(unityId: number){
+  getOnlineSchoolCalendar(unityId: number){
     const request = this.http.get(this.api.getSchoolCalendarUrl(), { params: { unity_id: unityId } } );
     return request.map((response: Response) => {
       return {
@@ -33,7 +23,7 @@ export class SchoolCalendarsService {
     });
   }
 
-  private getOfflineSchoolCalendar(unityId: number){
+  getOfflineSchoolCalendar(unityId: number){
     return new Observable((observer) => {
       this.storage.get('schoolCalendars').then((schoolCalendars) => {
         schoolCalendars.forEach((schoolCalendar) => {

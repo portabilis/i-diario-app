@@ -17,7 +17,7 @@ export class ClassroomsPersisterService{
     return new Observable((observer) => {
       let classroomsObservables = []
       unities.forEach((unity) => {
-        classroomsObservables.push(this.classrooms.getClassrooms(user.teacher_id, unity.id))
+        classroomsObservables.push(this.classrooms.getOnlineClassrooms(user.teacher_id, unity.id))
       })
 
       Observable.forkJoin(classroomsObservables).subscribe(

@@ -14,7 +14,7 @@ export class SchoolCalendarsPersisterService{
     return new Observable((observer) => {
       let schoolCalendarObservables = []
       unities.forEach((unity) => {
-        schoolCalendarObservables.push(this.schoolCalendars.getSchoolCalendar(unity.id))
+        schoolCalendarObservables.push(this.schoolCalendars.getOnlineSchoolCalendar(unity.id))
       })
 
       Observable.forkJoin(schoolCalendarObservables).subscribe(

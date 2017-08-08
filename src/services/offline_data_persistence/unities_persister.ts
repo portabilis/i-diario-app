@@ -19,7 +19,7 @@ export class UnitiesPersisterService{
 
   persist(user: User){
     return new Observable((observer) => {
-      this.unities.getUnities(user.teacher_id).subscribe(
+      this.unities.getOnlineUnities(user.teacher_id).subscribe(
         (unities) => {
           this.storage.set('unities', unities)
 

@@ -1,6 +1,5 @@
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { AuthService } from './../../services/auth';
-import { OnlineDataService } from './../../services/online_data';
 import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-index';
 import { LessonPlanIndexPage } from './../lesson-plan-index/lesson-plan-index';
 import { UserIndexPage } from './../user-index/user-index';
@@ -22,7 +21,6 @@ export class AppIndexPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private _onlineData: OnlineDataService,
               private _auth: AuthService,
               private _offlineDataPersister: OfflineDataPersisterService,
               private loadingCtrl: LoadingController,

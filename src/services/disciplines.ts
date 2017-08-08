@@ -15,13 +15,6 @@ export class DisciplinesService {
     private api: ApiService
   ){}
 
-  getDisciplines(teacherId: number, classroomId: number){
-    if(this.connection.isOnline){
-      return this.getOnlineDisciplines(teacherId, classroomId)
-    }else{
-      return this.getOfflineDisciplines(classroomId)
-    }
-  }
   getOnlineDisciplines(teacherId: number, classroomId: number){
     const request = this.http.get(this.api.getTeacherDisciplinesUrl(), { params: { teacher_id: teacherId, classroom_id: classroomId } } );
     return request.map((response: Response) => {
