@@ -1,6 +1,15 @@
 <ion-content class="login-background" padding>
   <div class="background-content">
     <ion-label class="saudacao">Olá, bom dia!</ion-label>
+      <ion-grid class="form-errors" *ngIf="anyError">
+        <ion-row>
+          <ion-col class="form-errors-content">
+            <ion-icon name="close"></ion-icon>
+            <p>{{ errorMessage }} <b>Verifique os dados e tente novamente.</b></p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">

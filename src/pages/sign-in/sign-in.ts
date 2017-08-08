@@ -18,6 +18,8 @@ import { User } from '../../data/user.interface';
 })
 export class SignIn {
   private cities = [];
+  private anyError:Boolean = false;
+  private errorMessage:String = "";
 
   constructor(
     private auth: AuthService,
@@ -49,13 +51,9 @@ export class SignIn {
         this.navCtrl.push(AppIndexPage, {'user': user});
       },
     (error) => {
+      this.anyError = true;
+      this.errorMessage = "Não foi possível efetuar login.";
       loading.dismiss();
-      const alert = this.alertCtrl.create({
-        title: 'Dados inválidos.',
-        message: "Não foi possível efetuar login",
-        buttons: ['Ok']
-      });
-      alert.present();
     },
     () => {
       loading.dismiss();
