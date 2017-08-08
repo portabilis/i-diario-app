@@ -28,7 +28,7 @@
 
         </ion-list>
       </div>
-      <div *ngIf="!unities" class="unity-empty">
+      <div *ngIf="emptyUnities" class="unity-empty">
         <p margin>Nenhuma escola encontrada.</p>
       </div>
       <div class=form-item *ngIf="classrooms">
@@ -79,7 +79,7 @@
       <button class="button-frequency"
               ion-button
               block
-              *ngIf="unities"
+              *ngIf="!emptyUnities"
               [disabled]="!f.valid">Carregar lista de frequência</button>
     </div>
   </form>

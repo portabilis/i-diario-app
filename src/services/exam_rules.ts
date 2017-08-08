@@ -15,16 +15,7 @@ export class ExamRulesService {
     private api: ApiService
   ){}
 
-  getExamRules(teacherId: number, classroomId: number){
-
-    if(this.connection.isOnline){
-      return this.getOnlineExamRules(teacherId, classroomId)
-    }else{
-      return this.getOfflineExamRules(classroomId)
-    }
-
-  }
-  private getOnlineExamRules(teacherId: number, classroomId: number){
+  getOnlineExamRules(teacherId: number, classroomId: number){
     const request = this.http.get(this.api.getExamRulesUrl(), { params: { teacher_id: teacherId, classroom_id: classroomId } } )
     return request.map((response: Response) => {
       return {

@@ -35,6 +35,7 @@ export class FrequencyPage{
   private disciplineId: number;
   private classes: any;
   private selectedClasses:any = [];
+  private emptyUnities: boolean = true;
 
   constructor(
     private unitiesService: UnitiesService,
@@ -55,6 +56,7 @@ export class FrequencyPage{
   ionViewWillEnter(){
     this.date = new Date().toISOString()
     this.unities = this.navParams.get('unities');
+    this.emptyUnities = this.unities.length == 0;
   }
 
   startSync(){
@@ -72,9 +74,9 @@ export class FrequencyPage{
     });
     loader.present();
     this.auth.currentUser().then((user: User) => {
-      this.classroomsService.getClassrooms(user.teacher_id, this.unityId).subscribe(
+      this.classroomsService.getOfflineClassrooms(this.unityId).subscribe(
         (classrooms: any) => {
-          this.schoolCalendarsService.getSchoolCalendar(this.unityId).subscribe(
+          this.schoolCalendarsService.getOfflineSchoolCalendar(this.unityId).subscribe(
             (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
@@ -112,10 +114,10 @@ export class FrequencyPage{
 
     this.auth.currentUser().then((user) => {
 
-      this.examRulesService.getExamRules(user.teacher_id, this.classroomId).subscribe(
+      this.examRulesService.getOfflineExamRules(this.classroomId).subscribe(
         (result:any) => {
           if(result.data.exam_rule && result.data.exam_rule.allow_frequency_by_discipline){
-            this.disciplinesService.getDisciplines(user.teacher_id, this.classroomId).subscribe(
+            this.disciplinesService.getOfflineDisciplines(this.classroomId).subscribe(
               (result: any) => {
                 this.disciplines = result.data;
                 this.globalAbsence = false;

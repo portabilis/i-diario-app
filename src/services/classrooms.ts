@@ -15,15 +15,7 @@ export class ClassroomsService {
     private api: ApiService
   ){}
 
-  getClassrooms(teacherId: number, unityId: number){
-    if(this.connection.isOnline){
-      return this.getOnlineClassrooms(teacherId, unityId)
-    }else{
-      return this.getOfflineClassrooms(unityId)
-    }
-  }
-
-  private getOnlineClassrooms(teacherId: number, unityId: number){
+  getOnlineClassrooms(teacherId: number, unityId: number){
     const request = this.http.get(this.api.getTeatcherClassroomsUrl(), { params: { teacher_id: teacherId, unity_id: unityId } } );
     return request.map((response: Response) => {
       return {
@@ -32,7 +24,7 @@ export class ClassroomsService {
       }
     });
   }
-  private getOfflineClassrooms(unityId: number){
+  getOfflineClassrooms(unityId: number){
     return new Observable((observer) => {
       this.storage.get('classrooms').then((classrooms) => {
         classrooms.forEach((classroom) => {

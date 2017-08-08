@@ -19,7 +19,7 @@ export class ExamRulesPersisterService{
       let examRulesObservables = []
       classrooms.forEach(classroomList => {
         classroomList.data.forEach((classroom) => {
-          examRulesObservables.push(this.examRules.getExamRules(user.teacher_id, classroom.id))
+          examRulesObservables.push(this.examRules.getOnlineExamRules(user.teacher_id, classroom.id))
         })
       })
       Observable.forkJoin(examRulesObservables).subscribe(

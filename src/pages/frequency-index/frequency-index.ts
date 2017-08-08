@@ -50,7 +50,7 @@ export class FrequencyIndexPage {
       content: 'Carregando...'
     });
     loading.present();
-    this.unitiesService.getUnities(this.user.teacher_id).subscribe(
+    this.unitiesService.getOfflineUnities(this.user.teacher_id).subscribe(
       (unities: Unity[]) => {
         this.navCtrl.push(FrequencyPage, { "unities": unities });
       },
