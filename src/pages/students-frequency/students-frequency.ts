@@ -44,7 +44,7 @@ export class StudentsFrequencyPage {
     this.frequencyDate = this.findCurrentFrequencyDate()
   }
 
-  updateFrequency(frequency, classNumber){
+  updateFrequency(frequency, classNumber = null){
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     })
