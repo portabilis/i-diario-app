@@ -103,3 +103,56 @@ ion-checkbox.checkbox.checkbox-md {
     margin: 0;
     text-align: center;
 }
+
+.global-frequency .radio-icon {
+    visibility: hidden;
+    position: absolute;
+}
+
+.global-frequency {
+    border-radius: 5px;
+    border: 1px solid #dddce6 !important;
+}
+
+.global-frequency ion-label {
+    font-size: 16px;
+    font-family: "NunitoRegular";
+    color: #3f3d4d;
+    text-align: center;
+}
+
+.global-frequency-present {
+    width: 110px;
+    height: 40px;
+}
+
+.global-frequency-present.item.item-block.item-wp.item-radio.item-radio-checked,
+.global-frequency-present.item.item-block.item-ios.item-radio.item-radio-checked,
+.global-frequency-present.item.item-block.item-md.item-radio.item-radio-checked {
+    background-color: #3fd4b4;
+    border: 0 !important;
+}
+
+.global-frequency-present.item.item-block.item-wp.item-radio.item-radio-checked ion-label,
+.global-frequency-present.item.item-block.item-ios.item-radio.item-radio-checked ion-label,
+.global-frequency-present.item.item-block.item-md.item-radio.item-radio-checked ion-label,
+.global-frequency-absent.item.item-block.item-wp.item-radio.item-radio-checked ion-label,
+.global-frequency-absent.item.item-block.item-ios.item-radio.item-radio-checked ion-label,
+.global-frequency-absent.item.item-block.item-md.item-radio.item-radio-checked ion-label {
+    font-family: "NunitoBold";
+    color: white !important;
+}
+
+.global-frequency-absent {
+    width: 90px;
+    height: 40px;
+
+    margin-left: 10px;
+}
+
+.global-frequency-absent.item.item-block.item-wp.item-radio.item-radio-checked,
+.global-frequency-absent.item.item-block.item-ios.item-radio.item-radio-checked,
+.global-frequency-absent.item.item-block.item-md.item-radio.item-radio-checked {
+    background-color: #ff8870;
+    border: 0 !important;
+}

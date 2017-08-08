@@ -28,14 +28,20 @@
         <ion-list [hidden]="!globalAbsence"
                   class="frequency-checkbox"
                   [(ngModel)]="student.present"
-                  name="classes" radio-group>
-          <ion-item>
+                  name="classes"
+                  radio-group
+                  no-lines>
+          <ion-item class="global-frequency global-frequency-present">
             <ion-label>Presente</ion-label>
-            <ion-radio (ionSelect)="updateFrequency(student)" checked="{{student.present}}" value="true"></ion-radio>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{student.present}}"
+                       value="true"></ion-radio>
           </ion-item>
-          <ion-item>
+          <ion-item class="global-frequency global-frequency-absent">
             <ion-label>Faltou</ion-label>
-            <ion-radio (ionSelect)="updateFrequency(student)" checked="{{!student.present}}" value="false"></ion-radio>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{!student.present}}"
+                       value="false"></ion-radio>
           </ion-item>
         </ion-list>
       </ion-col>
