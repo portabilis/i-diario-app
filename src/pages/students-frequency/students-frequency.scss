@@ -1,9 +1,11 @@
-.button-left {
+.button-left-student-frequency {
     height: 30px;
+    float: left;
 }
 
 .students-frequency-title {
-  padding-left: 40px;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .img-close-frequency {
@@ -118,7 +120,9 @@ ion-checkbox.checkbox.checkbox-md {
     font-size: 16px;
     font-family: "NunitoRegular";
     color: #3f3d4d;
-    text-align: center;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .global-frequency-present {
@@ -155,4 +159,19 @@ ion-checkbox.checkbox.checkbox-md {
 .global-frequency-absent.item.item-block.item-md.item-radio.item-radio-checked {
     background-color: #ff8870;
     border: 0 !important;
+}
+
+.global-frequency-absent.item.item-block.item-wp,
+.global-frequency-present.item.item-block.item-wp {
+    padding: 0 !important;
+}
+
+.toolbar-title-md,
+.toolbar-title-ios {
+    padding: 0;
+}
+
+.global-frequency ion-radio.radio.radio-wp {
+    margin: 0 !important;
+    padding: 0 !important;
 }

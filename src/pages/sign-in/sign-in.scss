@@ -76,6 +76,7 @@ ion-grid.form-errors {
     margin-bottom: 0;
 }
 
+.item-wp.item-block .item-inner,
 .item-md.item-block .item-inner {
     padding-right: 0;
 }
@@ -84,6 +85,7 @@ ion-grid.form-errors {
     background-color: #3fd4b4;
 }
 
+.select-wp,
 .select-md {
     padding: 0;
 }
@@ -124,6 +126,8 @@ ion-content form ion-img {
     background-size: 25pt;
 }
 
+.text-input-ios,
+.text-input-wp,
 .text-input-md {
     margin: 0;
 }
@@ -152,4 +156,14 @@ ion-content form ion-img {
 .background-content .contato a {
     color: white;
     text-decoration: underline;
+}
+
+.select-wp {
+    border: none;
+    border-bottom: 0.55px solid #c8c7cc;
+}
+
+.text-input-wp {
+    border: none;
+    border-bottom: 0.55px solid #c8c7cc;
 }
