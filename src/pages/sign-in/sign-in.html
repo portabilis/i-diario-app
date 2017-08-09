@@ -1,6 +1,6 @@
 <ion-content class="login-background" padding>
   <div class="background-content">
-    <ion-label class="saudacao">Olá, bom dia!</ion-label>
+    <ion-label class="saudacao">{{greetingText()}}</ion-label>
       <ion-grid class="form-errors" *ngIf="anyError">
         <ion-row>
           <ion-col class="form-errors-content">
