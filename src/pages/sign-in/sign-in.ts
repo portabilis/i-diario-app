@@ -60,19 +60,19 @@ export class SignIn {
     })
   }
 
-  greatingText() {
+  greetingText() {
     let split_afternoon = 12;
     let split_evening = 17;
     let currentHour = new Date().getHours();
 
-    let greating = "bom dia";
+    let greeting = "bom dia";
 
     if(currentHour >= split_afternoon && currentHour <= split_evening) {
-      greating = 'boa tarde';
+      greeting = 'boa tarde';
     } else if(currentHour >= split_evening) {
-      greating = 'boa noite';
+      greeting = 'boa noite';
     }
 
-    return `Olá, ${greating}!`;
+    return `Olá, ${greeting}!`;
   }
 }
