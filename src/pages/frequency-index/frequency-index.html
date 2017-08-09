@@ -16,6 +16,9 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <div *ngIf="emptyFrequencies" class="empty-results">
+    <p margin>Nenhuma frequência encontrada.</p>
+  </div>
   <div class="frequency-space">
     <div *ngFor="let frequencyDay of lastFrequencyDays; let i=index">
       <div *ngIf="i==0 && !frequencyDay.exists">

@@ -31,34 +31,4 @@ export class AppIndexPage {
     this.tab4 = TeachingPlanIndexPage
     this.tab5 = UserIndexPage;
   }
-
-  ionViewDidLoad() {
-    const loading = this.loadingCtrl.create({
-      content: 'Aguarde, estamos deixando tudo pronto para você.'
-    })
-    loading.present()
-
-    this._auth.currentUser().then((user) => {
-      this._offlineDataPersister.persist(user).subscribe(
-        (result) => {
-        },
-        (error) => {
-          loading.dismiss();
-          this.showErrorAlert();
-        },
-        () => {
-          loading.dismiss();
-        }
-      )
-    });
-  }
-
-  showErrorAlert() {
-    let alert = this._alertCtrl.create({
-      title: 'Erro',
-      subTitle: 'Não foi possível realizar a sincronização.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
 }
