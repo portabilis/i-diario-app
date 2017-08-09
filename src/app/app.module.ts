@@ -46,7 +46,6 @@ import { ApiService } from './../services/api';
 import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { LessonPlansPersisterService } from './../services/offline_data_persistence/lesson_plans_persister';
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
-import { StorageManagerService } from './../services/storage_manager';
 import { UtilsService } from './../services/utils';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 
@@ -114,7 +113,6 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     LessonPlansPersisterService,
     TeachingPlansPersisterService,
     ApiService,
-    StorageManagerService,
     UtilsService,
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
