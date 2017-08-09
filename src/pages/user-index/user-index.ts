@@ -54,5 +54,6 @@ export class UserIndexPage {
   logout() {
     this.auth.removeCurrentUser();
     this.app.getRootNav().setRoot(SignIn);
+    this.storage.clear();
   }
 }
