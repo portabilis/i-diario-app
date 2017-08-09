@@ -57,7 +57,22 @@ export class SignIn {
     },
     () => {
       loading.dismiss();
+    })
+  }
+
+  greatingText() {
+    let split_afternoon = 12;
+    let split_evening = 17;
+    let currentHour = new Date().getHours();
+
+    let greating = "bom dia";
+
+    if(currentHour >= split_afternoon && currentHour <= split_evening) {
+      greating = 'boa tarde';
+    } else if(currentHour >= split_evening) {
+      greating = 'boa noite';
     }
-  )
+
+    return `Olá, ${greating}!`;
   }
 }
