@@ -13,8 +13,6 @@
   <h3 class="page-content-title">Lista de presença</h3>
   <ion-grid>
     <ion-row class="grid-row" *ngFor="let student of students">
-      <!-- <div class="student-picture">
-      </div> -->
       <ion-col>
         <div class="student-name" text-left>
           {{student.name || student.student.name}}
@@ -27,12 +25,23 @@
                           (ionChange)="updateFrequency(frequency, i+1)"></ion-checkbox>
           </ion-item>
         </ion-list>
-        <ion-list [hidden]="!globalAbsence" class="frequency-checkbox" name="classes">
-          <ion-item class="frequency-checkbox-item" no-lines>
-            <ion-label class="frequency-checkbox-item-label"> {{ classes[i] }}ª</ion-label>
-            <ion-checkbox type="checkbox"
-                          [(ngModel)]="student.present"
-                          (ionChange)="updateFrequency(student)"></ion-checkbox>
+        <ion-list [hidden]="!globalAbsence"
+                  class="frequency-checkbox"
+                  [(ngModel)]="student.present"
+                  name="classes"
+                  radio-group
+                  no-lines>
+          <ion-item class="global-frequency global-frequency-present">
+            <ion-label>Presente</ion-label>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{student.present}}"
+                       value="true"></ion-radio>
+          </ion-item>
+          <ion-item class="global-frequency global-frequency-absent">
+            <ion-label>Faltou</ion-label>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{!student.present}}"
+                       value="false"></ion-radio>
           </ion-item>
         </ion-list>
       </ion-col>
