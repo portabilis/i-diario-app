@@ -26,20 +26,21 @@ export class FrequenciesPersisterService{
       })
 
       Observable.forkJoin(frequenciesObservables).subscribe(
-        (results) => {
+        (results: any) => {
 
-          const notEmptyResults = results.filter(this.notEmptyDailyFrequencies)
-          const mergedResults = notEmptyResults.map((result: any) => {
+          let notEmptyResults = results.filter(this.notEmptyDailyFrequencies)
+          notEmptyResults = notEmptyResults.map((result: any) => {
             return result.data.daily_frequencies
-          }).reduce((a:any,b:any) => {
-            return a.concat(b)
           })
-
-          observer.next(this.storage.set('frequencies', { daily_frequencies: mergedResults }))
+          if(notEmptyResults.length > 0){
+            const mergedResults = notEmptyResults.reduce((a:any,b:any) => {
+              return a.concat(b)
+            })
+            observer.next(this.storage.set('frequencies', { daily_frequencies: mergedResults }))
+          }
         },
         (error) => {
           observer.error(error);
-          console.log(error)
         },
         () => {
           observer.complete()

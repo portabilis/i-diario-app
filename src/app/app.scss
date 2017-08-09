@@ -106,3 +106,18 @@ ion-app .scroll-content {
     padding-left: 15px;
     margin-right: 10px;
 }
+.empty-results {
+    width: auto;
+    height: 50pt;
+    background-color: #E5DEEC;
+    border-radius: 5pt;
+    margin: 0 10px 0 10px;
+    p {
+        font-family: "NunitoBold";
+        font-size: 14pt;
+        color: #87878c;
+        text-align: center;
+        padding-top: 14pt;
+    }
+}
+

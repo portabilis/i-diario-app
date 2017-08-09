@@ -1,3 +1,4 @@
+import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
@@ -6,7 +7,7 @@ import { FrequencyPage } from './../frequency/frequency';
 import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,6 +18,7 @@ export class FrequencyIndexPage {
   private user: any;
   shownGroup = null;
   lastFrequencyDays = null;
+  emptyFrequencies = false;
 
   constructor(
     public navCtrl: NavController,
@@ -26,21 +28,55 @@ export class FrequencyIndexPage {
     private auth: AuthService,
     private utilsService: UtilsService,
     private storage: Storage,
-    private unitiesPersister: UnitiesPersisterService
+    private unitiesPersister: UnitiesPersisterService,
+    private alertCtrl: AlertController,
+    private offlineDataPersister: OfflineDataPersisterService
   ) {}
 
   ionViewWillEnter(){
     this.auth.currentUser().then((user) => {
       this.user = user;
+      this.refreshFrequencies(user);
     });
 
-    this.loadFrequencies();
+  }
+
+  refreshFrequencies(user){
+    const loading = this.loadingCtrl.create({
+      content: 'Aguarde, estamos deixando tudo pronto para você.'
+    })
+    loading.present()
+    this.offlineDataPersister.persist(user).subscribe(
+      (result) => {
+      },
+      (error) => {
+        loading.dismiss()
+        this.showErrorAlert()
+      },
+      () => {
+        loading.dismiss()
+        this.loadFrequencies()
+      }
+    )
+  }
+
+  showErrorAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Erro',
+      subTitle: 'Não foi possível realizar a sincronização.',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   loadFrequencies() {
     this.storage.get('frequencies').then((frequencies) => {
+      console.log(frequencies)
       if (frequencies) {
         this.lastFrequencyDays = this.lastTenDays(frequencies.daily_frequencies);
+        this.emptyFrequencies = false;
+      }else{
+        this.emptyFrequencies = true;
       }
     });
   }
@@ -128,7 +164,7 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
-    this.unitiesPersister.persist(this.user).subscribe(
+    this.offlineDataPersister.persist(this.user).subscribe(
       () => {
       },
       (error) => {
@@ -138,6 +174,7 @@ export class FrequencyIndexPage {
       () => {
         this.loadFrequencies();
         refresher.complete();
+        this.emptyFrequencies = false;
       }
     );
   }

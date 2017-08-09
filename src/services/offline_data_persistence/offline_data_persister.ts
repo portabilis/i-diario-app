@@ -39,7 +39,7 @@ export class OfflineDataPersisterService {
     return new Observable((observer) => {
       this.clearStorage();
 
-      Observable.forkJoin(
+      Observable.concat(
         this.unitiesPersister.persist(user),
         this.lessonPlansPersister.persist(user),
         this.teachingPlansPersister.persist(user)
