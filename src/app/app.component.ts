@@ -54,23 +54,24 @@ export class MyApp {
     const isSynchronizingToast = this.toastCtrl.create({
       message: 'As frequências lançadas estão sendo sincronizadas.',
       duration: 2000,
-      position: 'bottom'
+      position: 'middle'
     })
 
     const isSychronizedToast = this.toastCtrl.create({
       message: 'As frequências lançadas foram sincronizadas com sucesso.',
       duration: 2000,
-      position: 'bottom'
+      position: 'middle'
     })
 
     const synchronizationErrorToast = this.toastCtrl.create({
       message: 'Não foi possível sincronizar as frequências lançadas.',
       duration: 2000,
-      position: 'bottom'
+      position: 'middle'
     })
 
     this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
       this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
+        if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync) return;
         isSynchronizingToast.present()
         this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
           () => {
