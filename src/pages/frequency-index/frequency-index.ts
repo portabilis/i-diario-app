@@ -74,9 +74,8 @@ export class FrequencyIndexPage {
 
   loadFrequencies() {
     this.storage.get('frequencies').then((frequencies) => {
-      console.log(frequencies)
       if (frequencies) {
-        this.lastFrequencyDays = this.lastTenDays(frequencies.daily_frequencies);
+        this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
         this.emptyFrequencies = true;
@@ -113,23 +112,36 @@ export class FrequencyIndexPage {
       return this.shownGroup === group;
   };
 
-  private lastTenDays(frequencies) {
-    var lastDays = [];
+  private sortDesc(a,b){
+    return b > a
+  }
 
-    for (var day = 0; day < 10; day++) {
-      var lastDay = new Date();
-      lastDay.setDate(lastDay.getDate()-day);
+  private lastTenFrequencies(frequencies) {
+
+    let uniqueDates:any = []
+    frequencies.forEach(frequency => {
+      if(!uniqueDates.includes(frequency.frequency_date)){
+        uniqueDates.push(frequency.frequency_date)
+      }
+    });
+
+    uniqueDates.sort(this.sortDesc)
+
+    var lastDays = []
+    uniqueDates.forEach((uniqueDate, index) => {
+      var lastDay = new Date(uniqueDate);
 
       let shortDate = this.utilsService.toStringWithoutTime(lastDay);
       let frequenciesOfDay = this.frequenciesOfDay(frequencies, shortDate);
 
-      lastDays[day] = {
+      lastDays[index] = {
         date: shortDate,
         format_date: this.utilsService.toExtensiveFormat(lastDay),
         exists: frequenciesOfDay.length > 0,
         unities: this.unitiesOfFrequency(frequenciesOfDay)
       };
-    }
+    })
+
     return lastDays;
   }
 
