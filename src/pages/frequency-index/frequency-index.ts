@@ -86,20 +86,9 @@ export class FrequencyIndexPage {
   }
 
   newFrequency() {
-    const loading = this.loadingCtrl.create({
-      content: 'Carregando...'
+    this.storage.get('unities').then((unities) => {
+      this.navCtrl.push(FrequencyPage, { "unities": unities });
     });
-    loading.present();
-    this.unitiesService.getOfflineUnities(this.user.teacher_id).subscribe(
-      (unities: Unity[]) => {
-        this.navCtrl.push(FrequencyPage, { "unities": unities });
-      },
-      (error) => {
-        console.log(error)
-      },
-      () => {
-        loading.dismiss();
-      });
   }
 
   toggleGroup(group) {
