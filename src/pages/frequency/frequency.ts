@@ -56,15 +56,8 @@ export class FrequencyPage{
   ionViewWillEnter(){
     this.date = new Date().toISOString()
     this.unities = this.navParams.get('unities');
-    this.emptyUnities = this.unities.length == 0;
-  }
 
-  startSync(){
-    if(this.connectionService.isOnline){
-      this.auth.currentUser().then((user) => {
-        this.offlineDataPersister.persist(user)
-      })
-    }
+    this.emptyUnities = (!this.unities || this.unities.length == 0);
   }
 
   onChangeUnity(){

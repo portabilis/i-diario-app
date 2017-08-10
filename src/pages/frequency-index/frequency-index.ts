@@ -5,7 +5,6 @@ import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
 import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
-import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
@@ -86,20 +85,9 @@ export class FrequencyIndexPage {
   }
 
   newFrequency() {
-    const loading = this.loadingCtrl.create({
-      content: 'Carregando...'
+    this.storage.get('unities').then((unities) => {
+      this.navCtrl.push(FrequencyPage, { "unities": unities });
     });
-    loading.present();
-    this.unitiesService.getOfflineUnities(this.user.teacher_id).subscribe(
-      (unities: Unity[]) => {
-        this.navCtrl.push(FrequencyPage, { "unities": unities });
-      },
-      (error) => {
-        console.log(error)
-      },
-      () => {
-        loading.dismiss();
-      });
   }
 
   toggleGroup(group) {
