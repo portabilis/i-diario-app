@@ -68,7 +68,7 @@ export class FrequencyIndexPage {
     let alert = this.alertCtrl.create({
       title: 'Erro',
       subTitle: 'Não foi possível realizar a sincronização.',
-      buttons: ['OK']connectionService
+      buttons: ['OK']
     });
     alert.present();
   }
