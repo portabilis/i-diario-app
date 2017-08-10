@@ -39,7 +39,7 @@ export class UtilsService {
     let toast = this._toastCtrl.create({
       message: 'Não foi possível completar a atualização.' + offlineMessage,
       duration: 3000,
-      position: 'down'
+      position: 'middle'
     });
 
     toast.present();
