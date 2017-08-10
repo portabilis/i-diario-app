@@ -1,3 +1,4 @@
+import { ConnectionService } from './../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
 import { Storage } from '@ionic/storage';
@@ -30,15 +31,17 @@ export class FrequencyIndexPage {
     private storage: Storage,
     private unitiesPersister: UnitiesPersisterService,
     private alertCtrl: AlertController,
-    private offlineDataPersister: OfflineDataPersisterService
+    private offlineDataPersister: OfflineDataPersisterService,
+    private connectionService: ConnectionService
   ) {}
 
   ionViewWillEnter(){
-    this.auth.currentUser().then((user) => {
-      this.user = user;
-      this.refreshFrequencies(user);
-    });
-
+    if (this.connectionService.isOnline) {
+      this.auth.currentUser().then((user) => {
+        this.user = user;
+        this.refreshFrequencies(user);
+      });
+    }
   }
 
   refreshFrequencies(user){
