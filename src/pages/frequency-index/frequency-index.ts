@@ -41,6 +41,8 @@ export class FrequencyIndexPage {
         this.user = user;
         this.refreshFrequencies(user);
       });
+    } else {
+      this.loadFrequencies();
     }
   }
 
