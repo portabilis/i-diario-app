@@ -5,7 +5,6 @@ import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
 import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
-import { Unity } from './../../data/unity.interface';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
@@ -69,7 +68,7 @@ export class FrequencyIndexPage {
     let alert = this.alertCtrl.create({
       title: 'Erro',
       subTitle: 'Não foi possível realizar a sincronização.',
-      buttons: ['OK']
+      buttons: ['OK']connectionService
     });
     alert.present();
   }
