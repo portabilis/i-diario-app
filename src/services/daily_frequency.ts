@@ -101,11 +101,10 @@ export class DailyFrequencyService {
       this.storage.get('frequencies').then((frequencies) => {
         this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
           dailyFrequenciesToSync = dailyFrequenciesToSync || []
-
           let filteredDailyFrequencies = frequencies.daily_frequencies.filter((dailyFrequency) => {
             return (dailyFrequency.classroom_id == classroomId &&
                     dailyFrequency.discipline_id == disciplineId &&
-                    splitedClassNumbers.includes(dailyFrequency.class_number.toString()) &&
+                    splitedClassNumbers.includes(String(dailyFrequency.class_number)) &&
                     dailyFrequency.frequency_date == frequencyDate)
           })
 
@@ -123,9 +122,8 @@ export class DailyFrequencyService {
             this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
           }
           else if(filteredDailyFrequencies.length < splitedClassNumbers.length){
-
             const frequencyClasses = filteredDailyFrequencies.map((frequency) => {
-              return frequency.class_number.toString()
+              return String(frequency.class_number)
             })
 
             const missingClasses = splitedClassNumbers.filter((classNumber) => {
