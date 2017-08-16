@@ -35,33 +35,7 @@ export class FrequencyIndexPage {
   ) {}
 
   ionViewWillEnter(){
-    if (this.connectionService.isOnline) {
-      this.auth.currentUser().then((user) => {
-        this.user = user;
-        this.refreshFrequencies(user);
-      });
-    } else {
-      this.loadFrequencies();
-    }
-  }
-
-  refreshFrequencies(user){
-    const loading = this.loadingCtrl.create({
-      content: 'Aguarde, estamos deixando tudo pronto para você.'
-    })
-    loading.present()
-    this.offlineDataPersister.persist(user).subscribe(
-      (result) => {
-      },
-      (error) => {
-        loading.dismiss()
-        this.showErrorAlert()
-      },
-      () => {
-        loading.dismiss()
-        this.loadFrequencies()
-      }
-    )
+    this.loadFrequencies();
   }
 
   showErrorAlert() {
@@ -79,6 +53,7 @@ export class FrequencyIndexPage {
         this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
+        this.utilsService.showGenericToast("Puxe para baixo para atualizar.");
         this.emptyFrequencies = true;
       }
     });
@@ -169,18 +144,19 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
-    this.offlineDataPersister.persist(this.user).subscribe(
-      () => {
-      },
-      (error) => {
-        this.utilsService.showRefreshPageError();
-        refresher.cancel();
-      },
-      () => {
-        this.loadFrequencies();
-        refresher.complete();
-        this.emptyFrequencies = false;
-      }
-    );
+    this.auth.currentUser().then((user) => {
+      this.offlineDataPersister.persist(user).subscribe(
+        (result) => {
+        },
+        (error) => {
+          refresher.cancel();
+          this.showErrorAlert()
+        },
+        () => {
+          refresher.complete();
+          this.loadFrequencies()
+        }
+      )
+    });
   }
 }

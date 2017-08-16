@@ -44,4 +44,14 @@ export class UtilsService {
 
     toast.present();
   }
+
+  public showGenericToast(message) {
+    let toast = this._toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.present();
+  }
 }
