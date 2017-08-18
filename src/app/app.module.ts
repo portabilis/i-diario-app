@@ -35,6 +35,7 @@ import { ConnectionService } from '../services/connection';
 import { LessonPlansService } from './../services/lesson_plans';
 import { TeachingPlansService } from './../services/teaching_plans';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
+import { StudentsService } from './../services/students';
 import { OfflineDataPersisterService } from './../services/offline_data_persistence/offline_data_persister';
 import { ClassroomsPersisterService } from './../services/offline_data_persistence/classrooms_persister';
 import { ExamRulesPersisterService } from './../services/offline_data_persistence/exam_rules_persister';
@@ -42,6 +43,7 @@ import { UnitiesPersisterService } from './../services/offline_data_persistence/
 import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
 import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
+import { StudentsPersisterService } from './../services/offline_data_persistence/students_persister';
 import { ApiService } from './../services/api';
 import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { LessonPlansPersisterService } from './../services/offline_data_persistence/lesson_plans_persister';
@@ -102,6 +104,7 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     ConnectionService,
     LessonPlansService,
     TeachingPlansService,
+    StudentsService,
     Network,
     OfflineDataPersisterService,
     UnitiesPersisterService,
@@ -112,6 +115,7 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     FrequenciesPersisterService,
     LessonPlansPersisterService,
     TeachingPlansPersisterService,
+    StudentsPersisterService,
     ApiService,
     UtilsService,
     DailyFrequenciesSynchronizer,
