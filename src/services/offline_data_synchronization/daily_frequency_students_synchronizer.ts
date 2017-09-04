@@ -19,30 +19,19 @@ export class DailyFrequencyStudentsSynchronizer {
       if(dailyFrequencyStudents){
         let dailyFrequencyStudentObservables = []
         dailyFrequencyStudents.forEach(dailyFrequencyStudent => {
-          if(dailyFrequencyStudent.id){
-            const request = this.http.put(this.api.getDailyFrequencyStudentsUrl(dailyFrequencyStudent.id),
-              {
-                present: dailyFrequencyStudent.present,
-                user_id: dailyFrequencyStudent.userId
-              }
-            );
+          const request = this.http.post(this.api.getDailyFrequencyStudentsUpdateOrCreateUrl(),
+            {
+              present: dailyFrequencyStudent.present,
+              user_id: dailyFrequencyStudent.userId,
+              classroom_id: dailyFrequencyStudent.classroomId,
+              discipline_id: dailyFrequencyStudent.disciplineId,
+              student_id: dailyFrequencyStudent.studentId,
+              class_number: dailyFrequencyStudent.classNumber,
+              frequency_date: dailyFrequencyStudent.frequencyDate
+            }
+          );
 
-            dailyFrequencyStudentObservables.push(request)
-          }else{
-            const request = this.http.post(this.api.getDailyFrequencyStudentsUpdateOrCreateUrl(),
-              {
-                present: dailyFrequencyStudent.present,
-                user_id: dailyFrequencyStudent.userId,
-                classroom_id: dailyFrequencyStudent.classroomId,
-                discipline_id: dailyFrequencyStudent.disciplineId,
-                student_id: dailyFrequencyStudent.studentId,
-                class_number: dailyFrequencyStudent.classNumber,
-                frequency_date: dailyFrequencyStudent.frequencyDate
-              }
-            );
-
-            dailyFrequencyStudentObservables.push(request)
-          }
+          dailyFrequencyStudentObservables.push(request)
         })
 
         Observable.concat(...dailyFrequencyStudentObservables).subscribe(

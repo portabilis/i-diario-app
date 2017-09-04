@@ -151,15 +151,15 @@ export class FrequencyPage{
     });
     loader.present();
     this.auth.currentUser().then((user) => {
-      this.dailyFrequencyService.getStudents(
-        user.id,
-        user.teacher_id,
-        unityId,
-        classroomId,
-        stringDate,
-        disciplineId,
-        classes.join()
-      ).subscribe(
+      this.dailyFrequencyService.getStudents({
+        userId: user.id,
+        teacherId: user.teacher_id,
+        unityId: unityId,
+        classroomId: classroomId,
+        frequencyDate: stringDate,
+        disciplineId: disciplineId,
+        classNumbers: classes.join()
+      }).subscribe(
         (result:any) => {
           this.navCtrl.push(StudentsFrequencyPage, {
               "frequencies": result,

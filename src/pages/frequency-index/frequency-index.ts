@@ -1,3 +1,5 @@
+import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
+import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { ConnectionService } from './../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
@@ -15,7 +17,6 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
   templateUrl: 'frequency-index.html'
 })
 export class FrequencyIndexPage {
-  private user: any;
   shownGroup = null;
   lastFrequencyDays = null;
   emptyFrequencies = false;
@@ -31,7 +32,9 @@ export class FrequencyIndexPage {
     private unitiesPersister: UnitiesPersisterService,
     private alertCtrl: AlertController,
     private offlineDataPersister: OfflineDataPersisterService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
+    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer
   ) {}
 
   ionViewWillEnter(){
@@ -145,18 +148,42 @@ export class FrequencyIndexPage {
 
   doRefresh(refresher) {
     this.auth.currentUser().then((user) => {
-      this.offlineDataPersister.persist(user).subscribe(
-        (result) => {
-        },
-        (error) => {
-          refresher.cancel();
-          this.showErrorAlert()
-        },
-        () => {
-          refresher.complete();
-          this.loadFrequencies()
-        }
-      )
+      this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
+        this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
+          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
+            () => {
+            },
+            (error) => {
+            },
+            () => {
+              this.storage.remove('dailyFrequenciesToSync')
+              this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
+                () => {
+                },
+                (error) => {
+                },
+                () => {
+                  this.storage.remove('dailyFrequencyStudentsToSync')
+                  this.auth.currentUser().then((user) => {
+                    this.offlineDataPersister.persist(user).subscribe(
+                      (result) => {
+                      },
+                      (error) => {
+                        refresher.cancel();
+                        this.showErrorAlert()
+                      },
+                      () => {
+                        refresher.complete();
+                        this.loadFrequencies()
+                      }
+                    )
+                  })
+                }
+              )
+            }
+          )
+        })
+      })
     });
   }
 }

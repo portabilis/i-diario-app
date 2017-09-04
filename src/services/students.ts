@@ -24,15 +24,28 @@ export class StudentsService {
     });
   }
 
-  getOfflineStudents(classroomId, disciplineId){
+  getOfflineGlobalStudents(classroomId){
+     return new Observable((observer) => {
+      this.storage.get('students').then((students) => {
+        students.forEach((student) => {
+          if(student.classroomId == classroomId){
+            observer.next(student)
+          }
+        })
+        observer.complete()
+      })
+    })
+  }
+
+   getOfflineDisciplineStudents(classroomId, disciplineId){
      return new Observable((observer) => {
       this.storage.get('students').then((students) => {
         students.forEach((student) => {
           if(student.classroomId == classroomId && student.disciplineId == disciplineId){
             observer.next(student)
-            observer.complete()
           }
         })
+        observer.complete()
       })
     })
   }

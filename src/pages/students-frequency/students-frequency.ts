@@ -1,3 +1,7 @@
+import { Observable } from 'rxjs/Observable';
+import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
+import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
+import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { Component } from '@angular/core';
@@ -19,13 +23,18 @@ export class StudentsFrequencyPage {
   private classroomId: number = null
   private disciplineId: number = null
   private frequencyDate: string = null
+  private isSavingFrequencies : boolean = false
+  private loadingCount: number = 0
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private dailyFrequencyStudentService: DailyFrequencyStudentService,
     private loadingCtrl: LoadingController,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private storage: Storage,
+    private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
+    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer) {
   }
 
   ionViewDidLoad() {
@@ -45,10 +54,6 @@ export class StudentsFrequencyPage {
   }
 
   updateFrequency(frequency, classNumber = null){
-    const loader = this.loadingCtrl.create({
-      content: "Carregando..."
-    })
-    loader.present();
     this.auth.currentUser().then((user) => {
       const params = {
         id: frequency.id,
@@ -60,17 +65,74 @@ export class StudentsFrequencyPage {
         userId: user.id,
         frequencyDate: this.frequencyDate
       }
-      this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
-        (result) => {
-        },
-        (error) => {
-          console.log(error)
-        },
-        () => {
-          loader.dismiss()
+
+      this.dailyFrequencyStudentService.updateFrequency(params)
+      Observable.forkJoin(
+        Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
+        Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
+      ).subscribe((results) => {
+        console.log("results", results)
+        this.loadingCount++
+        let loadingCountLocal = this.loadingCount
+        this.isSavingFrequencies = true
+        
+        Observable.concat(
+          this.dailyFrequenciesSynchronizer.sync(results[0]),
+          this.dailyFrequencyStudentsSynchronizer.sync(results[1])
+        ).subscribe(
+          () => {
+          },
+          () => {
+          },
+          () => {
+            if (this.loadingCount == loadingCountLocal){
+              this.isSavingFrequencies = false
+              // this.storage.remove('dailyFrequenciesToSync')
+              // this.storage.remove('dailyFrequencyStudentsToSync')
+            }
+          }
+        )
+      })
+
+      // this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
+      //   () => {
+      //   },
+      //   () => {
+      //   },
+      //   () => {
+      // Observable.zip(
+      //   this.dailyFrequencyStudentService.updateFrequency(params),
+      //   Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
+      //   Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
+      // ).subscribe((results) => {
+      //   const dailyFrequenciesToSync = results[0]
+      //   const dailyFrequencyStudentsToSync = results[1]
+      //   this.isSavingFrequencies = true
+      //   console.log('dailyFrequenciesToSync', dailyFrequenciesToSync)
+      //   console.log('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
+      //   this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
+      //     () => {
+      //     },
+      //     (error) => {
+      //     },
+      //     () => {
+      //       this.storage.remove('dailyFrequenciesToSync')
+      //       this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
+      //         () => {
+      //         },
+      //         (error) => {
+      //         },
+      //         () => {
+      //           this.storage.remove('dailyFrequencyStudentsToSync')
+      //           this.isSavingFrequencies = false
+      //         }
+      //       )
+      //     }
+      //   )
+          // })
         }
       )
-    });
+    // })
   }
 
   private mountStudentList(){

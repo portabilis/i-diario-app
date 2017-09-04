@@ -50,6 +50,8 @@ import { LessonPlansPersisterService } from './../services/offline_data_persiste
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
 import { UtilsService } from './../services/utils';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
+import { OfflineClassroomFinder } from './../services/offline_data_finder/classrooms';
+import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 
 @NgModule({
   declarations: [
@@ -120,6 +122,8 @@ import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_syn
     UtilsService,
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
+    OfflineClassroomFinder,
+    OfflineUnityFinder,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

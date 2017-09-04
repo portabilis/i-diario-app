@@ -16,59 +16,39 @@ export class DailyFrequencyStudentService {
   ){}
 
   updateFrequency(frequency){
-    if(this.connection.isOnline){
-      return this.updateOnlineFrequency(frequency)
-    }else{
-      return this.updateOfflineFrequency(frequency)
-    }
-  }
-
-  private updateOnlineFrequency(frequency){
-    const request = this.http.put(this.api.getDailyFrequencyStudentsUrl(frequency.id),
-      {
-        present: frequency.present,
-        user_id: frequency.userId
-      }
-    );
-    return request.map((response: Response) => {
-      return response.json();
-    });
-  }
-
-  private updateOfflineFrequency(frequency){
-    return new Observable((observer) => {
-      this.storage.get('dailyFrequencyStudentsToSync').then((frequenciesToSync) => {
-        this.storage.get('frequencies').then((localFrequencies) => {
-          let existingDailyFrequencyStudentsToSync = frequenciesToSync || []
-          const dailyFrequencyStudentsToSync = existingDailyFrequencyStudentsToSync.concat(frequency)
-          this.storage.set('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
-          this.updateLocalFrequency(frequency, localFrequencies)
-          observer.next()
-          observer.complete()
-        })
+    this.storage.get('dailyFrequencyStudentsToSync').then((frequenciesToSync) => {
+      this.storage.get('frequencies').then((frequencies) => {
+        let existingDailyFrequencyStudentsToSync = frequenciesToSync || []
+        const dailyFrequencyStudentsToSync = existingDailyFrequencyStudentsToSync.concat(frequency)
+        this.storage.set('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
+        this.updateLocalFrequency(frequency, frequencies)
       })
     })
   }
 
   private updateLocalFrequency(frequency, localFrequencies){
     localFrequencies.daily_frequencies.forEach((localFrequency, localFrequencyIndex) => {
-      if(localFrequency.classroom_id == frequency.classroomId &&
-         localFrequency.frequency_date == frequency.frequencyDate &&
-         localFrequency.discipline_id == frequency.disciplineId &&
-         localFrequency.class_number == frequency.classNumber){
+      if (localFrequency.classroom_id == frequency.classroomId &&
+          localFrequency.frequency_date == frequency.frequencyDate &&
+          localFrequency.discipline_id == frequency.disciplineId &&
+          localFrequency.class_number == frequency.classNumber) {
 
-        const localFrequencyFoundIndex = localFrequencyIndex
+        let newLocalFrequency = this.clone(localFrequency)
 
-        localFrequency.students.forEach(student => {
+        newLocalFrequency.students.forEach(student => {
           if(student.student.id == frequency.studentId){
             student.present = frequency.present
           }
         });
 
-        localFrequencies.daily_frequencies[localFrequencyFoundIndex] = localFrequency
+        localFrequencies.daily_frequencies[localFrequencyIndex] = newLocalFrequency
 
         this.storage.set('frequencies', localFrequencies )
       }
     });
+  }
+
+  private clone(object){
+    return JSON.parse(JSON.stringify(object))
   }
 }
