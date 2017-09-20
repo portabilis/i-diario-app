@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { ConnectionService } from './../../services/connection';
@@ -147,43 +148,44 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
-    this.auth.currentUser().then((user) => {
-      this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
-        this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
-          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
-            () => {
-            },
-            (error) => {
-            },
-            () => {
-              this.storage.remove('dailyFrequenciesToSync')
-              this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
-                () => {
-                },
-                (error) => {
-                },
-                () => {
-                  this.storage.remove('dailyFrequencyStudentsToSync')
-                  this.auth.currentUser().then((user) => {
-                    this.offlineDataPersister.persist(user).subscribe(
-                      (result) => {
-                      },
-                      (error) => {
-                        refresher.cancel();
-                        this.showErrorAlert()
-                      },
-                      () => {
-                        refresher.complete();
-                        this.loadFrequencies()
-                      }
-                    )
-                  })
-                }
-              )
-            }
-          )
-        })
-      })
-    });
+    Observable.forkJoin(
+      Observable.fromPromise(this.auth.currentUser()),
+      Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
+      Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
+    ).subscribe(
+      (results) => {
+        let user = results[0]
+        let dailyFrequenciesToSync = results[1] || []
+        let dailyFrequencyStudentsToSync = results[2] || []
+
+
+        Observable.concat(
+          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
+          this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync)
+        ).subscribe(
+          () => {},
+          (error) => {
+            refresher.cancel()
+            this.showErrorAlert()
+          },
+          () => {
+            this.storage.remove('dailyFrequencyStudentsToSync')
+            this.storage.remove('dailyFrequenciesToSync')
+            this.offlineDataPersister.persist(user).subscribe(
+              (result) => {
+              },
+              (error) => {
+                refresher.cancel()
+                this.showErrorAlert()
+              },
+              () => {
+                refresher.complete()
+                this.loadFrequencies()
+              }
+            )
+          }
+        )
+      }
+    )
   }
 }

@@ -7,8 +7,7 @@
     </ion-buttons>
     <ion-buttons end>
       <button ion-button icon-only>
-        <!--<ion-icon name="refresh" class="ion-refreshing"></ion-icon>-->
-        <!--<ion-spinner name="crescent"></ion-spinner>-->
+        <ion-icon name="refresh" [ngClass]="isSavingFrequencies ? 'ion-spin-animation' : ''"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title class="students-frequency-title">Frequência</ion-title>
@@ -17,7 +16,6 @@
 
 <ion-content class="page-content" padding>
   <h3 class="page-content-title">Lista de presença</h3>
-  {{ isSavingFrequencies }}
   <ion-grid>
     <ion-row class="grid-row" *ngFor="let student of students">
       <ion-col>

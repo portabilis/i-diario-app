@@ -16,13 +16,21 @@ export class DailyFrequencyStudentService {
   ){}
 
   updateFrequency(frequency){
-    this.storage.get('dailyFrequencyStudentsToSync').then((frequenciesToSync) => {
-      this.storage.get('frequencies').then((frequencies) => {
-        let existingDailyFrequencyStudentsToSync = frequenciesToSync || []
-        const dailyFrequencyStudentsToSync = existingDailyFrequencyStudentsToSync.concat(frequency)
-        this.storage.set('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
-        this.updateLocalFrequency(frequency, frequencies)
-      })
+    return new Observable((observer) => {
+      Observable.forkJoin(
+        Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
+        Observable.fromPromise(this.storage.get('frequencies'))
+      ).subscribe(
+        (results) => {
+          let existingDailyFrequencyStudentsToSync = results[0] || []
+          let frequencies = results[1] || []
+
+          const dailyFrequencyStudentsToSync = existingDailyFrequencyStudentsToSync.concat(frequency)
+          this.storage.set('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
+          this.updateLocalFrequency(frequency, frequencies)
+          observer.next(dailyFrequencyStudentsToSync)
+          observer.complete()
+        })
     })
   }
 

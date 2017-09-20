@@ -1,4 +1,5 @@
-import { FrequenciesPersisterService } from './frequencies_persister'
+import { GlobalFrequenciesPersisterService } from './global_frequencies_persister';
+import { DisciplineFrequenciesPersisterService } from './discipline_frequencies_persister';
 import { StudentsPersisterService } from './students_persister'
 import { DisciplinesService } from './../disciplines'
 import { Observable } from 'rxjs/Observable'
@@ -10,8 +11,9 @@ export class DisciplinesPersisterService{
   constructor(
     private storage: Storage,
     private disciplines: DisciplinesService,
-    private frequenciesPersister: FrequenciesPersisterService,
-    private studentsPersister: StudentsPersisterService
+    private disciplineFrequenciesPersister: DisciplineFrequenciesPersisterService,
+    private studentsPersister: StudentsPersisterService,
+    private globalFrequenciesPersister: GlobalFrequenciesPersisterService
   ){}
   persist(user, classrooms){
     return new Observable((observer) => {
@@ -25,8 +27,9 @@ export class DisciplinesPersisterService{
       Observable.forkJoin(classroomObservables).subscribe(
         (disciplines) => {
           this.storage.set('disciplines', disciplines)
-          Observable.forkJoin(
-            this.frequenciesPersister.persist(user, disciplines),
+          Observable.concat(
+            this.globalFrequenciesPersister.persist(user, classrooms),
+            this.disciplineFrequenciesPersister.persist(user, disciplines),
             this.studentsPersister.persist(user, disciplines)
           ).subscribe(
             (result) => {

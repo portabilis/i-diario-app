@@ -10,9 +10,7 @@ export class DailyFrequenciesSynchronizer {
     private http: Http,
     private api: ApiService,
     private storage: Storage
-  ){
-
-  }
+  ){}
 
   public sync(dailyFrequencies){
     return new Observable((observer) => {
@@ -28,7 +26,7 @@ export class DailyFrequenciesSynchronizer {
             observer.next(result)
           },
           (error) => {
-            observer.next(error)
+            observer.error(error)
           },
           () => {
             observer.complete()

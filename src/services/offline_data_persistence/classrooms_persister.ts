@@ -24,7 +24,7 @@ export class ClassroomsPersisterService{
         (classrooms) => {
           this.storage.set('classrooms', classrooms)
 
-          Observable.forkJoin(
+          Observable.concat(
             this.examRulesPersister.persist(user, classrooms),
             this.disciplinesPersister.persist(user, classrooms)
           ).subscribe(

@@ -1,3 +1,4 @@
+import { ConnectionService } from './../../services/connection';
 import { Observable } from 'rxjs/Observable';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
@@ -34,7 +35,8 @@ export class StudentsFrequencyPage {
     private auth: AuthService,
     private storage: Storage,
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
-    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer) {
+    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
+    private connection: ConnectionService) {
   }
 
   ionViewDidLoad() {
@@ -66,73 +68,27 @@ export class StudentsFrequencyPage {
         frequencyDate: this.frequencyDate
       }
 
-      this.dailyFrequencyStudentService.updateFrequency(params)
-      Observable.forkJoin(
-        Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-        Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
-      ).subscribe((results) => {
-        console.log("results", results)
-        this.loadingCount++
-        let loadingCountLocal = this.loadingCount
-        this.isSavingFrequencies = true
-        
-        Observable.concat(
-          this.dailyFrequenciesSynchronizer.sync(results[0]),
-          this.dailyFrequencyStudentsSynchronizer.sync(results[1])
-        ).subscribe(
-          () => {
-          },
-          () => {
-          },
-          () => {
-            if (this.loadingCount == loadingCountLocal){
-              this.isSavingFrequencies = false
-              // this.storage.remove('dailyFrequenciesToSync')
-              // this.storage.remove('dailyFrequencyStudentsToSync')
+      this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
+        (dailyFrequencyStudentsToSync) => {
+          if(this.connection.isOnline){
+            this.loadingCount++
+            let loadingCountLocal = this.loadingCount
+            this.isSavingFrequencies = true
+
+            this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
+              () => {
+              },
+              () => {
+              },
+              () => {
+                if (this.loadingCount == loadingCountLocal){
+                  this.isSavingFrequencies = false
+                }
+              })
             }
           }
         )
-      })
-
-      // this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
-      //   () => {
-      //   },
-      //   () => {
-      //   },
-      //   () => {
-      // Observable.zip(
-      //   this.dailyFrequencyStudentService.updateFrequency(params),
-      //   Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-      //   Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
-      // ).subscribe((results) => {
-      //   const dailyFrequenciesToSync = results[0]
-      //   const dailyFrequencyStudentsToSync = results[1]
-      //   this.isSavingFrequencies = true
-      //   console.log('dailyFrequenciesToSync', dailyFrequenciesToSync)
-      //   console.log('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
-      //   this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
-      //     () => {
-      //     },
-      //     (error) => {
-      //     },
-      //     () => {
-      //       this.storage.remove('dailyFrequenciesToSync')
-      //       this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
-      //         () => {
-      //         },
-      //         (error) => {
-      //         },
-      //         () => {
-      //           this.storage.remove('dailyFrequencyStudentsToSync')
-      //           this.isSavingFrequencies = false
-      //         }
-      //       )
-      //     }
-      //   )
-          // })
-        }
-      )
-    // })
+    })
   }
 
   private mountStudentList(){

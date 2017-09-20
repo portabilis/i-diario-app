@@ -21,7 +21,6 @@ export class LessonPlansPersisterService{
         },
         (error) => {
           observer.error(error);
-          console.log(error)
         },
         () => {
           observer.complete()

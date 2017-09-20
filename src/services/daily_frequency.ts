@@ -23,11 +23,7 @@ export class DailyFrequencyService {
   ){}
 
   getStudents(params){
-    // if(this.connection.isOnline){
-    //   return this.getOnlineStudents(params)
-    // }else{
-      return this.getOfflineStudents(params)
-    // }
+    return this.getOfflineStudents(params)
   }
 
   getOnlineStudents(params){
@@ -68,109 +64,41 @@ export class DailyFrequencyService {
         let dailyFrequencies = results[0] ? results[0].daily_frequencies : []
         let dailyFrequenciesToSync = results[1] || []
         let studentList = results[2] || []
-        let classroom:any = results[3]
-        let unity:any = results[4]
+        let classroom:any = results[3] || []
+        let unity:any = results[4] || []
 
         let filteredDailyFrequencies = dailyFrequencies.filter((dailyFrequency) => {
+          return (dailyFrequency.classroom_id == classroomId &&
+                  dailyFrequency.frequency_date == frequencyDate &&
+                  dailyFrequency.discipline_id == null &&
+                  dailyFrequency.class_number == null)
+        })
+
+        if(filteredDailyFrequencies.length == 0){
+          let filteredFrequencies = dailyFrequencies.filter((dailyFrequency) => {
             return (dailyFrequency.classroom_id == classroomId &&
-                    dailyFrequency.frequency_date == frequencyDate &&
                     dailyFrequency.discipline_id == null &&
                     dailyFrequency.class_number == null)
           })
 
-          if(filteredDailyFrequencies.length == 0){
-            let filteredFrequencies = dailyFrequencies.filter((dailyFrequency) => {
-              return (dailyFrequency.classroom_id == classroomId &&
-                      dailyFrequency.discipline_id == null &&
-                      dailyFrequency.class_number == null)
-            })
+          const newFrequencies = this.createOfflineGlobalFrequencies({
+            classroomId: classroomId,
+            classroomDescription: classroom.description,
+            unityId: unityId,
+            unityDescription: unity.description,
+            students: studentList,
+            frequencyDate: frequencyDate
+          })
 
-            const newFrequencies = this.createOfflineGlobalFrequencies({
-              classroomId: classroomId,
-              classroomDescription: classroom.description,
-              unityId: unityId,
-              unityDescription: unity.description,
-              students: studentList,
-              frequencyDate: frequencyDate
-            })
+          filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
+          this.saveOfflineFrequencies(dailyFrequencies, newFrequencies)
+          this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
+        }
 
-            filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
-            this.saveOfflineFrequencies(dailyFrequencies, newFrequencies)
-            this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
-          }
-
-          observer.next({daily_frequency: filteredDailyFrequencies[0]})
-          observer.complete()
+        observer.next({daily_frequency: filteredDailyFrequencies[0]})
+        observer.complete()
 
       })
-    })
-  }
-
-  private saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies){
-    dailyFrequenciesToSync = dailyFrequenciesToSync.concat(newFrequencies)
-    this.storage.set('dailyFrequenciesToSync', dailyFrequenciesToSync)
-  }
-
-  private saveOfflineFrequencies(existingFrequencies, newFrequencies){
-    const offlineFrequencies = existingFrequencies.concat(newFrequencies)
-    this.storage.set('frequencies', { daily_frequencies: offlineFrequencies })
-  }
-
-  private createOfflineGlobalFrequencies(params){
-    const students = params.students.data.classroom_students.map((element) => {
-      return {
-        active: true,
-        daily_frequency_id: null,
-        id: null,
-        present: true,
-        student: { id: element.student.id, name: element.student.name },
-        created_at: null,
-        updated_at: null
-      }
-    })
-
-    return {
-      id: null,
-      class_number: null,
-      classroom_id: params.classroomId,
-      classroom_name: params.classroomDescription,
-      unity_id: params.unityId,
-      unity_name: params.unityDescription,
-      discipline_id: null,
-      frequency_date: params.frequencyDate,
-      students: students,
-      created_at: null,
-      updated_at: null
-    }
-  }
-
-  private createOfflineDisciplineFrequencies(params){
-    const students = params.students.data.classroom_students.map((element) => {
-      return {
-        active: true,
-        daily_frequency_id: null,
-        id: null,
-        present: true,
-        student: { id: element.student.id, name: element.student.name },
-        created_at: null,
-        updated_at: null
-      }
-    })
-
-    return params.classNumbers.map((classNumber) => {
-      return {
-        id: null,
-        class_number: String(classNumber),
-        classroom_id: params.classroomId,
-        classroom_name: params.classroomDescription,
-        unity_id: params.unityId,
-        unity_name: params.unityDescription,
-        discipline_id: params.disciplineId,
-        frequency_date: params.frequencyDate,
-        students: students,
-        created_at: null,
-        updated_at: null
-      }
     })
   }
 
@@ -251,6 +179,74 @@ export class DailyFrequencyService {
     })
   }
 
+  private saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies){
+    dailyFrequenciesToSync = dailyFrequenciesToSync.concat(newFrequencies)
+    this.storage.set('dailyFrequenciesToSync', dailyFrequenciesToSync)
+  }
+
+  private saveOfflineFrequencies(existingFrequencies, newFrequencies){
+    const offlineFrequencies = existingFrequencies.concat(newFrequencies)
+    this.storage.set('frequencies', { daily_frequencies: offlineFrequencies })
+  }
+
+  private createOfflineGlobalFrequencies(params){
+    const students = params.students.data.classroom_students.map((element) => {
+      return {
+        active: true,
+        daily_frequency_id: null,
+        id: null,
+        present: true,
+        student: { id: element.student.id, name: element.student.name },
+        created_at: null,
+        updated_at: null
+      }
+    })
+
+    return {
+      id: null,
+      class_number: null,
+      classroom_id: params.classroomId,
+      classroom_name: params.classroomDescription,
+      unity_id: params.unityId,
+      unity_name: params.unityDescription,
+      discipline_id: null,
+      frequency_date: params.frequencyDate,
+      students: students,
+      created_at: null,
+      updated_at: null
+    }
+  }
+
+  private createOfflineDisciplineFrequencies(params){
+    const students = params.students.data.classroom_students.map((element) => {
+      return {
+        active: true,
+        daily_frequency_id: null,
+        id: null,
+        present: true,
+        student: { id: element.student.id, name: element.student.name },
+        created_at: null,
+        updated_at: null
+      }
+    })
+
+    return params.classNumbers.map((classNumber) => {
+      return {
+        id: null,
+        class_number: String(classNumber),
+        classroom_id: params.classroomId,
+        classroom_name: params.classroomDescription,
+        unity_id: params.unityId,
+        unity_name: params.unityDescription,
+        discipline_id: params.disciplineId,
+        frequency_date: params.frequencyDate,
+        students: students,
+        created_at: null,
+        updated_at: null
+      }
+    })
+  }
+
   private byClassNumber(a,b){
     if (a.class_number > b.class_number) {
       return 1;
@@ -261,7 +257,7 @@ export class DailyFrequencyService {
     return 0;
   }
 
-  getFrequencies(classroomId, disciplineId,teacherId){
+  getFrequencies(classroomId, disciplineId, teacherId){
     const request = this.http.get(this.api.getDailyFrequencyUrl(),
       {
         params: {

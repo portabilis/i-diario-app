@@ -39,15 +39,37 @@ export class DailyFrequencyStudentsSynchronizer {
             observer.next(result)
           },
           (error) => {
-            observer.error()
+            observer.error(error)
           },
           () => {
+            this.deleteDailyFrequencyStudents(dailyFrequencyStudents)
             observer.complete()
           }
         )
       }else{
         observer.complete()
       }
+    })
+  }
+
+  private deleteDailyFrequencyStudents(dailyFrequencyStudents){
+    dailyFrequencyStudents.forEach((dailyFrequencyStudent) => {
+      this.deleteStudentFrequency(dailyFrequencyStudent)
+    });
+  }
+
+  private deleteStudentFrequency(dailyFrequencyStudent){
+    let newDailyFrequencyStudentsToSync = []
+    this.storage.get('dailyFrequencyStudentsToSync').then((localDailyFrequencyStudents) => {
+      newDailyFrequencyStudentsToSync = localDailyFrequencyStudents.filter((localDailyFrequencyStudent) => {
+        return (dailyFrequencyStudent.classNumber != localDailyFrequencyStudent.classNumber ||
+               dailyFrequencyStudent.classroomId != localDailyFrequencyStudent.classroomId ||
+               dailyFrequencyStudent.disciplineId != localDailyFrequencyStudent.disciplineId ||
+               dailyFrequencyStudent.frequencyDate != localDailyFrequencyStudent.frequencyDate ||
+               dailyFrequencyStudent.studentId != localDailyFrequencyStudent.studentId ||
+               dailyFrequencyStudent.present != localDailyFrequencyStudent.present)
+      })
+      this.storage.set('dailyFrequencyStudentsToSync', newDailyFrequencyStudentsToSync)
     })
   }
 }

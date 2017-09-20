@@ -1,7 +1,6 @@
 import { ConnectionService } from './../connection';
 import { TeachingPlansPersisterService } from './teaching_plans_persister';
 import { LessonPlansPersisterService } from './lesson_plans_persister';
-import { FrequenciesPersisterService } from './frequencies_persister';
 import { DisciplinesPersisterService } from './disciplines_persister';
 import { SchoolCalendarsPersisterService } from './school_calendars_persister';
 import { ExamRulesPersisterService } from './exam_rules_persister';
@@ -23,7 +22,6 @@ export class OfflineDataPersisterService {
     private examRulesPersister: ExamRulesPersisterService,
     private schoolCalendarPersister: SchoolCalendarsPersisterService,
     private disciplinePersister: DisciplinesPersisterService,
-    private frequenciesPersister: FrequenciesPersisterService,
     private lessonPlansPersister: LessonPlansPersisterService,
     private teachingPlansPersister: TeachingPlansPersisterService,
     private connectionService: ConnectionService
@@ -39,7 +37,7 @@ export class OfflineDataPersisterService {
   }
 
   persist(user: User){
-    if (this.connectionService.isOnline){
+    if (this.connectionService.isOnline) {
       this.clearStorage();
     }
 
@@ -53,7 +51,6 @@ export class OfflineDataPersisterService {
         },
         (error) => {
           observer.error(error);
-          console.log("Error on persist", error)
         },
         () => {
           observer.complete()

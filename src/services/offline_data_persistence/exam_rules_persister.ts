@@ -28,7 +28,6 @@ export class ExamRulesPersisterService{
         },
         (error) => {
           observer.error(error);
-          console.log(error)
         },
         () => {
           observer.complete()

@@ -41,7 +41,6 @@ import { ClassroomsPersisterService } from './../services/offline_data_persisten
 import { ExamRulesPersisterService } from './../services/offline_data_persistence/exam_rules_persister';
 import { UnitiesPersisterService } from './../services/offline_data_persistence/unities_persister';
 import { DisciplinesPersisterService } from './../services/offline_data_persistence/disciplines_persister';
-import { FrequenciesPersisterService } from './../services/offline_data_persistence/frequencies_persister';
 import { SchoolCalendarsPersisterService } from './../services/offline_data_persistence/school_calendars_persister';
 import { StudentsPersisterService } from './../services/offline_data_persistence/students_persister';
 import { ApiService } from './../services/api';
@@ -52,6 +51,8 @@ import { UtilsService } from './../services/utils';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { OfflineClassroomFinder } from './../services/offline_data_finder/classrooms';
 import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
+import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
+import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,6 @@ import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
     ExamRulesPersisterService,
     SchoolCalendarsPersisterService,
     DisciplinesPersisterService,
-    FrequenciesPersisterService,
     LessonPlansPersisterService,
     TeachingPlansPersisterService,
     StudentsPersisterService,
@@ -124,6 +124,8 @@ import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
     DailyFrequencyStudentsSynchronizer,
     OfflineClassroomFinder,
     OfflineUnityFinder,
+    DisciplineFrequenciesPersisterService,
+    GlobalFrequenciesPersisterService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

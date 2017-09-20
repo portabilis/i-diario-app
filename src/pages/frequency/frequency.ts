@@ -56,7 +56,6 @@ export class FrequencyPage{
   ionViewWillEnter(){
     this.date = new Date().toISOString()
     this.unities = this.navParams.get('unities');
-
     this.emptyUnities = (!this.unities || this.unities.length == 0);
   }
 
