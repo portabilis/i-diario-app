@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs/Observable';
-import { ApiService } from './api';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';

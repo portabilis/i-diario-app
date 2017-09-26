@@ -1,5 +1,4 @@
 import { OfflineUnityFinder } from './offline_data_finder/unities';
-import { Classroom } from './../data/classroom.interface';
 import { OfflineClassroomFinder } from './offline_data_finder/classrooms';
 import { StudentsService } from './students';
 import { Observable } from 'rxjs/Observable';
@@ -75,11 +74,6 @@ export class DailyFrequencyService {
         })
 
         if(filteredDailyFrequencies.length == 0){
-          let filteredFrequencies = dailyFrequencies.filter((dailyFrequency) => {
-            return (dailyFrequency.classroom_id == classroomId &&
-                    dailyFrequency.discipline_id == null &&
-                    dailyFrequency.class_number == null)
-          })
 
           const newFrequencies = this.createOfflineGlobalFrequencies({
             classroomId: classroomId,
@@ -125,11 +119,6 @@ export class DailyFrequencyService {
         })
 
         if(filteredDailyFrequencies.length == 0){
-            let filteredFrequencies = dailyFrequencies.filter((dailyFrequency) => {
-              return (dailyFrequency.classroom_id == classroomId &&
-                      dailyFrequency.discipline_id == disciplineId)
-            })
-
             const newFrequencies = this.createOfflineDisciplineFrequencies({
               classroomId: classroomId,
               classroomDescription: classroom.description,
