@@ -28,7 +28,7 @@ export class DailyFrequencyStudentService {
           const dailyFrequencyStudentsToSync = existingDailyFrequencyStudentsToSync.concat(frequency)
           this.storage.set('dailyFrequencyStudentsToSync', dailyFrequencyStudentsToSync)
           this.updateLocalFrequency(frequency, frequencies)
-          observer.next(dailyFrequencyStudentsToSync)
+          observer.next([frequency])
           observer.complete()
         })
     })

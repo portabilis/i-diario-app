@@ -88,7 +88,6 @@ export class MyApp {
                 synchronizationErrorToast.present()
               },
               () => {
-                this.storage.remove('dailyFrequencyStudentsToSync')
                 isSychronizedToast.present()
               }
             )

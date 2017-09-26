@@ -81,8 +81,8 @@ export class FrequencyIndexPage {
       return this.shownGroup === group;
   };
 
-  private sortDesc(a,b){
-    return b > a
+  private sortDateDesc(a,b){
+    return new Date(b).getTime() - new Date(a).getTime()
   }
 
   private lastTenFrequencies(frequencies) {
@@ -94,11 +94,12 @@ export class FrequencyIndexPage {
       }
     });
 
-    uniqueDates.sort(this.sortDesc)
+    uniqueDates = uniqueDates.sort(this.sortDateDesc)
 
     var lastDays = []
-    uniqueDates.forEach((uniqueDate, index) => {
-      var lastDay = new Date(uniqueDate);
+    const frequencyLimit = 10
+    for (let index = 0; index <= frequencyLimit - 1; index++) {
+      var lastDay = new Date(uniqueDates[index]);
 
       let shortDate = this.utilsService.toStringWithoutTime(lastDay);
       let frequenciesOfDay = this.frequenciesOfDay(frequencies, shortDate);
@@ -109,7 +110,7 @@ export class FrequencyIndexPage {
         exists: frequenciesOfDay.length > 0,
         unities: this.unitiesOfFrequency(frequenciesOfDay)
       };
-    })
+    }
 
     return lastDays;
   }
@@ -157,7 +158,6 @@ export class FrequencyIndexPage {
         let user = results[0]
         let dailyFrequenciesToSync = results[1] || []
         let dailyFrequencyStudentsToSync = results[2] || []
-
 
         Observable.concat(
           this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),

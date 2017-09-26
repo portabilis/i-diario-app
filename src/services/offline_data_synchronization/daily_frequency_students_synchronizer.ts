@@ -1,8 +1,8 @@
-import { ApiService } from './../api';
-import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
-import { Injectable } from '@angular/core';
+import { ApiService } from './../api'
+import { Observable } from 'rxjs/Observable'
+import { Http } from '@angular/http'
+import { Storage } from '@ionic/storage'
+import { Injectable } from '@angular/core'
 
 @Injectable()
 export class DailyFrequencyStudentsSynchronizer {
@@ -29,7 +29,7 @@ export class DailyFrequencyStudentsSynchronizer {
               class_number: dailyFrequencyStudent.classNumber,
               frequency_date: dailyFrequencyStudent.frequencyDate
             }
-          );
+          )
 
           dailyFrequencyStudentObservables.push(request)
         })
@@ -42,7 +42,7 @@ export class DailyFrequencyStudentsSynchronizer {
             observer.error(error)
           },
           () => {
-            this.deleteDailyFrequencyStudents(dailyFrequencyStudents)
+            this.deleteFrequencies(dailyFrequencyStudents)
             observer.complete()
           }
         )
@@ -52,24 +52,25 @@ export class DailyFrequencyStudentsSynchronizer {
     })
   }
 
-  private deleteDailyFrequencyStudents(dailyFrequencyStudents){
-    dailyFrequencyStudents.forEach((dailyFrequencyStudent) => {
-      this.deleteStudentFrequency(dailyFrequencyStudent)
-    });
-  }
-
-  private deleteStudentFrequency(dailyFrequencyStudent){
-    let newDailyFrequencyStudentsToSync = []
+  private deleteFrequencies(dailyFrequencyStudents){
+    let newDailyFrequencyStudents = []
     this.storage.get('dailyFrequencyStudentsToSync').then((localDailyFrequencyStudents) => {
-      newDailyFrequencyStudentsToSync = localDailyFrequencyStudents.filter((localDailyFrequencyStudent) => {
-        return (dailyFrequencyStudent.classNumber != localDailyFrequencyStudent.classNumber ||
-               dailyFrequencyStudent.classroomId != localDailyFrequencyStudent.classroomId ||
-               dailyFrequencyStudent.disciplineId != localDailyFrequencyStudent.disciplineId ||
-               dailyFrequencyStudent.frequencyDate != localDailyFrequencyStudent.frequencyDate ||
-               dailyFrequencyStudent.studentId != localDailyFrequencyStudent.studentId ||
-               dailyFrequencyStudent.present != localDailyFrequencyStudent.present)
+      dailyFrequencyStudents.forEach((dailyFrequencyStudent) => {
+        const foundFrequency = localDailyFrequencyStudents.find((localDailyFrequencyStudent) => {
+          return (dailyFrequencyStudent.classNumber == localDailyFrequencyStudent.classNumber &&
+                  dailyFrequencyStudent.classroomId == localDailyFrequencyStudent.classroomId &&
+                  dailyFrequencyStudent.disciplineId == localDailyFrequencyStudent.disciplineId &&
+                  dailyFrequencyStudent.frequencyDate == localDailyFrequencyStudent.frequencyDate &&
+                  dailyFrequencyStudent.studentId == localDailyFrequencyStudent.studentId)
+        })
+
+        if (!foundFrequency) {
+          newDailyFrequencyStudents.push(dailyFrequencyStudent)
+        }
       })
-      this.storage.set('dailyFrequencyStudentsToSync', newDailyFrequencyStudentsToSync)
+
+      this.storage.set('dailyFrequencyStudentsToSync', newDailyFrequencyStudents)
+
     })
   }
 }
