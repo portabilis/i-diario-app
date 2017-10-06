@@ -22,6 +22,9 @@ import { LessonPlanDetailsPage } from './../pages/lesson-plan-details/lesson-pla
 import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
 import { TeachingPlanDetailsPage } from './../pages/teaching-plan-details/teaching-plan-details';
 import { TeachingPlanIndexPage } from './../pages/teaching-plan-index/teaching-plan-index';
+import { ContentRecordsIndexPage } from './../pages/content-records-index/content-records-index';
+import { ContentRecordFormPage } from './../pages/content-record-form/content-record-form';
+import { NewContentRecordFormPage } from './../pages/new-content-record-form/new-content-record-form';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -33,6 +36,8 @@ import { DisciplinesService } from '../services/disciplines';
 import { SchoolCalendarsService } from './../services/school_calendars';
 import { ConnectionService } from '../services/connection';
 import { LessonPlansService } from './../services/lesson_plans';
+import { ContentLessonPlansService } from './../services/content_lesson_plans';
+import { ContentRecordsService } from './../services/content_records';
 import { TeachingPlansService } from './../services/teaching_plans';
 import { DailyFrequencyStudentService } from '../services/daily_frequency_student';
 import { StudentsService } from './../services/students';
@@ -46,9 +51,12 @@ import { StudentsPersisterService } from './../services/offline_data_persistence
 import { ApiService } from './../services/api';
 import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { LessonPlansPersisterService } from './../services/offline_data_persistence/lesson_plans_persister';
+import { ContentLessonPlansPersisterService } from './../services/offline_data_persistence/content_lesson_plans_persister';
+import { ContentRecordsPersisterService } from './../services/offline_data_persistence/content_records_persister';
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
 import { UtilsService } from './../services/utils';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
+import { ContentRecordsSynchronizer } from '../services/offline_data_synchronization/content_records_synchronizer';
 import { OfflineClassroomFinder } from './../services/offline_data_finder/classrooms';
 import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
@@ -64,6 +72,9 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     AppIndexPage,
     UserIndexPage,
     LessonPlanIndexPage,
+    ContentRecordsIndexPage,
+    ContentRecordFormPage,
+    NewContentRecordFormPage,
     LessonPlanDetailsPage,
     TeachingPlanIndexPage,
     TeachingPlanDetailsPage
@@ -89,6 +100,9 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     AppIndexPage,
     UserIndexPage,
     LessonPlanIndexPage,
+    ContentRecordsIndexPage,
+    ContentRecordFormPage,
+    NewContentRecordFormPage,
     LessonPlanDetailsPage,
     TeachingPlanIndexPage,
     TeachingPlanDetailsPage
@@ -106,6 +120,8 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     DailyFrequencyStudentService,
     ConnectionService,
     LessonPlansService,
+    ContentLessonPlansService,
+    ContentRecordsService,
     TeachingPlansService,
     StudentsService,
     Network,
@@ -116,12 +132,15 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     SchoolCalendarsPersisterService,
     DisciplinesPersisterService,
     LessonPlansPersisterService,
+    ContentLessonPlansPersisterService,
+    ContentRecordsPersisterService,
     TeachingPlansPersisterService,
     StudentsPersisterService,
     ApiService,
     UtilsService,
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
+    ContentRecordsSynchronizer,
     OfflineClassroomFinder,
     OfflineUnityFinder,
     DisciplineFrequenciesPersisterService,

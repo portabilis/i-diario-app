@@ -10,9 +10,13 @@ export class UtilsService {
   ){}
 
   public toStringWithoutTime(date: Date){
-    return date.getUTCFullYear() +
-        '-' + this.pad(date.getUTCMonth() + 1) +
-        '-' + this.pad(date.getUTCDate())
+    return date.getFullYear() +
+        '-' + this.pad(date.getMonth() + 1) +
+        '-' + this.pad(date.getDate());
+  }
+
+  public compareStrings(string1: String, string2: String){
+    return string1.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() == string2.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase();
   }
 
   private pad(number) {

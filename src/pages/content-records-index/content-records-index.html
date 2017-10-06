@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Conteúdos de aula</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="newContentRecordForm()">
+         <img width="50px" src="assets/img/icoAdicionar@3x.png" >
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-content" padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="content-space">
+    <div *ngFor="let contentDay of contentDays; let i=index">
+      <h3 class="content-day">{{contentDay.format_date}}</h3>
+      <div class="accordion-list-border">
+        <ion-list class="accordion-list"
+                    *ngFor="let unity of contentDay.unities; let y=index">
+          <ion-list-header class="accordion-list-header"
+                    no-lines
+                    text-wrap
+                    (click)="toggleGroup(i+''+y)"
+                    [ngClass]="{active: isGroupShown(i+''+y)}">
+            <p>{{ unity.name}}</p>
+            <p class="content-record-header-situation">
+              <span style="float: left;">Situação: </span> <progress max="{{unity.totalRecords}}" value="{{unity.filledRecords}}"></progress> <span class="progress-description">{{ unity.situation_percentage }}%</span>
+            </p>
+          </ion-list-header>
+
+          <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-new-content-record" >
+            <a (click)="newContentRecordForm(contentDay.date, unity.id)">
+              <img class="new-content-icon" src="assets/img/iconPlusCircle@2x.png" > Adicionar novo conteúdo
+            </a>
+          </ion-item>
+
+          <div *ngFor="let unityItem of unity.unityItems;">
+            <ion-item
+              (click)="openContentRecordForm(contentDay.date, unity.id, unityItem.discipline_id, unityItem.classroom_id, unityItem.grade_id, unityItem.description, unityItem.classroom_name, unity.name )"
+              *ngIf="isGroupShown(i+''+y)"
+              class="accordion-list-item accordion-list-content-record-index" >
+
+              <p>{{unityItem.description}} - {{unityItem.classroom_name}}
+              </p>
+              <a style="float: right;" class="text-view">{{unityItem.contents.length}}/{{unityItem.uniqueContents.length}}</a>
+
+            </ion-item>
+          </div>
+        </ion-list>
+      </div>
+    </div>
+    <div *ngIf="!contentDays.length" class="empty-results">
+      <p margin>Nenhum plano de aula encontrado.</p>
+    </div>
+  </div>
+</ion-content>
+

@@ -2,6 +2,7 @@ import { OfflineDataPersisterService } from './../../services/offline_data_persi
 import { AuthService } from './../../services/auth';
 import { TeachingPlanIndexPage } from './../teaching-plan-index/teaching-plan-index';
 import { LessonPlanIndexPage } from './../lesson-plan-index/lesson-plan-index';
+import { ContentRecordsIndexPage } from './../content-records-index/content-records-index';
 import { UserIndexPage } from './../user-index/user-index';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
@@ -14,6 +15,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 })
 export class AppIndexPage {
   tab1: any;
+  tab2: any;
   tab3: any;
   tab4: any;
   tab5: any;
@@ -27,6 +29,7 @@ export class AppIndexPage {
               private _alertCtrl: AlertController
              ){
     this.tab1 = FrequencyIndexPage;
+    this.tab2 = ContentRecordsIndexPage;
     this.tab3 = LessonPlanIndexPage;
     this.tab4 = TeachingPlanIndexPage
     this.tab5 = UserIndexPage;

@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
+import { ContentRecordsSynchronizer } from './../../services/offline_data_synchronization/content_records_synchronizer';
 import { ConnectionService } from './../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
@@ -35,7 +36,8 @@ export class FrequencyIndexPage {
     private offlineDataPersister: OfflineDataPersisterService,
     private connectionService: ConnectionService,
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
-    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer
+    private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
+    private contentRecordsSynchronizer: ContentRecordsSynchronizer
   ) {}
 
   ionViewWillEnter(){
@@ -152,16 +154,19 @@ export class FrequencyIndexPage {
     Observable.forkJoin(
       Observable.fromPromise(this.auth.currentUser()),
       Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-      Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync'))
+      Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
+      Observable.fromPromise(this.storage.get('contentRecordsToSync'))
     ).subscribe(
       (results) => {
-        let user = results[0]
-        let dailyFrequenciesToSync = results[1] || []
-        let dailyFrequencyStudentsToSync = results[2] || []
+        let user = results[0];
+        let dailyFrequenciesToSync = results[1] || [];
+        let dailyFrequencyStudentsToSync = results[2] || [];
+        let contentRecordsToSync = results[3] || [];
 
         Observable.concat(
           this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
-          this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync)
+          this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
+          this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
         ).subscribe(
           () => {},
           (error) => {

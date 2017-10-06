@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons class="button-left">
+      <button ion-button icon-only (click)="goBack()">
+        <img class="img-close" src="assets/img/arrowLeft@3x.png" >
+      </button>
+    </ion-buttons>
+    <p class="title-content-record" text-center>{{displayDate}}</p>
+    <p class="content-record-unity-name" text-center>{{contentRecord.unity_name}}</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-content" id="content-record-form">
+  <div class="details-panel">
+    <p class="content-record-description">{{contentRecord.description}} - {{contentRecord.classroom_name}}</p>
+
+    <ion-list>
+
+      <ion-item *ngFor="let content of contents">
+        <ion-label>{{content.description}}</ion-label>
+        <ion-checkbox [(ngModel)]="content.checked"></ion-checkbox>
+      </ion-item>
+      <form (ngSubmit)="addContent()">
+        <ion-item>
+          <ion-input [(ngModel)]="newContent" name="newContent" placeholder="Adicionar item..."></ion-input>
+           <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+        </ion-item>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>

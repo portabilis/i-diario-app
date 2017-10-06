@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Nova frequência</ion-title>
+    <ion-title>Novo conteúdo</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="goBack()">
@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content class="page-content" id="frequency-page" padding>
-  <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
+  <form #f="ngForm" (ngSubmit)="submitNewContentRecord(f)">
     <div class="form-frequency">
       <div class=form-item *ngIf="unities">
         <h3 class="form-item-title">Qual a escola?</h3>
@@ -45,7 +45,7 @@
           </ion-item>
         </ion-list>
       </div>
-      <div class=form-item *ngIf="!globalAbsence">
+      <div class=form-item *ngIf="disciplines">
         <h3 class="form-item-title">Disciplina</h3>
         <ion-list [(ngModel)]="disciplineId"
                   name="discipline"
@@ -55,17 +55,6 @@
           <ion-item class="form-item-radio-item" *ngFor="let discipline of disciplines" no-lines>
             <ion-label>{{ discipline.description }}</ion-label>
             <ion-radio value="{{discipline.id}}"></ion-radio>
-          </ion-item>
-        </ion-list>
-      </div>
-      <div class=form-item *ngIf="!globalAbsence">
-        <h3 class="form-item-title">Aulas</h3>
-        <ion-list class="itens-checkbox" name="classes">
-          <ion-item class="form-item-check-item" *ngFor="let class of classes;" no-lines>
-            <ion-label class="form-item-check-item-label"> {{ class }}ª</ion-label>
-            <ion-checkbox type="checkbox"
-                          [checked]="selectedClasses.indexOf(class) > -1"
-                          (ionChange)="updateSelectedClasses(class)"></ion-checkbox>
           </ion-item>
         </ion-list>
       </div>
@@ -80,7 +69,7 @@
               ion-button
               block
               *ngIf="!emptyUnities"
-              [disabled]="!f.valid">Carregar lista de frequência</button>
+              [disabled]="!f.valid">Avançar</button>
     </div>
   </form>
 </ion-content>

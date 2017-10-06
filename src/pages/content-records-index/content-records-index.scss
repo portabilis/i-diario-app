@@ -1,0 +1,117 @@
+.page-content {
+    background-color: #F0EBF8;
+    height: 100%;
+}
+
+.toolbar-title {
+    font-size: 24px;
+    font-family: "NunitoBold";
+    padding-right: 10px;
+}
+
+.content-day {
+    font-family: "NunitoRegular";
+    font-size: 18px;
+    color: #868499;
+    padding-left: 12px;
+}
+
+.new-content-icon{
+  width: 25px;
+  margin-right: 10px;
+  vertical-align: bottom;
+}
+
+.content-day:first-of-type {
+    padding-top: 20px;
+}
+
+.accordion-list-content-record-index {
+    background-color: white !important;
+}
+
+.accordion-list-content-record-index p  {
+    float: left;
+    font-size: 16px;
+    width: 80%;
+    color: rgb(63, 61, 77);
+}
+
+.accordion-list-content-record-index a {
+    float: right;
+    background-color: rgb(221, 220, 230);
+    padding: 2px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: "NunitoBold";
+}
+
+.content-space {
+    margin-bottom: 20px;
+}
+
+.accordion-list-new-content-record{
+  background-color: white !important;
+}
+
+.accordion-list-new-content-record a{
+  float: left;
+  font-family: "NunitoBold";
+  font-size: 16px;
+  padding-left: 15px;
+}
+
+.progress, progress[value] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  display:block;
+  height: 5px;
+  &::-webkit-progress-bar {
+    background-color: rgb(221,220,230);
+  }
+  &::-webkit-progress-value {
+    background-color: rgb(63,212,180);
+  }
+}
+
+.progress-description{
+  color: rgb(221,220,230);
+}
+
+progress {
+    border: 0;
+    height: 5px;
+    border-radius: 30px;
+}
+progress::-webkit-progress-bar {
+    border: 0;
+    height: 5px;
+    border-radius: 30px;
+}
+progress::-webkit-progress-value {
+    border: 0;
+    height: 5px;
+    border-radius: 30px;
+}
+progress::-moz-progress-bar {
+    border: 0;
+    height: 5px;
+    border-radius: 30px;
+}
+
+
+p.content-record-header-situation {
+    font-family: "NunitoRegular";
+    font-size: 14px;
+    color: #3f3d4d;
+    background-size: 12px 6px;
+    margin: auto 10px;
+}
+
+p.content-record-header-situation progress {
+    float: left;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 5px;
+}

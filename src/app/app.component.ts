@@ -1,6 +1,8 @@
 import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs/Observable'
 import { DailyFrequencyStudentsSynchronizer } from './../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchronization/daily_frequencies_synchronizer';
+import { ContentRecordsSynchronizer } from './../services/offline_data_synchronization/content_records_synchronizer';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
 import { Platform, ToastController } from 'ionic-angular';
@@ -28,6 +30,7 @@ export class MyApp {
               private auth: AuthService,
               private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
+              private contentRecordsSynchronizer: ContentRecordsSynchronizer,
               private storage: Storage,
               private toastCtrl: ToastController) {
     platform.ready().then(() => {
@@ -88,13 +91,56 @@ export class MyApp {
                 synchronizationErrorToast.present()
               },
               () => {
-                isSychronizedToast.present()
+                isSychronizedToast.present();
+                this.syncOfflineContentRecordsData();
               }
             )
           }
         )
       })
     })
+  }
+
+  private syncOfflineContentRecordsData(){
+    const isSynchronizingToast = this.toastCtrl.create({
+      message: 'Os conteúdos lançados estão sendo sincronizados.',
+      duration: 2000,
+      position: 'middle'
+    });
+
+    const isSychronizedToast = this.toastCtrl.create({
+      message: 'Os conteuídos lançados foram sincronizados com sucesso.',
+      duration: 2000,
+      position: 'middle'
+    });
+
+    const synchronizationErrorToast = this.toastCtrl.create({
+      message: 'Não foi possível sincronizar os conteúdos lançados.',
+      duration: 2000,
+      position: 'middle'
+    });
+
+    Observable.forkJoin(
+      this.auth.currentUser(),
+      this.storage.get('contentRecordsToSync')
+    ).subscribe((result) => {
+      let user = result[0];
+      let contentRecords = result[1];
+      if(!contentRecords || !contentRecords.length ){
+        return;
+      }
+      isSynchronizingToast.present();
+      this.contentRecordsSynchronizer.sync(contentRecords, user['teacher_id']).subscribe(
+        () => {
+        },
+        (error) => {
+          synchronizationErrorToast.present()
+        },
+        () => {
+          isSychronizedToast.present();
+        }
+      );
+    });
   }
 }
 
