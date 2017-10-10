@@ -37,11 +37,12 @@ export class LessonPlanDetailsPage {
       this.unity_name = details.unity_name;
       this.period = details.period;
       this.objectives = details.objectives;
-      this.activities = details.activities;
       this.evaluation = details.evaluation;
       this.bibliography = details.bibliography;
       this.contents = details.contents;
       this.knowledge_areas = details.knowledge_areas;
+
+      this.activities = this.utilsService.convertTextToHtml(details.activities);
       this.period_date = this.periodDate(details.start_at, details.end_at);
     });
   }
