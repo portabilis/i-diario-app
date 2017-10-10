@@ -1,3 +1,4 @@
+import { UtilsService } from './../../services/utils';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -18,11 +19,14 @@ export class LessonPlanDetailsPage {
   bibliography: string;
   contents: string;
   knowledge_areas: string;
+  period_date: string;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private storage: Storage) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private storage: Storage,
+    private utilsService: UtilsService
+  ) {}
 
   ionViewDidLoad() {
     this.lessonPlanId = this.navParams.get('lessonPlanId');
@@ -38,7 +42,14 @@ export class LessonPlanDetailsPage {
       this.bibliography = details.bibliography;
       this.contents = details.contents;
       this.knowledge_areas = details.knowledge_areas;
+      this.period_date = this.periodDate(details.start_at, details.end_at);
     });
+  }
+
+  periodDate(start_at, end_at) {
+    start_at = this.utilsService.toBrazilianFormat(new Date(start_at));
+    end_at = this.utilsService.toBrazilianFormat(new Date(end_at));
+    return start_at + " à " + end_at;
   }
 
   getLessonPlanDetail(lessonPlan){

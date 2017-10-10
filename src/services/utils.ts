@@ -33,6 +33,13 @@ export class UtilsService {
     return date.toLocaleDateString('pt-BR', options);
   }
 
+  public toBrazilianFormat(date: Date) {
+    var options = {
+      year: "numeric", month: "numeric", day: "numeric"
+    };
+    return date.toLocaleDateString('pt-BR', options);
+  }
+
   public showRefreshPageError() {
     let offlineMessage = "";
 
