@@ -19,6 +19,7 @@ export class TeachingPlanDetailsPage {
   bibliography: string;
   contents: string;
   knowledge_areas: string;
+  year: string;
 
   constructor(
     public navCtrl: NavController,
@@ -37,6 +38,7 @@ export class TeachingPlanDetailsPage {
       this.period = details.period;
       this.contents = details.contents;
       this.knowledge_areas = details.knowledge_areas;
+      this.year = details.year;
 
       this.objectives = this.utilsService.convertTextToHtml(details.objectives);
       this.evaluation = this.utilsService.convertTextToHtml(details.evaluation);
