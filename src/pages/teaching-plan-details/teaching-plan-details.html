@@ -28,7 +28,7 @@
     </div>
     <div class="detail">
       <h3 class="detail-title">Objetivos</h3>
-      <p class="detail-text">{{objectives}}</p>
+      <div class="detail-text" [innerHTML]="objectives || '-'"></div>
     </div>
     <div class="detail">
       <h3 class="detail-title">Conteúdos</h3>
@@ -40,15 +40,15 @@
     </div>
     <div class="detail">
       <h3 class="detail-title">Metodologia</h3>
-      <p class="detail-text">{{activities}}</p>
+      <div class="detail-text" [innerHTML]="activities || '-'"></div>
     </div>
     <div class="detail">
       <h3 class="detail-title">Avaliação</h3>
-      <p class="detail-text">{{evaluation}}</p>
+      <div class="detail-text" [innerHTML]="evaluation || '-'"></div>
     </div>
     <div class="detail">
       <h3 class="detail-title">Referências</h3>
-      <p class="detail-text">{{bibliography}}</p>
+      <div class="detail-text" [innerHTML]="bibliography || '-'"></div>
     </div>
   </div>
 </ion-content>
