@@ -20,6 +20,7 @@ export class LessonPlanDetailsPage {
   contents: string;
   knowledge_areas: string;
   period_date: string;
+  opinion: string;
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +44,7 @@ export class LessonPlanDetailsPage {
       this.evaluation = this.utilsService.convertTextToHtml(details.evaluation);
       this.bibliography = this.utilsService.convertTextToHtml(details.bibliography);
       this.activities = this.utilsService.convertTextToHtml(details.activities);
+      this.opinion = this.utilsService.convertTextToHtml(details.opinion);
       this.period_date = this.periodDate(details.start_at, details.end_at);
     });
   }
