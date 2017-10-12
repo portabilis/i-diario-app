@@ -20,12 +20,9 @@
         <ion-label>{{content.description}}</ion-label>
         <ion-checkbox [(ngModel)]="content.checked"></ion-checkbox>
       </ion-item>
-      <form (ngSubmit)="addContent()">
-        <ion-item>
-          <ion-input [(ngModel)]="newContent" name="newContent" placeholder="Adicionar item..."></ion-input>
-           <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
-        </ion-item>
-      </form>
+      <ion-item>
+        <ion-input (change)="addContent()" [(ngModel)]="newContent" name="newContent" placeholder="Adicionar item..."></ion-input>
+      </ion-item>
     </ion-list>
   </div>
 </ion-content>
