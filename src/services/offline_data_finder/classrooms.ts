@@ -11,20 +11,25 @@ export class OfflineClassroomFinder {
 
   find(params){
     return new Observable((observer) => {
-      this.storage.get('classrooms').then((classrooms) => {
+      this.storage.get('classrooms').then((allClassrooms) => {
+        let classrooms = [];
         if (params.unityId) {
-          classrooms = classrooms.filter((classroom) => {
+          classrooms = allClassrooms.filter((classroom) => {
             return classroom.unityId == params.unityId
           })
         }
 
         if (params.classroomId) {
-          classrooms = classrooms[0].data.filter((classroom) => {
-            return classroom.id == params.classroomId
-          })
+          allClassrooms.forEach(d => {
+            d.data.forEach(classroom => {
+              if(classroom.id == params.classroomId){
+                classrooms.push(classroom);
+              }
+            });
+          });
         }
 
-        if (classrooms.length === 1) {
+        if (classrooms.length === 1 || params.classroomId) {
           classrooms = classrooms[0]
         }
 

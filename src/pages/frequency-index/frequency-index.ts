@@ -5,10 +5,12 @@ import { ContentRecordsSynchronizer } from './../../services/offline_data_synchr
 import { ConnectionService } from './../../services/connection';
 import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './../../services/offline_data_persistence/unities_persister';
+import { DailyFrequencyService } from './../../services/daily_frequency';
 import { Storage } from '@ionic/storage';
 import { UtilsService } from './../../services/utils';
 import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
+import { StudentsFrequencyEditPage } from '../students-frequency-edit/students-frequency-edit';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
@@ -22,12 +24,14 @@ export class FrequencyIndexPage {
   shownGroup = null;
   lastFrequencyDays = null;
   emptyFrequencies = false;
+  currentDate: Date = null;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private loadingCtrl: LoadingController,
     private unitiesService: UnitiesService,
+    private dailyFrequencyService: DailyFrequencyService,
     private auth: AuthService,
     private utilsService: UtilsService,
     private storage: Storage,
@@ -54,8 +58,11 @@ export class FrequencyIndexPage {
   }
 
   loadFrequencies() {
+    this.currentDate = new Date();
+    this.currentDate.setHours(0,0,0,0);
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {
+
         this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
@@ -83,35 +90,23 @@ export class FrequencyIndexPage {
       return this.shownGroup === group;
   };
 
-  private sortDateDesc(a,b){
-    return new Date(b).getTime() - new Date(a).getTime()
-  }
-
   private lastTenFrequencies(frequencies) {
 
-    let uniqueDates:any = []
-    frequencies.forEach(frequency => {
-      if(!uniqueDates.includes(frequency.frequency_date)){
-        uniqueDates.push(frequency.frequency_date)
-      }
-    });
-
-    uniqueDates = uniqueDates.sort(this.sortDateDesc)
 
     var lastDays = []
     const frequencyLimit = 10
-    for (let index = 0; index <= frequencyLimit - 1; index++) {
-      var lastDay = new Date(uniqueDates[index]);
 
-      let shortDate = this.utilsService.toStringWithoutTime(lastDay);
+    for (let i = frequencyLimit; i > 0; i--) {
+      let shortDate = this.utilsService.toStringWithoutTime(this.currentDate);
       let frequenciesOfDay = this.frequenciesOfDay(frequencies, shortDate);
 
-      lastDays[index] = {
+      lastDays.push({
         date: shortDate,
-        format_date: this.utilsService.toExtensiveFormat(lastDay),
+        format_date: this.utilsService.toExtensiveFormat(this.currentDate),
         exists: frequenciesOfDay.length > 0,
         unities: this.unitiesOfFrequency(frequenciesOfDay)
-      };
+      });
+      this.currentDate.setDate(this.currentDate.getDate()-1);
     }
 
     return lastDays;
@@ -129,25 +124,86 @@ export class FrequencyIndexPage {
         unities.push({
           id: frequency.unity_id,
           name: frequency.unity_name,
-          classes: this.classesOfUnityFrequency(frequencies, frequency.unity_id)
+          classroomDisciplines: this.classroomDisciplinesOfUnityFrequency(frequencies, frequency.unity_id)
         });
       }
     });
     return unities;
   }
 
-  classesOfUnityFrequency(frequencies, unity_id) {
-    let frequenciesOfUnity = frequencies.filter((frequency) => frequency.unity_id = unity_id);
-    let classes = new Array();
+  classroomDisciplinesOfUnityFrequency(frequencies, unity_id) {
+    let frequenciesOfUnity = frequencies.filter((frequency) => frequency.unity_id == unity_id);
+    let classroomDisciplines = new Array();
     frequenciesOfUnity.forEach(frequency => {
-      if (classes.filter((classroom) => classroom.id == frequency.classroom_id).length == 0) {
-        classes.push({
-          id: frequency.classroom_id,
-          name: frequency.classroom_name
+      let indexOfClassroomDiscipline = -1;
+      classroomDisciplines.forEach((classroomDiscipline, index) => {
+
+          if( classroomDiscipline.classroomId == frequency.classroom_id
+              && classroomDiscipline.disciplineId == frequency.discipline_id){
+            indexOfClassroomDiscipline = index;
+          }
+        }
+      );
+      if (indexOfClassroomDiscipline < 0) {
+        classroomDisciplines.push({
+          classroomId: frequency.classroom_id,
+          classroomName: frequency.classroom_name,
+          disciplineId: frequency.discipline_id,
+          disciplineName: frequency.discipline_name,
+          classNumbers: frequency.class_number ? [frequency.class_number] : []
         });
+      }else if(frequency.class_number){
+        classroomDisciplines[indexOfClassroomDiscipline].classNumbers.push(frequency.class_number);
       }
     });
-    return classes;
+    return classroomDisciplines;
+  }
+
+  loadMoreFrequencies(){
+    const loader = this.loadingCtrl.create({
+      content: "Carregando..."
+    });
+    loader.present();
+    this.storage.get('frequencies').then((frequencies) => {
+      if(frequencies){
+        this.lastFrequencyDays = this.lastFrequencyDays.concat(this.lastTenFrequencies(frequencies.daily_frequencies));
+      }
+
+      loader.dismiss();
+    });
+  }
+
+  editFrequency(unityId, classroomId, stringDate, disciplineId, classes){
+    classes = classes || [];
+    let globalAbsence = !disciplineId;
+
+    const loader = this.loadingCtrl.create({
+      content: "Carregando..."
+    });
+    loader.present();
+    this.auth.currentUser().then((user) => {
+      this.dailyFrequencyService.getStudents({
+        userId: user.id,
+        teacherId: user.teacher_id,
+        unityId: unityId,
+        classroomId: classroomId,
+        frequencyDate: stringDate,
+        disciplineId: disciplineId,
+        classNumbers: classes.join()
+      }).subscribe(
+        (result:any) => {
+          this.navCtrl.push(StudentsFrequencyEditPage, {
+              "frequencies": result,
+              "global": globalAbsence })
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          loader.dismiss();
+        }
+      );
+    });
   }
 
   doRefresh(refresher) {

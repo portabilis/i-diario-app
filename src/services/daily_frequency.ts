@@ -1,5 +1,6 @@
 import { OfflineUnityFinder } from './offline_data_finder/unities';
 import { OfflineClassroomFinder } from './offline_data_finder/classrooms';
+import { OfflineDisciplineFinder } from './offline_data_finder/disciplines';
 import { StudentsService } from './students';
 import { Observable } from 'rxjs/Observable';
 import { ConnectionService } from './connection';
@@ -18,6 +19,7 @@ export class DailyFrequencyService {
     private api: ApiService,
     private studentsService: StudentsService,
     private offlineClassroomFinder: OfflineClassroomFinder,
+    private offlineDisciplineFinder: OfflineDisciplineFinder,
     private offlineUnityFinder: OfflineUnityFinder
   ){}
 
@@ -103,13 +105,15 @@ export class DailyFrequencyService {
         Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
         this.studentsService.getOfflineDisciplineStudents(classroomId, disciplineId),
         this.offlineClassroomFinder.find({classroomId: classroomId}),
+        this.offlineDisciplineFinder.find({disciplineId: disciplineId}),
         this.offlineUnityFinder.find({unityId: unityId})
       ).subscribe((results) => {
         let dailyFrequencies = results[0] ? results[0].daily_frequencies : []
         let dailyFrequenciesToSync = results[1] || []
         let studentList = results[2] || []
         let classroom:any = results[3]
-        let unity:any = results[4]
+        let discipline:any = results[4]
+        let unity:any = results[5]
 
         let filteredDailyFrequencies = dailyFrequencies.filter((dailyFrequency) => {
           return (dailyFrequency.classroom_id == classroomId &&
@@ -125,6 +129,7 @@ export class DailyFrequencyService {
               unityId: unityId,
               unityDescription: unity.description,
               disciplineId: disciplineId,
+              disciplineDescription: discipline.description,
               students: studentList,
               frequencyDate: frequencyDate,
               classNumbers: splitedClassNumbers
@@ -149,6 +154,7 @@ export class DailyFrequencyService {
               unityId: unityId,
               unityDescription: unity.description,
               disciplineId: disciplineId,
+              disciplineDescription: discipline.description,
               students: studentList,
               frequencyDate: frequencyDate,
               classNumbers: missingClasses
@@ -199,6 +205,7 @@ export class DailyFrequencyService {
       unity_id: params.unityId,
       unity_name: params.unityDescription,
       discipline_id: null,
+      discipline_name: null,
       frequency_date: params.frequencyDate,
       students: students,
       created_at: null,
@@ -228,6 +235,7 @@ export class DailyFrequencyService {
         unity_id: params.unityId,
         unity_name: params.unityDescription,
         discipline_id: params.disciplineId,
+        discipline_name: params.disciplineDescription,
         frequency_date: params.frequencyDate,
         students: students,
         created_at: null,

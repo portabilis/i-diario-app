@@ -15,6 +15,7 @@ import { MyApp } from './app.component';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { FrequencyPage } from '../pages/frequency/frequency';
 import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
+import { StudentsFrequencyEditPage } from '../pages/students-frequency-edit/students-frequency-edit';
 import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
 import { UserIndexPage } from './../pages/user-index/user-index';
 import { AppIndexPage } from "../pages/app-index/app-index";
@@ -58,6 +59,7 @@ import { UtilsService } from './../services/utils';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { ContentRecordsSynchronizer } from '../services/offline_data_synchronization/content_records_synchronizer';
 import { OfflineClassroomFinder } from './../services/offline_data_finder/classrooms';
+import { OfflineDisciplineFinder } from './../services/offline_data_finder/disciplines';
 import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
 import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
@@ -68,6 +70,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     SignIn,
     FrequencyPage,
     StudentsFrequencyPage,
+    StudentsFrequencyEditPage,
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
@@ -96,6 +99,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     SignIn,
     FrequencyPage,
     StudentsFrequencyPage,
+    StudentsFrequencyEditPage,
     FrequencyIndexPage,
     AppIndexPage,
     UserIndexPage,
@@ -142,6 +146,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     DailyFrequencyStudentsSynchronizer,
     ContentRecordsSynchronizer,
     OfflineClassroomFinder,
+    OfflineDisciplineFinder,
     OfflineUnityFinder,
     DisciplineFrequenciesPersisterService,
     GlobalFrequenciesPersisterService,

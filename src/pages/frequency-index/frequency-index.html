@@ -40,9 +40,10 @@
               <p>{{unity.name}}</p>
             </ion-list-header>
 
-            <div *ngFor="let classroom of unity.classes;">
-              <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-item-frequency-index" >
-                <p class="view-eye">{{classroom.name}}</p>
+            <div *ngFor="let classroomDiscipline of unity.classroomDisciplines;">
+              <ion-item (click)="editFrequency(unity.id, classroomDiscipline.classroomId, frequencyDay.date, classroomDiscipline.disciplineId, classroomDiscipline.classNumbers)" *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-item-frequency-index" >
+                <p *ngIf="!classroomDiscipline.disciplineId" class="view-eye">{{classroomDiscipline.classroomName}}</p>
+                <p *ngIf="classroomDiscipline.disciplineId" class="view-eye">{{classroomDiscipline.disciplineName}} - {{classroomDiscipline.classroomName}}</p>
               </ion-item>
             </div>
           </ion-list>
@@ -50,4 +51,8 @@
       </div>
     </div>
   </div>
+  <div style="text-align: center;">
+    <button (click)="loadMoreFrequencies()" ion-button>Carregar mais frequências</button>
+  </div>
+
 </ion-content>

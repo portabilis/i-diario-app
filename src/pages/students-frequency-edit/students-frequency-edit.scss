@@ -1,0 +1,214 @@
+.button-left-student-frequency {
+    height: 30px;
+    float: left;
+}
+
+.title-students-frequency-edit {
+  font-family: "NunitoBold";
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.unity-name-students-frequency-edit{
+  font-family: "NunitoRegular";
+  font-size: 14px;
+  line-height: 21px;
+  color: rgb(239, 238, 248);
+}
+
+.date-students-frequency-edit{
+  font-family: "NunitoBold";
+  font-size: 14px;
+  line-height: 21px;
+  color: rgb(239, 238, 248);
+}
+
+.students-frequency-edit-img{
+    width: 97px;
+    height: 51px;
+    display: block;
+    margin: 10px auto 20px;
+    padding-right: 20px;
+}
+
+.img-close-frequency-edit {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 25px;
+}
+
+#students-frequency-edit-page.page-content {
+    background-color: #F0EBF8;
+    padding-top: 10px;
+}
+
+#students-frequency-edit-page{
+  .content-page-section{
+    margin-top: 5px;
+    font-family: "NunitoRegular";
+    font-size: 16px;
+    line-height: 20px;
+    color: rgb(134,132,153);
+    padding-left: 12px;
+  }
+
+  .page-content-title {
+    font-family: "NunitoBold";
+    font-size: 20px;
+    color: #3f3d4d;
+    padding-top: 20px;
+    padding-left: 10px;
+  }
+
+  .grid {
+    background-color: white;
+    margin: 10px 10px 10px 10px;
+    border-radius: 5px;
+    border: 1px solid #dddce6 !important;
+    width: auto !important;
+    padding: 0;
+  }
+
+  .grid-row {
+    border-bottom: 1px solid #dddce6;
+    margin: 0px;
+    padding: 5px 10px;
+  }
+
+  .student-picture {
+    width: 70px;
+  }
+
+  .student-name {
+    font-family: "NunitoBold";
+    font-size: 16px;
+    color: #3f3d4d;
+  }
+
+  .frequency-checkbox {
+      display: flex;
+      border-radius: 5px;
+      background-color: white;
+      margin-top: 5px;
+      margin-bottom: 0px;
+  }
+
+  .frequency-checkbox-item {
+      background-color: #ff8870;
+      border-radius: 5px;
+      height: 40px;
+      width: 48px;
+      margin-right: 5px;
+  }
+
+  .checkbox-icon {
+      visibility: hidden;
+      position: absolute;
+  }
+
+  .frequency-checkbox-item .checkbox-wp .checkbox-icon,
+  .frequency-checkbox-item .checkbox-ios .checkbox-icon,
+  .frequency-checkbox-item .checkbox-md .checkbox-icon {
+      position: absolute !important;
+  }
+
+  .frequency-checkbox-item.item.item-block.item-wp.item-checkbox,
+  .frequency-checkbox-item.item.item-block.item-ios.item-checkbox,
+  .frequency-checkbox-item.item.item-block.item-md.item-checkbox {
+      padding-left: 0px !important;
+  }
+
+  ion-checkbox.checkbox.checkbox-wp,
+  ion-checkbox.checkbox.checkbox-ios,
+  ion-checkbox.checkbox.checkbox-md {
+      margin: 0 !important;
+  }
+
+  .frequency-checkbox-item.item.item-block.item-wp.item-checkbox.item-checkbox-checked,
+  .frequency-checkbox-item.item.item-block.item-ios.item-checkbox.item-checkbox-checked,
+  .frequency-checkbox-item.item.item-block.item-md.item-checkbox.item-checkbox-checked {
+      background-color: #3fd4b4;
+  }
+
+  .frequency-checkbox-item-label {
+      color: white !important;
+      font-family: "NunitoBold";
+      font-size: 16px;
+      width: 100%;
+      margin: 0;
+      text-align: center;
+  }
+
+  .global-frequency .radio-icon {
+      visibility: hidden;
+      position: absolute;
+  }
+
+  .global-frequency {
+      border-radius: 5px;
+      border: 1px solid #dddce6 !important;
+  }
+
+  .global-frequency ion-label {
+      font-size: 16px;
+      font-family: "NunitoRegular";
+      color: #3f3d4d;
+      text-align: center !important;
+      margin: 0 !important;
+      padding: 0 !important;
+  }
+
+  .global-frequency-present {
+      width: 110px;
+      height: 40px;
+  }
+
+  .global-frequency-present.item.item-block.item-wp.item-radio.item-radio-checked,
+  .global-frequency-present.item.item-block.item-ios.item-radio.item-radio-checked,
+  .global-frequency-present.item.item-block.item-md.item-radio.item-radio-checked {
+      background-color: #3fd4b4;
+      border: 0 !important;
+  }
+
+  .global-frequency-present.item.item-block.item-wp.item-radio.item-radio-checked ion-label,
+  .global-frequency-present.item.item-block.item-ios.item-radio.item-radio-checked ion-label,
+  .global-frequency-present.item.item-block.item-md.item-radio.item-radio-checked ion-label,
+  .global-frequency-absent.item.item-block.item-wp.item-radio.item-radio-checked ion-label,
+  .global-frequency-absent.item.item-block.item-ios.item-radio.item-radio-checked ion-label,
+  .global-frequency-absent.item.item-block.item-md.item-radio.item-radio-checked ion-label {
+      font-family: "NunitoBold";
+      color: white !important;
+  }
+
+  .global-frequency-absent {
+      width: 90px;
+      height: 40px;
+
+      margin-left: 10px;
+  }
+
+  .global-frequency-absent.item.item-block.item-wp.item-radio.item-radio-checked,
+  .global-frequency-absent.item.item-block.item-ios.item-radio.item-radio-checked,
+  .global-frequency-absent.item.item-block.item-md.item-radio.item-radio-checked {
+      background-color: #ff8870;
+      border: 0 !important;
+  }
+
+  .global-frequency-absent.item.item-block.item-wp,
+  .global-frequency-present.item.item-block.item-wp {
+      padding: 0 !important;
+  }
+
+  .toolbar-title-md,
+  .toolbar-title-ios {
+      padding: 0;
+  }
+
+  .global-frequency ion-radio.radio.radio-wp {
+      margin: 0 !important;
+      padding: 0 !important;
+  }
+}

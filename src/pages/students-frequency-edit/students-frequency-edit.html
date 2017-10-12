@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons class="button-left-student-frequency">
+      <button ion-button icon-only (click)="goBack()">
+        <img class="img-close-frequency-edit" src="assets/img/arrowLeft@3x.png" >
+      </button>
+    </ion-buttons>
+    <img class="students-frequency-edit-img" src="assets/img/students-frequency-edit/ilustraFrequencia@2x.png">
+    <p class="title-students-frequency-edit" text-center>Lista de Frequência</p>
+    <p class="unity-name-students-frequency-edit" text-center>{{unityName}}</p>
+    <p class="date-students-frequency-edit" text-center>{{formatDate}}</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-content" id="students-frequency-edit-page" padding>
+  <h3 class="content-page-section">Detalhes da Chamada</h3>
+  <div class="details-panel">
+    <div class="detail">
+      <h3 class="detail-title">Turma</h3>
+      <p class="detail-text">{{classroomName}}</p>
+    </div>
+    <div class="detail" *ngIf="disciplineName">
+      <h3 class="detail-title">Disciplina</h3>
+      <p class="detail-text">{{disciplineName}}</p>
+    </div>
+  </div>
+  <h3 class="content-page-section">Lista de Presença</h3>
+  <ion-grid>
+    <ion-row class="grid-row" *ngFor="let student of students">
+      <ion-col>
+        <div class="student-name" text-left>
+          {{student.name || student.student.name}}
+        </div>
+        <ion-list [hidden]="globalAbsence" class="frequency-checkbox" name="classes">
+          <ion-item class="frequency-checkbox-item" *ngFor="let frequency of student.frequencies;let i = index" no-lines>
+            <ion-label class="frequency-checkbox-item-label"> {{ classes[i] }}ª</ion-label>
+            <ion-checkbox type="checkbox"
+                          [(ngModel)]="frequency.present"
+                          (ionChange)="updateFrequency(frequency, i+1)"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <ion-list [hidden]="!globalAbsence"
+                  class="frequency-checkbox"
+                  [(ngModel)]="student.present"
+                  name="classes"
+                  radio-group
+                  no-lines>
+          <ion-item class="global-frequency global-frequency-present">
+            <ion-label>Presente</ion-label>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{student.present}}"
+                       value="true"></ion-radio>
+          </ion-item>
+          <ion-item class="global-frequency global-frequency-absent">
+            <ion-label>Faltou</ion-label>
+            <ion-radio (ionSelect)="updateFrequency(student)"
+                       checked="{{!student.present}}"
+                       value="false"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
