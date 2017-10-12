@@ -60,6 +60,10 @@ export class UtilsService {
     return text.replace(new RegExp('\n', 'g'), "<br />");
   }
 
+  public forceCapitalize(text) {
+    return text.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
+  }
+
   public showGenericToast(message) {
     let toast = this._toastCtrl.create({
       message: message,

@@ -1,3 +1,4 @@
+import { UtilsService } from './../../services/utils';
 import { ConnectionService } from './../../services/connection';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
@@ -33,8 +34,9 @@ export class StudentsFrequencyPage {
     private storage: Storage,
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
-    private connection: ConnectionService) {
-  }
+    private connection: ConnectionService,
+    private utilService: UtilsService
+  ) {}
 
   ionViewDidLoad() {
     this.globalAbsence = this.navParams.get('global')
@@ -91,11 +93,15 @@ export class StudentsFrequencyPage {
   private mountStudentList(){
 
     if(this.globalAbsence){
-      return this.studentsFrequency.students
+      this.studentsFrequency.students.map((student) => {
+        student.student.name = this.utilService.forceCapitalize(student.student.name);
+      });
+      return this.studentsFrequency.students;
     }
 
     let students = this.studentsFrequency[0].students.map((student) => {
-      return student.student
+      student.student.name = this.utilService.forceCapitalize(student.student.name);
+      return student.student;
     })
 
     students.forEach((student) => {
