@@ -21,6 +21,7 @@ export class LessonPlanDetailsPage {
   knowledge_areas: string;
   period_date: string;
   opinion: string;
+  resources: string;
 
   constructor(
     public navCtrl: NavController,
@@ -45,6 +46,7 @@ export class LessonPlanDetailsPage {
       this.bibliography = this.utilsService.convertTextToHtml(details.bibliography);
       this.activities = this.utilsService.convertTextToHtml(details.activities);
       this.opinion = this.utilsService.convertTextToHtml(details.opinion);
+      this.resources = this.utilsService.convertTextToHtml(details.resources);
       this.period_date = this.periodDate(details.start_at, details.end_at);
     });
   }
@@ -52,7 +54,7 @@ export class LessonPlanDetailsPage {
   periodDate(start_at, end_at) {
     start_at = this.utilsService.toBrazilianFormat(new Date(start_at));
     end_at = this.utilsService.toBrazilianFormat(new Date(end_at));
-    return start_at + " à " + end_at;
+    return start_at + " a " + end_at;
   }
 
   getLessonPlanDetail(lessonPlan){
