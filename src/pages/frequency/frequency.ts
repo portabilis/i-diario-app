@@ -1,8 +1,8 @@
 import { User } from './../../data/user.interface';
-import { LoadingController, NavController, NavParams, ToastController } from 'ionic-angular';
+import { LoadingController, NavController, NavParams, ToastController, Content } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 
 import { AuthService } from '../../services/auth';
 import { UnitiesService } from '../../services/unities';
@@ -25,6 +25,9 @@ import { Classroom } from '../../data/classroom.interface';
   templateUrl: 'frequency.html',
 })
 export class FrequencyPage{
+
+  @ViewChild(Content) content: Content;
+
   private unities: Unity[];
   private unityId: number;
   private classrooms: Classroom[];
@@ -51,12 +54,22 @@ export class FrequencyPage{
     private navParams: NavParams,
     private offlineDataPersister: OfflineDataPersisterService,
     private utilsService: UtilsService,
+    private cdr: ChangeDetectorRef,
     public toastCtrl: ToastController){}
 
   ionViewWillEnter(){
-    this.date = new Date().toISOString()
-    this.unities = this.navParams.get('unities');
-    this.emptyUnities = (!this.unities || this.unities.length == 0);
+    if(!this.date){
+      this.date = new Date().toISOString()
+    }
+    if(!this.unities || !this.unities.length){
+      this.unities = this.navParams.get('unities');
+      this.emptyUnities = (!this.unities || this.unities.length == 0);
+    }
+  }
+
+  scrollTo(elementId:string) {
+    let yOffset = document.getElementById(elementId).offsetTop;
+    this.content.scrollTo(0, yOffset, 1000)
   }
 
   onChangeUnity(){
@@ -78,6 +91,8 @@ export class FrequencyPage{
               }
 
               this.classes = this.schoolCalendarsService.getClasses(schoolCalendar.data.number_of_classes);
+              this.cdr.detectChanges();
+              this.scrollTo("frequency-classroom");
             },
             (error) => {
               console.log(error)
@@ -97,7 +112,13 @@ export class FrequencyPage{
   onChangeClassroom(){
     if(!this.classroomId) { return }
     this.disciplineId = null;
+
+    // Apenas limpar o selectedClasses está causando ExpressionChangedAfterItHasBeenCheckedError
+    let _classes = this.classes;
+    this.classes = [];
     this.selectedClasses = [];
+    this.cdr.detectChanges();
+    this.classes = _classes;
 
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
@@ -113,6 +134,8 @@ export class FrequencyPage{
               (result: any) => {
                 this.disciplines = result.data;
                 this.globalAbsence = false;
+                this.cdr.detectChanges();
+                this.scrollTo("frequency-discipline");
               },
               (error) => {
                 console.log(error)
@@ -124,6 +147,8 @@ export class FrequencyPage{
           }else{
             this.globalAbsence = true;
             loader.dismiss()
+            this.cdr.detectChanges();
+            this.scrollTo("frequency-date");
           }
         },
         (error) => {
@@ -131,6 +156,10 @@ export class FrequencyPage{
         }
       )
     })
+  }
+
+  onChangeDiscipline(){
+    this.scrollTo("frequency-classes");
   }
 
   frequencyForm(form: NgForm){

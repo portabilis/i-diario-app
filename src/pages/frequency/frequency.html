@@ -31,7 +31,7 @@
       <div *ngIf="emptyUnities" class="empty-results">
         <p margin>Nenhuma escola encontrada.</p>
       </div>
-      <div class=form-item *ngIf="classrooms">
+      <div class=form-item *ngIf="classrooms" id="frequency-classroom">
         <h3 class="form-item-title">Turma</h3>
         <ion-list [(ngModel)]="classroomId"
                   name="classroom"
@@ -45,7 +45,7 @@
           </ion-item>
         </ion-list>
       </div>
-      <div class=form-item *ngIf="!globalAbsence">
+      <div class=form-item *ngIf="!globalAbsence" id="frequency-discipline">
         <h3 class="form-item-title">Disciplina</h3>
         <ion-list [(ngModel)]="disciplineId"
                   name="discipline"
@@ -58,7 +58,7 @@
           </ion-item>
         </ion-list>
       </div>
-      <div class=form-item *ngIf="!globalAbsence">
+      <div class=form-item *ngIf="!globalAbsence" id="frequency-classes">
         <h3 class="form-item-title">Aulas</h3>
         <ion-list class="itens-checkbox" name="classes">
           <ion-item class="form-item-check-item" *ngFor="let class of classes;" no-lines>
@@ -69,7 +69,7 @@
           </ion-item>
         </ion-list>
       </div>
-      <div class=form-item *ngIf="classrooms">
+      <div class=form-item *ngIf="classrooms" id="frequency-date">
         <h3 class="form-item-title">Data</h3>
         <div class="date-frequency">
           <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date" name="date"></ion-datetime>
@@ -80,7 +80,7 @@
               ion-button
               block
               *ngIf="!emptyUnities"
-              [disabled]="!f.valid">Carregar lista de frequência</button>
+              [disabled]="!f.valid || (!globalAbsence && !selectedClasses.length)">Carregar lista de frequência</button>
     </div>
   </form>
 </ion-content>
