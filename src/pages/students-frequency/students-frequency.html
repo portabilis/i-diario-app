@@ -27,7 +27,7 @@
             <ion-label class="frequency-checkbox-item-label"> {{ classes[i] }}ª</ion-label>
             <ion-checkbox type="checkbox"
                           [(ngModel)]="frequency.present"
-                          (ionChange)="updateFrequency(frequency, i+1)"></ion-checkbox>
+                          (ionChange)="updateFrequency(frequency, classes[i])"></ion-checkbox>
           </ion-item>
         </ion-list>
         <ion-list [hidden]="!globalAbsence"
