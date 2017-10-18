@@ -52,12 +52,12 @@ export class StudentsFrequencyEditPage {
       this.studentsFrequency = this.navParams.get('frequencies').daily_frequencies
     }
 
-    this.students = this.mountStudentList();
     this.classes = this.mountClassNumbers();
     this.setCurrentClassroom();
     this.setCurrentDiscipline();
     this.setCurrentUnity();
     this.setCurrentFrequencyDate();
+    this.students = this.mountStudentList();
     let date = new Date(this.frequencyDate);
     date.setHours(24,0,0,0);
     this.formatDate = this.utilsService.toBrazilianFormat(date);
@@ -99,27 +99,45 @@ export class StudentsFrequencyEditPage {
     })
   }
 
+  private sortStudents(studentA, studentB){
+    if(studentA.sequence > studentB.sequence){
+      return 1;
+    }else if(studentA.sequence < studentB.sequence){
+      return -1;
+    }else if((studentA.name||studentA.student.name).toUpperCase() > (studentB.name||studentB.student.name).toUpperCase()){
+      return 1;
+    }else if((studentA.name||studentA.student.name).toUpperCase() < (studentB.name||studentB.student.name).toUpperCase()){
+      return -1;
+    }else{
+      return 0;
+    }
+  }
+
   private mountStudentList(){
+    let students = [];
 
     if(this.globalAbsence){
-      return this.studentsFrequency.students
-    }
+      students = this.studentsFrequency.students;
+    }else{
+      students = this.studentsFrequency[0].students.map((student) => {
+        let obj = student.student;
+        obj.sequence = student['sequence'];
+        return obj;
+      });
 
-    let students = this.studentsFrequency[0].students.map((student) => {
-      return student.student
-    })
-
-    students.forEach((student) => {
-      let studentFrequencies = []
-      this.studentsFrequency.forEach((dailyFrequency) => {
-        dailyFrequency.students.map((dailyFrequencyStudent) => {
-          if(dailyFrequencyStudent.student.id == student.id){
-            studentFrequencies.push(dailyFrequencyStudent)
-          }
+      students.forEach((student) => {
+        let studentFrequencies = []
+        this.studentsFrequency.forEach((dailyFrequency) => {
+          dailyFrequency.students.map((dailyFrequencyStudent) => {
+            if(dailyFrequencyStudent.student.id == student.id){
+              studentFrequencies.push(dailyFrequencyStudent)
+            }
+          })
         })
-      })
-      student["frequencies"] = JSON.parse(JSON.stringify(studentFrequencies))
-    });
+        student["frequencies"] = JSON.parse(JSON.stringify(studentFrequencies))
+      });
+    }
+    students = students.sort(this.sortStudents);
 
     return students
   }

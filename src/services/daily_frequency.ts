@@ -193,7 +193,8 @@ export class DailyFrequencyService {
         present: true,
         student: { id: element.student.id, name: element.student.name },
         created_at: null,
-        updated_at: null
+        updated_at: null,
+        sequence: element.sequence
       }
     })
 
@@ -215,6 +216,7 @@ export class DailyFrequencyService {
 
   private createOfflineDisciplineFrequencies(params){
     const students = params.students.data.classroom_students.map((element) => {
+      console.log(element);
       return {
         active: true,
         daily_frequency_id: null,
@@ -222,7 +224,8 @@ export class DailyFrequencyService {
         present: true,
         student: { id: element.student.id, name: element.student.name },
         created_at: null,
-        updated_at: null
+        updated_at: null,
+        sequence: element.sequence
       }
     })
 
