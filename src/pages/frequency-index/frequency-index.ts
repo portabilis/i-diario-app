@@ -45,7 +45,9 @@ export class FrequencyIndexPage {
   ) {}
 
   ionViewWillEnter(){
-    this.loadFrequencies();
+    if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"){
+      this.loadFrequencies();
+    }
   }
 
   showErrorAlert() {
@@ -156,6 +158,19 @@ export class FrequencyIndexPage {
         classroomDisciplines[indexOfClassroomDiscipline].classNumbers.push(frequency.class_number);
       }
     });
+
+    classroomDisciplines = classroomDisciplines.sort((cd1, cd2) => {
+      let desc1 = this.utilsService.comparableString(cd1.classroomName + cd1.disciplineName);
+      let desc2 = this.utilsService.comparableString(cd2.classroomName + cd2.disciplineName);
+      if(desc1 > desc2){
+        return 1;
+      }else if(desc2 > desc1){
+        return -1;
+      }else{
+        return 0;
+      }
+    });
+
     return classroomDisciplines;
   }
 

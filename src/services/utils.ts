@@ -16,7 +16,11 @@ export class UtilsService {
   }
 
   public compareStrings(string1: String, string2: String){
-    return string1.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() == string2.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase();
+    return this.comparableString(string1) == this.comparableString(string2);
+  }
+
+  public comparableString(string: String){
+    return string.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase();
   }
 
   private pad(number) {

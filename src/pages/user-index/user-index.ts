@@ -4,6 +4,7 @@ import { App, AlertController } from 'ionic-angular';
 import { AuthService } from './../../services/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -22,8 +23,18 @@ export class UserIndexPage {
   ) {}
 
   exit() {
-    this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
-      if (dailyFrequencyStudentsToSync) {
+    Observable.forkJoin(
+      Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
+      Observable.fromPromise(this.storage.get('contentRecordsToSync'))
+    ).subscribe(
+      (results) => {
+        let dailyFrequencyStudentsToSync = results[0];
+        let contentRecordsToSync = results[1] || [];
+
+      if (
+          (dailyFrequencyStudentsToSync && dailyFrequencyStudentsToSync.length) ||
+          (contentRecordsToSync && contentRecordsToSync.length)
+        ) {
         this.showConfirmExit();
       } else {
         this.logout();
