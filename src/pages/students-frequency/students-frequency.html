@@ -20,7 +20,7 @@
     <ion-row class="grid-row" *ngFor="let student of students">
       <ion-col>
         <div class="student-name" text-left>
-          {{student.name || student.student.name}}
+          {{student.name || student.student.name | capitalize }}
         </div>
         <ion-list [hidden]="globalAbsence" class="frequency-checkbox" name="classes">
           <ion-item class="frequency-checkbox-item" *ngFor="let frequency of student.frequencies;let i = index" no-lines>
