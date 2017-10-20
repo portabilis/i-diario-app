@@ -12,20 +12,22 @@ import { Network } from '@ionic-native/network';
 
 //Pages
 import { MyApp } from './app.component';
-import { SignIn } from '../pages/sign-in/sign-in';
-import { FrequencyPage } from '../pages/frequency/frequency';
-import { StudentsFrequencyPage } from '../pages/students-frequency/students-frequency';
-import { StudentsFrequencyEditPage } from '../pages/students-frequency-edit/students-frequency-edit';
-import { FrequencyIndexPage } from "../pages/frequency-index/frequency-index";
-import { UserIndexPage } from './../pages/user-index/user-index';
-import { AppIndexPage } from "../pages/app-index/app-index";
-import { LessonPlanDetailsPage } from './../pages/lesson-plan-details/lesson-plan-details';
-import { LessonPlanIndexPage } from './../pages/lesson-plan-index/lesson-plan-index';
-import { TeachingPlanDetailsPage } from './../pages/teaching-plan-details/teaching-plan-details';
-import { TeachingPlanIndexPage } from './../pages/teaching-plan-index/teaching-plan-index';
-import { ContentRecordsIndexPage } from './../pages/content-records-index/content-records-index';
-import { ContentRecordFormPage } from './../pages/content-record-form/content-record-form';
-import { NewContentRecordFormPage } from './../pages/new-content-record-form/new-content-record-form';
+
+// modules
+import { SignInModule } from '../pages/sign-in/sign-in.module';
+import { FrequencyModule } from '../pages/frequency/frequency.module';
+import { AppIndexPageModule } from '../pages/app-index/app-index.module';
+import { StudentsFrequencyModule } from '../pages/students-frequency/students-frequency.module';
+import { StudentsFrequencyEditModule } from '../pages/students-frequency-edit/students-frequency-edit.module';
+import { FrequencyIndexPageModule } from "../pages/frequency-index/frequency-index.module";
+import { UserIndexPageModule } from './../pages/user-index/user-index.module';
+import { LessonPlanDetailsPageModule } from './../pages/lesson-plan-details/lesson-plan-details.module';
+import { LessonPlanIndexPageModule } from './../pages/lesson-plan-index/lesson-plan-index.module';
+import { TeachingPlanDetailsPageModule } from './../pages/teaching-plan-details/teaching-plan-details.module';
+import { TeachingPlanIndexPageModule } from './../pages/teaching-plan-index/teaching-plan-index.module';
+import { ContentRecordsIndexPageModule } from './../pages/content-records-index/content-records-index.module';
+import { ContentRecordFormPageModule } from './../pages/content-record-form/content-record-form.module';
+import { NewContentRecordFormModule } from './../pages/new-content-record-form/new-content-record-form.module';
 
 //Services
 import { AuthService } from '../services/auth';
@@ -66,21 +68,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
 
 @NgModule({
   declarations: [
-    MyApp,
-    SignIn,
-    FrequencyPage,
-    StudentsFrequencyPage,
-    StudentsFrequencyEditPage,
-    FrequencyIndexPage,
-    AppIndexPage,
-    UserIndexPage,
-    LessonPlanIndexPage,
-    ContentRecordsIndexPage,
-    ContentRecordFormPage,
-    NewContentRecordFormPage,
-    LessonPlanDetailsPage,
-    TeachingPlanIndexPage,
-    TeachingPlanDetailsPage
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -88,6 +76,20 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
       backButtonText: ""
     }),
     HttpModule,
+    AppIndexPageModule,
+    SignInModule,
+    FrequencyModule,
+    StudentsFrequencyModule,
+    StudentsFrequencyEditModule,
+    FrequencyIndexPageModule,
+    UserIndexPageModule,
+    LessonPlanDetailsPageModule,
+    LessonPlanIndexPageModule,
+    TeachingPlanDetailsPageModule,
+    TeachingPlanIndexPageModule,
+    ContentRecordsIndexPageModule,
+    ContentRecordFormPageModule,
+    NewContentRecordFormModule,
     IonicStorageModule.forRoot({
       name: '__appfrequencia',
          driverOrder: ['indexeddb']
@@ -95,21 +97,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    SignIn,
-    FrequencyPage,
-    StudentsFrequencyPage,
-    StudentsFrequencyEditPage,
-    FrequencyIndexPage,
-    AppIndexPage,
-    UserIndexPage,
-    LessonPlanIndexPage,
-    ContentRecordsIndexPage,
-    ContentRecordFormPage,
-    NewContentRecordFormPage,
-    LessonPlanDetailsPage,
-    TeachingPlanIndexPage,
-    TeachingPlanDetailsPage
+    MyApp
   ],
   providers: [
     StatusBar,

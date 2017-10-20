@@ -225,7 +225,6 @@ export class DailyFrequencyService {
 
   private createOfflineDisciplineFrequencies(params){
     const students = params.students.data.classroom_students.map((element) => {
-      console.log(element);
       return {
         active: true,
         daily_frequency_id: null,
