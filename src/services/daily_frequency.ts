@@ -9,6 +9,7 @@ import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
+import { DailyFrequenciesSynchronizer } from './offline_data_synchronization/daily_frequencies_synchronizer';
 
 @Injectable()
 export class DailyFrequencyService {
@@ -20,7 +21,8 @@ export class DailyFrequencyService {
     private studentsService: StudentsService,
     private offlineClassroomFinder: OfflineClassroomFinder,
     private offlineDisciplineFinder: OfflineDisciplineFinder,
-    private offlineUnityFinder: OfflineUnityFinder
+    private offlineUnityFinder: OfflineUnityFinder,
+    private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer
   ){}
 
   getStudents(params){
@@ -96,6 +98,10 @@ export class DailyFrequencyService {
 
       })
     })
+  }
+
+  private synchronizeDailyFrequencies(dailyFrequencies){
+    this.dailyFrequenciesSynchronizer.sync(dailyFrequencies).subscribe();
   }
 
   private getOfflineStudentsDisciplineAbsence(classroomId, unityId, disciplineId, splitedClassNumbers, frequencyDate){
@@ -177,6 +183,9 @@ export class DailyFrequencyService {
   private saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies){
     dailyFrequenciesToSync = dailyFrequenciesToSync.concat(newFrequencies)
     this.storage.set('dailyFrequenciesToSync', dailyFrequenciesToSync)
+    if(this.connection.isOnline){
+      this.synchronizeDailyFrequencies(newFrequencies);
+    }
   }
 
   private saveOfflineFrequencies(existingFrequencies, newFrequencies){
