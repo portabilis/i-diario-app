@@ -45,7 +45,8 @@ export class FrequencyIndexPage {
   ) {}
 
   ionViewWillEnter(){
-    if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"){
+    if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
+        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
       this.loadFrequencies();
     }
   }

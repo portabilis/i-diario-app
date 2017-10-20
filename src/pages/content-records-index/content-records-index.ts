@@ -121,29 +121,16 @@ export class ContentRecordsIndexPage {
         });
 
         (teachingPlans['unities']||[]).forEach(teachingPlanUnity => {
-          console.log('currentday');
-          console.log(currentDate);
 
-          console.log('unities');
-          console.log(unities);
-          console.log("teachingPlanUnity.unity_id");
-          console.log(teachingPlanUnity.unity_id);
           let unityIndex = unities.map(d=> parseInt(d['id'])).indexOf(parseInt(teachingPlanUnity.unity_id));
-          console.log(unityIndex);
 
           teachingPlanUnity.plans.forEach(teachingPlan => {
-
-
-
 
             if(unityIndex >= 0){
 
               this.getClassroomsByGradeAndUnity(classrooms, teachingPlanUnity.unity_id, teachingPlan.grade_id).forEach(classroom => {
                 let description = teachingPlan.description + ' - ' + classroom.description;
                 let unityItemIndex = unities[unityIndex].unityItems.map(d=>d.description+' - '+d.classroom_name).indexOf(description);
-
-                console.log(unityItemIndex);
-                console.log(unities[unityIndex].unityItems[unityItemIndex]);
 
                 if(unityItemIndex >=0){
 
