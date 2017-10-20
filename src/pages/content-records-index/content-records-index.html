@@ -26,9 +26,9 @@
                     (click)="toggleGroup(i+''+y)"
                     [ngClass]="{active: isGroupShown(i+''+y)}">
             <p>{{ unity.name}}</p>
-            <p class="content-record-header-situation">
+            <!--p class="content-record-header-situation">
               <span style="float: left;">Situação: </span> <progress max="{{unity.totalRecords}}" value="{{unity.filledRecords}}"></progress> <span class="progress-description">{{ unity.situation_percentage }}%</span>
-            </p>
+            </p-->
           </ion-list-header>
 
           <ion-item *ngIf="isGroupShown(i+''+y)" class="accordion-list-item accordion-list-new-content-record" >
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div *ngIf="!contentDays.length" class="empty-results">
-      <p margin>Nenhum plano de aula encontrado.</p>
+      <p margin>Nenhum conteúdo encontrado.</p>
     </div>
   </div>
 </ion-content>

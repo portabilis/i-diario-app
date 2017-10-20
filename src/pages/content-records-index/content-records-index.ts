@@ -108,72 +108,52 @@ export class ContentRecordsIndexPage {
 
           if(currentDate >= startAt && currentDate <= endAt){
             let unityIndex = unities.map(d=> d['id']).indexOf(lessonPlan.unity_id);
-            if(unityIndex < 0){
-              unities.push({
-                id: lessonPlan.unity_id,
-                name: lessonPlan.unity_name,
-                filledRecords: 0,
-                totalRecords: 0,
-                unityItems: []
-              });
-              unityIndex = unities.length-1;
+            if(unityIndex >= 0){
+              let description = lessonPlan.description + ' - ' + lessonPlan.classroom_name;
+              let unityItemIndex = unities[unityIndex].unityItems.map(d=>d.description+' - '+d.classroom_name).indexOf(description);
+              if(unityItemIndex >= 0 ){
+                unities[unityIndex].unityItems[unityItemIndex].plannedContents = unities[unityIndex].unityItems[unityItemIndex].plannedContents.concat(lessonPlan.contents);
+              }
             }
 
-            let description = lessonPlan.description + ' - ' + lessonPlan.classroom_name;
-            let unityItemIndex = unities[unityIndex].unityItems.map(d=>d.description+' - '+d.classroom_name).indexOf(description);
-            if(unityItemIndex < 0 ){
-              unities[unityIndex]['totalRecords']++;
-              unities[unityIndex].unityItems.push({
-                discipline_id: lessonPlan.discipline_id,
-                classroom_id: lessonPlan.classroom_id,
-                grade_id: lessonPlan.grade_id,
-                description: lessonPlan.description,
-                classroom_name: lessonPlan.classroom_name,
-                contents: [],
-                plannedContents: lessonPlan.contents
-              });
-            }else{
-              unities[unityIndex].unityItems[unityItemIndex].plannedContents = unities[unityIndex].unityItems[unityItemIndex].plannedContents.concat(lessonPlan.contents);
-            }
+
           }
         });
 
         (teachingPlans['unities']||[]).forEach(teachingPlanUnity => {
-          let unityIndex = unities.map(d=> d['id']).indexOf(teachingPlanUnity.unity_id);
+          console.log('currentday');
+          console.log(currentDate);
+
+          console.log('unities');
+          console.log(unities);
+          console.log("teachingPlanUnity.unity_id");
+          console.log(teachingPlanUnity.unity_id);
+          let unityIndex = unities.map(d=> parseInt(d['id'])).indexOf(parseInt(teachingPlanUnity.unity_id));
+          console.log(unityIndex);
 
           teachingPlanUnity.plans.forEach(teachingPlan => {
 
 
-            if(unityIndex < 0){
-              unities.push({
-                id: teachingPlanUnity.unity_id,
-                name: teachingPlanUnity.unity_name,
-                filledRecords: 0,
-                totalRecords: 0,
-                unityItems: []
+
+
+            if(unityIndex >= 0){
+
+              this.getClassroomsByGradeAndUnity(classrooms, teachingPlanUnity.unity_id, teachingPlan.grade_id).forEach(classroom => {
+                let description = teachingPlan.description + ' - ' + classroom.description;
+                let unityItemIndex = unities[unityIndex].unityItems.map(d=>d.description+' - '+d.classroom_name).indexOf(description);
+
+                console.log(unityItemIndex);
+                console.log(unities[unityIndex].unityItems[unityItemIndex]);
+
+                if(unityItemIndex >=0){
+
+                  if(!unities[unityIndex].unityItems[unityItemIndex].plannedContents || !unities[unityIndex].unityItems[unityItemIndex].plannedContents.length){
+
+                    unities[unityIndex].unityItems[unityItemIndex].plannedContents = unities[unityIndex].unityItems[unityItemIndex].plannedContents.concat(teachingPlan.contents);
+                  }
+                }
               });
-              unityIndex = unities.length-1;
             }
-
-            this.getClassroomsByGradeAndUnity(classrooms, teachingPlanUnity.unity_id, teachingPlan.grade_id).forEach(classroom => {
-              let description = teachingPlan.description + ' - ' + classroom.description;
-              let unityItemIndex = unities[unityIndex].unityItems.map(d=>d.description+' - '+d.classroom_name).indexOf(description);
-
-              if(unityItemIndex < 0 ){
-                unities[unityIndex]['totalRecords']++;
-                unities[unityIndex].unityItems.push({
-                  discipline_id: teachingPlan.discipline_id,
-                  classroom_id: classroom.id,
-                  grade_id: teachingPlan.grade_id,
-                  description: teachingPlan.description,
-                  classroom_name: classroom.description,
-                  contents: [],
-                  plannedContents: teachingPlan.contents
-                });
-              }else if(!unities[unityIndex].unityItems[unityItemIndex].plannedContents || !unities[unityIndex].unityItems[unityItemIndex].plannedContents.length){
-                unities[unityIndex].unityItems[unityItemIndex].plannedContents = unities[unityIndex].unityItems[unityItemIndex].plannedContents.concat(teachingPlan.contents);
-              }
-            });
           });
         });
 
