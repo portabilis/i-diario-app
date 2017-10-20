@@ -60,6 +60,7 @@ export class FrequencyIndexPage {
   }
 
   loadFrequencies() {
+    this.shownGroup = null;
     this.currentDate = new Date();
     this.currentDate.setHours(0,0,0,0);
     this.storage.get('frequencies').then((frequencies) => {

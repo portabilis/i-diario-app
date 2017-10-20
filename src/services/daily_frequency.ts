@@ -90,7 +90,7 @@ export class DailyFrequencyService {
 
           filteredDailyFrequencies = filteredDailyFrequencies.concat(newFrequencies)
           this.saveOfflineFrequencies(dailyFrequencies, newFrequencies)
-          this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, newFrequencies)
+          this.saveOfflineFrequenciesToSync(dailyFrequenciesToSync, [newFrequencies])
         }
 
         observer.next({daily_frequency: filteredDailyFrequencies[0]})
