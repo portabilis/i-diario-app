@@ -54,6 +54,14 @@ export class ApiService {
         {value: "https://***REMOVED***", name: "Treinamento 1"},
         {value: "https://***REMOVED***", name: "Treinamento 2"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***-sp.***REMOVED***.com.br", name: "***REMOVED*** - SP"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED***", name: "***REMOVED***"},
+        {value: "https://***REMOVED******REMOVED***", name: "***REMOVED***"}
      ];
 
   constructor(

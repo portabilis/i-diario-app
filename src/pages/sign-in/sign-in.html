@@ -14,7 +14,7 @@
       <ion-list>
         <ion-item class="inputs">
           <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" id="serverUrl" required>
-            <ion-option *ngFor="let city of cities" value={{city.value}}>
+            <ion-option *ngFor="let city of cities | sort:'name'" value={{city.value}}>
               {{ city.name }}
             </ion-option>
           </ion-select>
