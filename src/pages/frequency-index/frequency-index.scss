@@ -3,10 +3,15 @@
     height: 100%;
 }
 
+ion-title.title.title-ios{
+  padding: 0 12px;
+}
+
 .toolbar-title {
     font-size: 24px;
     font-family: "NunitoBold";
     padding-right: 10px;
+    overflow: visible;
 }
 
 .frequency-day {
