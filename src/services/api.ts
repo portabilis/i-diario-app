@@ -61,7 +61,7 @@ export class ApiService {
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
         {value: "https://***REMOVED***", name: "***REMOVED***"},
-        {value: "https://***REMOVED******REMOVED***", name: "***REMOVED***"}
+        {value: "https://***REMOVED***", name: "***REMOVED***"}
      ];
 
   constructor(
