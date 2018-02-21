@@ -8,6 +8,7 @@ import { AppIndexPage } from "../app-index/app-index";
 import { AuthService } from '../../services/auth';
 import { ConnectionService } from '../../services/connection';
 import { UnitiesService } from '../../services/unities';
+import { CustomersService } from '../../services/customers';
 import { ApiService } from './../../services/api';
 
 import { User } from '../../data/user.interface';
@@ -28,11 +29,14 @@ export class SignIn {
     private navCtrl: NavController,
     private connection: ConnectionService,
     private unitiesService: UnitiesService,
+    private customersService: CustomersService,
     private api: ApiService
   ){}
 
   ionViewWillEnter(){
-    this.cities = this.api.allHosts;
+    this.customersService.getCustomers().subscribe( data => {
+      this.cities = data;
+    });
   }
 
   loginForm(form: NgForm ){
