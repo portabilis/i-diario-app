@@ -1,8 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { ConnectionService } from './connection';
 import { ApiService } from './api';
 import { Http, Response } from '@angular/http';
-import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 
@@ -10,8 +7,6 @@ import 'rxjs/Rx';
 export class CustomersService {
   constructor(
     private http: Http,
-    private storage: Storage,
-    private connection: ConnectionService,
     private api: ApiService
   ){}
 
