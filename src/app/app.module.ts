@@ -65,6 +65,7 @@ import { OfflineDisciplineFinder } from './../services/offline_data_finder/disci
 import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
 import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
+import { CustomersService } from '../services/customers';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
     ContentRecordsService,
     TeachingPlansService,
     StudentsService,
+    CustomersService,
     Network,
     OfflineDataPersisterService,
     UnitiesPersisterService,
