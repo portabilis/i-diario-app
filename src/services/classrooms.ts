@@ -24,13 +24,18 @@ export class ClassroomsService {
       }
     });
   }
+
   getOfflineClassrooms(unityId: number){
     return new Observable((observer) => {
       this.storage.get('classrooms').then((classrooms) => {
+        var currentYear = (new Date()).getFullYear();
         classrooms.forEach((classroom) => {
-          if(classroom.unityId == unityId){
-            observer.next(classroom)
-            observer.complete()
+          if (classroom.unityId == unityId){
+            classroom.data = classroom.data.filter((value) => {
+              return (value.year || currentYear) == currentYear
+            })
+            observer.next(classroom);
+            observer.complete();
           }
         })
       })
