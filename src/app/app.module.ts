@@ -1,7 +1,7 @@
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, Injectable, Injector } from '@angular/core';
 
 // Imports from Ionic
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -9,6 +9,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage'
 import { Network } from '@ionic-native/network';
+import { Pro } from '@ionic/pro';
+
+Pro.init('***REMOVED***', {
+  appVersion: '0.0.25'
+})
 
 //Pages
 import { MyApp } from './app.component';
@@ -66,6 +71,27 @@ import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
 import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
 import { CustomersService } from '../services/customers';
+
+@Injectable()
+export class AppDiarioErrorHandler implements ErrorHandler {
+  ionicErrorHandler: IonicErrorHandler;
+
+  constructor(injector: Injector) {
+    try {
+      this.ionicErrorHandler = injector.get(IonicErrorHandler);
+    } catch(e) {
+      // Unable to get the IonicErrorHandler provider, ensure
+      // IonicErrorHandler has been added to the providers list below
+    }
+  }
+
+  handleError(err: any): void {
+    Pro.monitoring.handleNewError(err);
+    // Remove this if you want to disable Ionic's auto exception handling
+    // in development mode.
+    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -140,7 +166,8 @@ import { CustomersService } from '../services/customers';
     OfflineUnityFinder,
     DisciplineFrequenciesPersisterService,
     GlobalFrequenciesPersisterService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    IonicErrorHandler,
+    [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }]
   ]
 })
 export class AppModule {}
