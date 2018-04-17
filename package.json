@@ -24,6 +24,7 @@
     "@ionic-native/network": "^4.7.0",
     "@ionic-native/splash-screen": "4.7.0",
     "@ionic-native/status-bar": "4.7.0",
+    "@ionic/pro": "^1.0.20",
     "@ionic/storage": "^2.0.1",
     "cordova-android": "7.1.0",
     "cordova-ios": "~4.5.2",
@@ -45,7 +46,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.8",
+    "@ionic/app-scripts": "^3.1.8",
     "ionic": "3.20.0",
     "typescript": "2.8.1"
   },
