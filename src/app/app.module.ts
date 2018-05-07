@@ -12,7 +12,7 @@ import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic/pro';
 
 Pro.init('***REMOVED***', {
-  appVersion: '0.0.27'
+  appVersion: '0.0.28'
 })
 
 //Pages
