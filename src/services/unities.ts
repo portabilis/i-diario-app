@@ -23,6 +23,11 @@ export class UnitiesService {
   getOfflineUnities(teacherId: number){
     return new Observable((observer) => {
       this.storage.get('unities').then((unities) => {
+        if (!unities){
+          observer.complete();
+          return;
+        }
+
         observer.next(unities)
         observer.complete()
       })

@@ -28,6 +28,11 @@ export class ExamRulesService {
   getOfflineExamRules(classroomId: number){
     return new Observable((observer) => {
       this.storage.get('examRules').then((examRules) => {
+        if (!examRules){
+          observer.complete();
+          return;
+        }
+
         examRules.forEach((examRule) => {
           if(examRule.classroomId == classroomId){
             observer.next(examRule)

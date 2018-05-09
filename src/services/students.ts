@@ -27,6 +27,11 @@ export class StudentsService {
   getOfflineGlobalStudents(classroomId){
      return new Observable((observer) => {
       this.storage.get('students').then((students) => {
+        if (!students){
+          observer.complete();
+          return;
+        }
+
         students.forEach((student) => {
           if(student.classroomId == classroomId){
             observer.next(student)
@@ -40,6 +45,11 @@ export class StudentsService {
    getOfflineDisciplineStudents(classroomId, disciplineId){
      return new Observable((observer) => {
       this.storage.get('students').then((students) => {
+        if (!students){
+          observer.complete();
+          return;
+        }
+
         students.forEach((student) => {
           if(student.classroomId == classroomId && student.disciplineId == disciplineId){
             observer.next(student)

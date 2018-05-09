@@ -27,6 +27,11 @@ export class DisciplinesService {
   getOfflineDisciplines(classroomId: number){
     return new Observable((observer) => {
       this.storage.get('disciplines').then((disciplines) => {
+        if (!disciplines){
+          observer.complete();
+          return;
+        }
+
         disciplines.forEach((discipline) => {
           if(discipline.classroomId == classroomId){
             observer.next(discipline)
