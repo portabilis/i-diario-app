@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage'
 import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic/pro';
+import { Device } from '@ionic-native/device';
 
 Pro.init('***REMOVED***', {
   appVersion: '0.0.28'
@@ -127,6 +128,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     MyApp
   ],
   providers: [
+    Device,
     StatusBar,
     SplashScreen,
     AuthService,

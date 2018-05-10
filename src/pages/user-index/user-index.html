@@ -6,9 +6,25 @@
 
 </ion-header>
 
+<ion-content class="page-content" id="students-frequency-edit-page" padding>
 
-<ion-content padding>
+  <h3 class="content-page-section">Dados úteis</h3>
+  <div class="details-panel">
+    <div class="detail">
+      <h3 class="detail-title">Versão do aplicativo</h3>
+      <p class="detail-text">{{ this.binary_version }}/{{ this.minor_version }}</p>
+    </div>
+
+    <div class="detail">
+      <h3 class="detail-title">Sistema operacional</h3>
+      <p class="detail-text">{{ this.device.platform }} {{ this.device.version }}</p>
+    </div>
+
+    <div class="detail">
+      <h3 class="detail-title">Marca e modelo</h3>
+      <p class="detail-text">{{ this.device.manufacturer }} {{ this.device.model }}</p>
+    </div>
+  </div>
 
   <button class="button-exit" ion-button large full (click)="exit()">Sair</button>
-
 </ion-content>
