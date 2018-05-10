@@ -5,6 +5,8 @@ import { AuthService } from './../../services/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Device } from '@ionic-native/device';
+import { Pro } from '@ionic/pro';
 
 @IonicPage()
 @Component({
@@ -12,6 +14,8 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'user-index.html',
 })
 export class UserIndexPage {
+  binary_version: string;
+  minor_version: string;
 
   constructor(
     public navCtrl: NavController,
@@ -19,8 +23,11 @@ export class UserIndexPage {
     private auth: AuthService,
     private app: App,
     private storage: Storage,
-    private alertCtrl: AlertController
-  ) {}
+    private alertCtrl: AlertController,
+    public device: Device
+  ) {
+    this.getDeployInfo();
+  }
 
   exit() {
     Observable.forkJoin(
@@ -66,5 +73,11 @@ export class UserIndexPage {
     this.auth.removeCurrentUser();
     this.app.getRootNav().setRoot(SignIn);
     this.storage.clear();
+  }
+
+  async getDeployInfo() {
+    const info = await Pro.deploy.info();
+    this.binary_version = info.binary_version;
+    this.minor_version = '1';
   }
 }

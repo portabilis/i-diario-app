@@ -26,6 +26,11 @@ export class SchoolCalendarsService {
   getOfflineSchoolCalendar(unityId: number){
     return new Observable((observer) => {
       this.storage.get('schoolCalendars').then((schoolCalendars) => {
+        if (!schoolCalendars){
+          observer.complete();
+          return;
+        }
+
         schoolCalendars.forEach((schoolCalendar) => {
           if(schoolCalendar.unityId == unityId){
             observer.next(schoolCalendar)

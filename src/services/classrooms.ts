@@ -28,6 +28,10 @@ export class ClassroomsService {
   getOfflineClassrooms(unityId: number){
     return new Observable((observer) => {
       this.storage.get('classrooms').then((classrooms) => {
+        if (!classrooms){
+          observer.complete();
+          return;
+        }
         var currentYear = (new Date()).getFullYear();
         classrooms.forEach((classroom) => {
           if (classroom.unityId == unityId){
