@@ -11,6 +11,8 @@ import { IonicStorageModule } from '@ionic/storage'
 import { Network } from '@ionic-native/network';
 import { Pro } from '@ionic/pro';
 import { Device } from '@ionic-native/device';
+import { SafariViewController } from '@ionic-native/safari-view-controller';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 Pro.init('***REMOVED***', {
   appVersion: '0.0.28'
@@ -169,6 +171,8 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     DisciplineFrequenciesPersisterService,
     GlobalFrequenciesPersisterService,
     IonicErrorHandler,
+    SafariViewController,
+    InAppBrowser,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }]
   ]
 })

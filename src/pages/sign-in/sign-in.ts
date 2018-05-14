@@ -2,7 +2,8 @@ import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
 import { LoadingController, AlertController, NavController } from 'ionic-angular';
-
+import { SafariViewController } from '@ionic-native/safari-view-controller';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AppIndexPage } from "../app-index/app-index";
 
 import { AuthService } from '../../services/auth';
@@ -30,7 +31,9 @@ export class SignIn {
     private connection: ConnectionService,
     private unitiesService: UnitiesService,
     private customersService: CustomersService,
-    private api: ApiService
+    private api: ApiService,
+    private safariViewController: SafariViewController,
+    private iab: InAppBrowser,
   ){}
 
   ionViewWillEnter(){
@@ -78,5 +81,23 @@ export class SignIn {
     }
 
     return `Olá, ${greeting}!`;
+  }
+
+  openUrl(url) {
+    this.safariViewController.isAvailable().then((available: boolean) => {
+        if (available) {
+          this.safariViewController.show({
+            url: 'http://ionic.io',
+            hidden: false,
+            animated: false,
+            transition: 'curl',
+            enterReaderModeIfAvailable: true,
+            tintColor: '#ff0000'
+          });
+        } else {
+          const browser = this.iab.create(url);
+        }
+      }
+    );
   }
 }
