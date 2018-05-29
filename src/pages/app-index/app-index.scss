@@ -5,56 +5,30 @@
   height: 20px !important;
 }
 
-.tab-button-icon[ng-reflect-is-active=false][ng-reflect-name="frequencyicon"] {
-  content: url("../assets/img/tabs/iconTabbarLfInactive@2x.png");
+@each $state in $states {
+  .tab-button[aria-selected=#{nth($state, 1)}] {
+    @each $menu in $buttonConfig {
+      .tab-button-icon[aria-label="#{nth($menu, 1)}"] {
+        content: url("../assets/img/tabs/iconTabbar#{nth($menu, 2)}#{nth($state, 2)}@2x.png");
+        height: #{nth($menu, 3)} !important;
+        min-height: #{nth($menu, 4)} !important;
+        width: #{nth($menu, 5)} !important;
+        min-width: #{nth($menu, 6)} !important;
+      }
+    }
+  }
 }
 
-.tab-button-icon[ng-reflect-is-active=true][ng-reflect-name="frequencyicon"] {
-  content: url("../assets/img/tabs/iconTabbarLfActive@2x.png");
-}
-
-.tab-button-icon[ng-reflect-is-active=false][ng-reflect-name="contentregistrationicon"] {
-  content: url("../assets/img/tabs/iconTabbarLcInactive@2x.png");
-  width: 28px !important;
-  min-width: 28px !important;
-  min-height: 21px !important;
-  height: 21px !important;
-}
-
-.tab-button-icon[ng-reflect-is-active=true][ng-reflect-name="contentregistrationicon"] {
-  content: url("../assets/img/tabs/iconTabbarLcActive@2x.png");
-  width: 28px !important;
-  min-width: 28px !important;
-  min-height: 21px !important;
-  height: 21px !important;
-}
-
-.tab-button-icon[ng-reflect-is-active=false][ng-reflect-name="lessonplanicon"] {
-  content: url("../assets/img/tabs/iconTabbarCpaInactive@2x.png");
-}
-
-.tab-button-icon[ng-reflect-is-active=true][ng-reflect-name="lessonplanicon"] {
-  content: url("../assets/img/tabs/iconTabbarCpaActive@2x.png");
-}
-
-.tab-button-icon[ng-reflect-is-active=false][ng-reflect-name="teachingplanicon"] {
-  content: url("../assets/img/tabs/iconTabbarCpeInactive@2x.png");
-}
-
-.tab-button-icon[ng-reflect-is-active=true][ng-reflect-name="teachingplanicon"] {
-  content: url("../assets/img/tabs/iconTabbarCpeActive@2x.png");
-}
-
-.tab-button-icon[ng-reflect-is-active=false][ng-reflect-name="userico"] {
-  content: url("../assets/img/tabs/iconTabbarPerfilInactive@2x.png");
-  min-height: 18px !important;
-  height: 18px !important;
-}
-
-.tab-button-icon[ng-reflect-is-active=true][ng-reflect-name="userico"] {
-  content: url("../assets/img/tabs/iconTabbarPerfilActive@2x.png");
-  min-height: 18px !important;
-  height: 18px !important;
+@each $state in $states {
+  @each $menu in $buttonConfig {
+    .tab-button-icon[ng-reflect-is-active=#{nth($state, 1)}][ng-reflect-name="#{nth($menu, 1)}"] {
+      content: url("../assets/img/tabs/iconTabbar#{nth($menu, 2)}#{nth($state, 2)}@2x.png");
+      height: #{nth($menu, 3)} !important;
+      min-height: #{nth($menu, 4)} !important;
+      width: #{nth($menu, 5)} !important;
+      min-width: #{nth($menu, 6)} !important;
+    }
+  }
 }
 
 .tab-button[aria-selected=true] {
