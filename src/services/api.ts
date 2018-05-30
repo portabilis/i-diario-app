@@ -85,6 +85,6 @@ export class ApiService {
   }
 
   getallHostsUrl() {
-    return 'http://***REMOVED***/api/v1/diary_app_customers';
+    return '***REMOVED***';
   }
 }

@@ -25,6 +25,7 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
+        <preference name="loadUrlTimeoutValue" value="700000" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -96,4 +97,5 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="4.5.4" />
+    <allow-navigation href="http://192.168.0.105:8100" />
 </widget>

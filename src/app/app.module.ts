@@ -122,7 +122,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     NewContentRecordFormModule,
     IonicStorageModule.forRoot({
       name: '__appfrequencia',
-         driverOrder: ['indexeddb']
+         driverOrder: ['indexeddb', 'sqlite', 'websql']
     })
   ],
   bootstrap: [IonicApp],
