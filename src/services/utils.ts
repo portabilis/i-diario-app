@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import { ConnectionService } from './connection';
+import { SafariViewController } from '@ionic-native/safari-view-controller';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Injectable()
 export class UtilsService {
   constructor(
     private _connectionService: ConnectionService,
-    private _toastCtrl: ToastController
+    private _toastCtrl: ToastController,
+    private safariViewController: SafariViewController,
+    private iab: InAppBrowser,
   ){}
 
   public toStringWithoutTime(date: Date){
@@ -77,5 +81,23 @@ export class UtilsService {
     });
 
     toast.present();
+  }
+
+  openUrl(url) {
+    this.safariViewController.isAvailable().then((available) => {
+        if (available) {
+          this.safariViewController.show({ url: url, }).subscribe(
+            (result: any) => {
+
+            },
+            (error: any) => {
+
+            }
+          );
+        } else {
+          const browser = this.iab.create(url);
+        }
+      }
+    );
   }
 }
