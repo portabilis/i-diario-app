@@ -15,7 +15,7 @@ import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 Pro.init('***REMOVED***', {
-  appVersion: '0.0.28'
+  appVersion: '0.0.29'
 })
 
 //Pages
