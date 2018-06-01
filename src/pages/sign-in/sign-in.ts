@@ -2,7 +2,6 @@ import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
 import { LoadingController, AlertController, NavController } from 'ionic-angular';
-
 import { AppIndexPage } from "../app-index/app-index";
 
 import { AuthService } from '../../services/auth';
@@ -10,6 +9,7 @@ import { ConnectionService } from '../../services/connection';
 import { UnitiesService } from '../../services/unities';
 import { CustomersService } from '../../services/customers';
 import { ApiService } from './../../services/api';
+import { UtilsService } from './../../services/utils';
 
 import { User } from '../../data/user.interface';
 
@@ -30,7 +30,8 @@ export class SignIn {
     private connection: ConnectionService,
     private unitiesService: UnitiesService,
     private customersService: CustomersService,
-    private api: ApiService
+    private api: ApiService,
+    private utilsService: UtilsService,
   ){}
 
   ionViewWillEnter(){
@@ -78,5 +79,9 @@ export class SignIn {
     }
 
     return `Olá, ${greeting}!`;
+  }
+
+  openUrl(url) {
+    this.utilsService.openUrl(url);
   }
 }

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.appoffline153013" version="0.0.28" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.appoffline153013" version="0.0.29" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Portabilis Diário</name>
     <description>Cadastro de frequências online/offline, consulta de planos de aula e de ensino.</description>
     <author email="suporte@portabilis.com.br" href="http://www.portabilis.com.br">Portabilis Tecnologia Ltda.</author>
@@ -77,18 +77,16 @@
         <splash height="960" platform="ios" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" platform="ios" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
-    <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
     <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
-    <engine name="android" spec="7.1.0" />
-    <engine name="ios" spec="~4.5.2" />
-    <plugin name="cordova-plugin-ionic" spec="^4.1.4">
+    <plugin name="cordova-plugin-safariviewcontroller" spec="^1.5.3" />
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <plugin name="cordova-plugin-ionic" spec="^4.1.7">
         <variable name="APP_ID" value="***REMOVED***" />
         <variable name="CHANNEL_NAME" value="Master" />
         <variable name="UPDATE_METHOD" value="background" />
@@ -96,5 +94,8 @@
         <variable name="UPDATE_API" value="https://api.ionicjs.com" />
         <variable name="MAX_STORE" value="2" />
     </plugin>
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
+    <engine name="android" spec="7.1.0" />
+    <engine name="ios" spec="4.5.4" />
     <allow-navigation href="http://192.168.0.105:8100" />
 </widget>
