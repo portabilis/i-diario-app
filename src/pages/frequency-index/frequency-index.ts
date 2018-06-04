@@ -13,7 +13,8 @@ import { FrequencyPage } from './../frequency/frequency';
 import { StudentsFrequencyEditPage } from '../students-frequency-edit/students-frequency-edit';
 import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { MessagesService } from './../../services/messages';
 
 @IonicPage()
 @Component({
@@ -34,14 +35,14 @@ export class FrequencyIndexPage {
     private dailyFrequencyService: DailyFrequencyService,
     private auth: AuthService,
     private utilsService: UtilsService,
+    private messages: MessagesService,
     private storage: Storage,
     private unitiesPersister: UnitiesPersisterService,
-    private alertCtrl: AlertController,
     private offlineDataPersister: OfflineDataPersisterService,
     private connectionService: ConnectionService,
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
-    private contentRecordsSynchronizer: ContentRecordsSynchronizer
+    private contentRecordsSynchronizer: ContentRecordsSynchronizer,
   ) {}
 
   ionViewWillEnter(){
@@ -49,15 +50,6 @@ export class FrequencyIndexPage {
         || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
       this.loadFrequencies();
     }
-  }
-
-  showErrorAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Erro',
-      subTitle: 'Não foi possível realizar a sincronização.',
-      buttons: ['OK']
-    });
-    alert.present();
   }
 
   loadFrequencies() {
@@ -77,6 +69,10 @@ export class FrequencyIndexPage {
   }
 
   newFrequency() {
+    if (!this.utilsService.hasAvailableStorage()) {
+      this.messages.showError('Espaço insuficiente para lançar novas frequências.');
+      return;
+    }
     this.storage.get('unities').then((unities) => {
       this.navCtrl.push(FrequencyPage, { "unities": unities });
     });
@@ -244,7 +240,7 @@ export class FrequencyIndexPage {
           () => {},
           (error) => {
             refresher.cancel()
-            this.showErrorAlert()
+            this.messages.showError('Não foi possível realizar a sincronização.')
           },
           () => {
             this.storage.remove('dailyFrequencyStudentsToSync')
@@ -254,7 +250,7 @@ export class FrequencyIndexPage {
               },
               (error) => {
                 refresher.cancel()
-                this.showErrorAlert()
+                this.messages.showError('Não foi possível realizar a sincronização.')
               },
               () => {
                 refresher.complete()

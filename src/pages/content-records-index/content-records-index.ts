@@ -9,8 +9,9 @@ import { ContentRecordsSynchronizer } from './../../services/offline_data_synchr
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { MessagesService } from './../../services/messages';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,7 @@ export class ContentRecordsIndexPage {
               private storage: Storage,
               private utilsService: UtilsService,
               private offlineDataPersister: OfflineDataPersisterService,
-              private alertCtrl: AlertController,
+              private messages: MessagesService,
               private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
               private contentRecordsSynchronizer: ContentRecordsSynchronizer
@@ -212,15 +213,6 @@ export class ContentRecordsIndexPage {
     });
   }
 
-  showErrorAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Erro',
-      subTitle: 'Não foi possível realizar a sincronização.',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
   doRefresh(refresher) {
     Observable.forkJoin(
       Observable.fromPromise(this.auth.currentUser()),
@@ -241,8 +233,8 @@ export class ContentRecordsIndexPage {
         ).subscribe(
           () => {},
           (error) => {
-            refresher.cancel()
-            this.showErrorAlert()
+            refresher.cancel();
+            this.messages.showError('Não foi possível realizar a sincronização.');
           },
           () => {
             this.storage.remove('dailyFrequencyStudentsToSync')
@@ -251,8 +243,8 @@ export class ContentRecordsIndexPage {
               (result) => {
               },
               (error) => {
-                refresher.cancel()
-                this.showErrorAlert()
+                refresher.cancel();
+                this.messages.showError('Não foi possível realizar a sincronização.');
               },
               () => {
                 refresher.complete()

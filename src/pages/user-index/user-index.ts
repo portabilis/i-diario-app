@@ -1,9 +1,10 @@
 import { Storage } from '@ionic/storage';
 import { SignIn } from './../sign-in/sign-in';
-import { App, AlertController } from 'ionic-angular';
+import { App } from 'ionic-angular';
 import { AuthService } from './../../services/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MessagesService } from './../../services/messages';
 import { Observable } from 'rxjs/Observable';
 import { Device } from '@ionic-native/device';
 import { Pro } from '@ionic/pro';
@@ -25,7 +26,7 @@ export class UserIndexPage {
     private auth: AuthService,
     private app: App,
     private storage: Storage,
-    private alertCtrl: AlertController,
+    private messages: MessagesService,
     public device: Device
   ) {
     this.getDeployInfo();
@@ -56,23 +57,20 @@ export class UserIndexPage {
   }
 
   showConfirmExit() {
-    let confirm = this.alertCtrl.create({
-      title: 'Deseja realmente sair?',
-      message: 'Encontramos alguns lançamentos que ainda não foram sincronizados.',
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {}
-        },
-        {
-          text: 'Apagar lançamentos e sair',
-          handler: () => {
-            this.logout();
-          }
-        }
-      ]
-    });
-    confirm.present();
+    this.messages.showError('Encontramos alguns lançamentos que ainda não foram sincronizados.',
+                            'Deseja realmente sair?',
+                            [
+                              {
+                                text: 'Cancelar',
+                                handler: () => {}
+                              },
+                              {
+                                text: 'Apagar lançamentos e sair',
+                                handler: () => {
+                                  this.logout();
+                                }
+                              }
+                            ]);
   }
 
   logout() {
