@@ -3,6 +3,7 @@ import { ToastController } from 'ionic-angular';
 import { ConnectionService } from './connection';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { File } from '@ionic-native/file';
 
 @Injectable()
 export class UtilsService {
@@ -11,6 +12,7 @@ export class UtilsService {
     private _toastCtrl: ToastController,
     private safariViewController: SafariViewController,
     private iab: InAppBrowser,
+    private file: File,
   ){}
 
   public toStringWithoutTime(date: Date){
@@ -83,7 +85,7 @@ export class UtilsService {
     toast.present();
   }
 
-  openUrl(url) {
+  public openUrl(url) {
     this.safariViewController.isAvailable().then((available) => {
         if (available) {
           this.safariViewController.show({ url: url, }).subscribe(
@@ -97,6 +99,18 @@ export class UtilsService {
         } else {
           const browser = this.iab.create(url);
         }
+      }
+    );
+  }
+
+  public hasAvailableStorage() {
+    this.file.getFreeDiskSpace().then(
+      (success) => {
+        return success > 50000;
+      },
+      (error) => {
+        console.log(error);
+        return false;
       }
     );
   }
