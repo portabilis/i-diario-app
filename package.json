@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "5.2.10",
     "@ionic-native/core": "^4.7.0",
     "@ionic-native/device": "^4.7.0",
+    "@ionic-native/file": "^4.7.0",
     "@ionic-native/in-app-browser": "^4.7.0",
     "@ionic-native/network": "^4.7.0",
     "@ionic-native/safari-view-controller": "^4.7.0",
@@ -35,6 +36,7 @@
     "cordova-ios": "4.5.4",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic": "^4.1.7",
     "cordova-plugin-network-information": "^2.0.1",
@@ -86,7 +88,8 @@
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2"
       },
-      "cordova-plugin-safariviewcontroller": {}
+      "cordova-plugin-safariviewcontroller": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "android",
