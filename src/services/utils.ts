@@ -104,12 +104,11 @@ export class UtilsService {
   }
 
   public hasAvailableStorage() {
-    this.file.getFreeDiskSpace().then(
+    return this.file.getFreeDiskSpace().then(
       (success) => {
-        return success > 50000;
+        return success > 200000;
       },
       (error) => {
-        console.log(error);
         return false;
       }
     );
