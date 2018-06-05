@@ -13,7 +13,6 @@ import { Pro } from '@ionic/pro';
 import { Device } from '@ionic-native/device';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { File } from '@ionic-native/file';
 
 Pro.init('***REMOVED***', {
   appVersion: '0.0.29'
@@ -75,7 +74,6 @@ import { OfflineUnityFinder } from './../services/offline_data_finder/unities';
 import { DisciplineFrequenciesPersisterService } from './../services/offline_data_persistence/discipline_frequencies_persister';
 import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
 import { CustomersService } from '../services/customers';
-import { MessagesService } from './../services/messages';
 
 @Injectable()
 export class AppDiarioErrorHandler implements ErrorHandler {
@@ -175,8 +173,6 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     IonicErrorHandler,
     SafariViewController,
     InAppBrowser,
-    File,
-    MessagesService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }]
   ]
 })
