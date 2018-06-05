@@ -69,12 +69,14 @@ export class FrequencyIndexPage {
   }
 
   newFrequency() {
-    if (!this.utilsService.hasAvailableStorage()) {
-      this.messages.showError('Espaço insuficiente para lançar novas frequências.');
-      return;
-    }
-    this.storage.get('unities').then((unities) => {
-      this.navCtrl.push(FrequencyPage, { "unities": unities });
+    this.utilsService.hasAvailableStorage().then((available) => {
+      if (!available) {
+        this.messages.showError('Espaço insuficiente para lançar novas frequências.');
+        return;
+      }
+      this.storage.get('unities').then((unities) => {
+        this.navCtrl.push(FrequencyPage, { "unities": unities });
+      });
     });
   }
 
@@ -173,16 +175,22 @@ export class FrequencyIndexPage {
   }
 
   loadMoreFrequencies(){
-    const loader = this.loadingCtrl.create({
-      content: "Carregando..."
-    });
-    loader.present();
-    this.storage.get('frequencies').then((frequencies) => {
-      if(frequencies){
-        this.lastFrequencyDays = this.lastFrequencyDays.concat(this.lastTenFrequencies(frequencies.daily_frequencies));
+    this.utilsService.hasAvailableStorage().then((available) => {
+      if (!available) {
+        this.messages.showError('Espaço insuficiente para carregar mais frequências.');
+        return;
       }
+      const loader = this.loadingCtrl.create({
+        content: "Carregando..."
+      });
+      loader.present();
+      this.storage.get('frequencies').then((frequencies) => {
+        if(frequencies){
+          this.lastFrequencyDays = this.lastFrequencyDays.concat(this.lastTenFrequencies(frequencies.daily_frequencies));
+        }
 
-      loader.dismiss();
+        loader.dismiss();
+      });
     });
   }
 
@@ -220,46 +228,53 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
-    Observable.forkJoin(
-      Observable.fromPromise(this.auth.currentUser()),
-      Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-      Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
-      Observable.fromPromise(this.storage.get('contentRecordsToSync'))
-    ).subscribe(
-      (results) => {
-        let user = results[0];
-        let dailyFrequenciesToSync = results[1] || [];
-        let dailyFrequencyStudentsToSync = results[2] || [];
-        let contentRecordsToSync = results[3] || [];
-
-        Observable.concat(
-          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
-          this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
-          this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
-        ).subscribe(
-          () => {},
-          (error) => {
-            refresher.cancel()
-            this.messages.showError('Não foi possível realizar a sincronização.')
-          },
-          () => {
-            this.storage.remove('dailyFrequencyStudentsToSync')
-            this.storage.remove('dailyFrequenciesToSync')
-            this.offlineDataPersister.persist(user).subscribe(
-              (result) => {
-              },
-              (error) => {
-                refresher.cancel()
-                this.messages.showError('Não foi possível realizar a sincronização.')
-              },
-              () => {
-                refresher.complete()
-                this.loadFrequencies()
-              }
-            )
-          }
-        )
+    this.utilsService.hasAvailableStorage().then((available) => {
+      if (!available) {
+        this.messages.showError('Espaço insuficiente para sincronizar frequências.');
+        refresher.cancel();
+        return;
       }
-    )
+      Observable.forkJoin(
+        Observable.fromPromise(this.auth.currentUser()),
+        Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
+        Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
+        Observable.fromPromise(this.storage.get('contentRecordsToSync'))
+      ).subscribe(
+        (results) => {
+          let user = results[0];
+          let dailyFrequenciesToSync = results[1] || [];
+          let dailyFrequencyStudentsToSync = results[2] || [];
+          let contentRecordsToSync = results[3] || [];
+
+          Observable.concat(
+            this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
+            this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
+            this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
+          ).subscribe(
+            () => {},
+            (error) => {
+              refresher.cancel();
+              this.messages.showError('Não foi possível realizar a sincronização.');
+            },
+            () => {
+              this.storage.remove('dailyFrequencyStudentsToSync')
+              this.storage.remove('dailyFrequenciesToSync')
+              this.offlineDataPersister.persist(user).subscribe(
+                (result) => {
+                },
+                (error) => {
+                  refresher.cancel();
+                  this.messages.showError('Não foi possível realizar a sincronização.')
+                },
+                () => {
+                  refresher.complete();
+                  this.loadFrequencies()
+                }
+              )
+            }
+          )
+        }
+      )
+    });
   }
 }

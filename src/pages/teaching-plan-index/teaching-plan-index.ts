@@ -5,6 +5,7 @@ import { AuthService } from './../../services/auth';
 import { TeachingPlansService } from './../../services/teaching_plans';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MessagesService } from './../../services/messages';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,9 @@ export class TeachingPlanIndexPage {
               private auth: AuthService,
               private teachingPlansService: TeachingPlansService,
               private storage: Storage,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService,
+              private messages: MessagesService,
+             ) {
   }
 
   ionViewDidLoad() {
@@ -29,22 +32,30 @@ export class TeachingPlanIndexPage {
   }
 
   doRefresh(refresher) {
-    this.auth.currentUser().then((user) => {
-      this.teachingPlansService.getTeachingPlans(
-        user.teacher_id
-      ).subscribe(
-        (teachingPlans:any) => {
-          this.storage.set('teachingPlans', teachingPlans);
-        },
-        (error) => {
-          this.utilsService.showRefreshPageError();
-          refresher.cancel();
-        },
-        () => {
-          refresher.complete();
-          this.updateTeachingPlans();
-        }
-      );
+    this.utilsService.hasAvailableStorage().then((available) => {
+      if (!available) {
+        this.messages.showError('Espaço insuficiente para sincronizar planos de ensino.');
+        refresher.cancel();
+        return;
+      }
+
+      this.auth.currentUser().then((user) => {
+        this.teachingPlansService.getTeachingPlans(
+          user.teacher_id
+        ).subscribe(
+          (teachingPlans:any) => {
+            this.storage.set('teachingPlans', teachingPlans);
+          },
+          (error) => {
+            this.utilsService.showRefreshPageError();
+            refresher.cancel();
+          },
+          () => {
+            refresher.complete();
+            this.updateTeachingPlans();
+          }
+        );
+      });
     });
   }
 
