@@ -1,7 +1,7 @@
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
 
-import { LoadingController, NavController } from 'ionic-angular';
+import { LoadingController, AlertController, NavController } from 'ionic-angular';
 import { AppIndexPage } from "../app-index/app-index";
 
 import { AuthService } from '../../services/auth';
@@ -25,6 +25,7 @@ export class SignIn {
   constructor(
     private auth: AuthService,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private navCtrl: NavController,
     private connection: ConnectionService,
     private unitiesService: UnitiesService,
