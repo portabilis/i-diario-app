@@ -9,12 +9,11 @@ import { Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
-
 import { SignIn } from '../pages/sign-in/sign-in';
-
 import { ConnectionService } from './../services/connection';
-
 import { AppIndexPage } from "../pages/app-index/app-index";
+import { UtilsService } from './../services/utils';
+import { MessagesService } from './../services/messages';
 
 @Component({
   templateUrl: 'app.html'
@@ -32,7 +31,10 @@ export class MyApp {
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
               private contentRecordsSynchronizer: ContentRecordsSynchronizer,
               private storage: Storage,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private messages: MessagesService,
+              private utilsService: UtilsService,
+            ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();

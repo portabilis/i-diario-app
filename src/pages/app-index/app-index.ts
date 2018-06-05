@@ -6,7 +6,7 @@ import { ContentRecordsIndexPage } from './../content-records-index/content-reco
 import { UserIndexPage } from './../user-index/user-index';
 import { FrequencyIndexPage } from './../frequency-index/frequency-index';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -26,7 +26,6 @@ export class AppIndexPage {
               private _auth: AuthService,
               private _offlineDataPersister: OfflineDataPersisterService,
               private loadingCtrl: LoadingController,
-              private _alertCtrl: AlertController
              ){
     this.tab1 = FrequencyIndexPage;
     this.tab2 = ContentRecordsIndexPage;
