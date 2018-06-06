@@ -20,4 +20,8 @@ export class MessagesService {
     });
     alert.present();
   }
+
+  public insuficientStorageErrorMessage(action) {
+    return `Espaço de armazenamento insuficiente no dispositivo para ${action}. São necessários, no mínimo, 50 MB livres para executar a operação.`;
+  }
 }
