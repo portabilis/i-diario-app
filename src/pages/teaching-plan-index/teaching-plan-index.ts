@@ -34,7 +34,7 @@ export class TeachingPlanIndexPage {
   doRefresh(refresher) {
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
-        this.messages.showError('Espaço insuficiente para sincronizar planos de ensino.');
+        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
         refresher.cancel();
         return;
       }
