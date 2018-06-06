@@ -15,6 +15,7 @@ import { UnitiesService } from './../../services/unities';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
+import { ProService } from './../../services/pro';
 
 @IonicPage()
 @Component({
@@ -43,6 +44,7 @@ export class FrequencyIndexPage {
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
     private contentRecordsSynchronizer: ContentRecordsSynchronizer,
+    private pro: ProService,
   ) {}
 
   ionViewWillEnter(){
@@ -254,6 +256,7 @@ export class FrequencyIndexPage {
             () => {},
             (error) => {
               refresher.cancel();
+              this.pro.Exception(`On frequency syncing error: ${error}`);
               this.messages.showError('Não foi possível realizar a sincronização.');
             },
             () => {
@@ -264,7 +267,8 @@ export class FrequencyIndexPage {
                 },
                 (error) => {
                   refresher.cancel();
-                  this.messages.showError('Não foi possível realizar a sincronização.')
+                  this.pro.Exception(`On frequency finishing sync error: ${error}`);
+                  this.messages.showError('Não foi possível finalizar a sincronização.');
                 },
                 () => {
                   refresher.complete();
