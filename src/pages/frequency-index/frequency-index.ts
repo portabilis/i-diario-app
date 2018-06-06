@@ -71,7 +71,7 @@ export class FrequencyIndexPage {
   newFrequency() {
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
-        this.messages.showError('Espaço insuficiente para lançar novas frequências.');
+        this.messages.showError(this.messages.insuficientStorageErrorMessage('lançar novas frequências'));
         return;
       }
       this.storage.get('unities').then((unities) => {
@@ -177,7 +177,7 @@ export class FrequencyIndexPage {
   loadMoreFrequencies(){
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
-        this.messages.showError('Espaço insuficiente para carregar mais frequências.');
+        this.messages.showError(this.messages.insuficientStorageErrorMessage('carregar mais frequências'));
         return;
       }
       const loader = this.loadingCtrl.create({
@@ -230,7 +230,7 @@ export class FrequencyIndexPage {
   doRefresh(refresher) {
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
-        this.messages.showError('Espaço insuficiente para sincronizar frequências.');
+        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));
         refresher.cancel();
         return;
       }
