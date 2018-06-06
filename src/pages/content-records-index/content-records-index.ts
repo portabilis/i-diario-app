@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { MessagesService } from './../../services/messages';
+import { ProService } from './../../services/pro';
 
 @IonicPage()
 @Component({
@@ -33,7 +34,8 @@ export class ContentRecordsIndexPage {
               private messages: MessagesService,
               private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
-              private contentRecordsSynchronizer: ContentRecordsSynchronizer
+              private contentRecordsSynchronizer: ContentRecordsSynchronizer,
+              private pro: ProService,
             ) {
   }
 
@@ -246,17 +248,19 @@ export class ContentRecordsIndexPage {
             () => {},
             (error) => {
               refresher.cancel();
+              this.pro.Exception(`On content record syncing error: ${error}`);
               this.messages.showError('Não foi possível realizar a sincronização.');
             },
             () => {
-              this.storage.remove('dailyFrequencyStudentsToSync')
-              this.storage.remove('dailyFrequenciesToSync')
+              this.storage.remove('dailyFrequencyStudentsToSync');
+              this.storage.remove('dailyFrequenciesToSync');
               this.offlineDataPersister.persist(user).subscribe(
                 (result) => {
                 },
                 (error) => {
                   refresher.cancel();
-                  this.messages.showError('Não foi possível realizar a sincronização.');
+                  this.pro.Exception(`On content record finishing sync error: ${error}`);
+                  this.messages.showError('Não foi possível finalizar a sincronização.');
                 },
                 () => {
                   refresher.complete()
