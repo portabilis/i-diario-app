@@ -222,7 +222,7 @@ export class ContentRecordsIndexPage {
   doRefresh(refresher) {
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
-        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar conteúdos de aula.'));
+        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar conteúdos de aula'));
         refresher.cancel();
         return;
       }
