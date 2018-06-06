@@ -35,7 +35,6 @@ export class LessonPlanIndexPage {
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
         this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de aula'));
-        ('Espaço insuficiente para .');
         refresher.cancel();
         return;
       }
