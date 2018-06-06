@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
 import { ConnectionService } from './connection';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
+import { MessagesService } from './messages';
 
 @Injectable()
 export class UtilsService {
   constructor(
     private _connectionService: ConnectionService,
-    private _toastCtrl: ToastController,
     private safariViewController: SafariViewController,
     private iab: InAppBrowser,
     private file: File,
+    private messages: MessagesService,
   ){}
 
   public toStringWithoutTime(date: Date){
@@ -57,13 +57,7 @@ export class UtilsService {
       offlineMessage = " Parece que você está offline";
     }
 
-    let toast = this._toastCtrl.create({
-      message: 'Não foi possível completar a atualização.' + offlineMessage,
-      duration: 3000,
-      position: 'middle'
-    });
-
-    toast.present();
+    this.messages.showToast('Não foi possível completar a atualização.' + offlineMessage);
   }
 
   public convertTextToHtml(text) {
@@ -73,16 +67,6 @@ export class UtilsService {
 
   public forceCapitalize(text) {
     return text.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
-  }
-
-  public showGenericToast(message) {
-    let toast = this._toastCtrl.create({
-      message: message,
-      duration: 3000,
-      position: 'middle'
-    });
-
-    toast.present();
   }
 
   public openUrl(url) {

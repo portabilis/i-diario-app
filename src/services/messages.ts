@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import { AlertController, ToastController } from 'ionic-angular';
 
 @Injectable()
 export class MessagesService {
   constructor(
     private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
   ){}
 
   public showError(message,
@@ -19,6 +20,17 @@ export class MessagesService {
       buttons: buttons,
     });
     alert.present();
+  }
+
+  public showToast(message,
+                   duration=3000,
+                   position='middle'){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: duration,
+      position: position,
+    });
+    toast.present();
   }
 
   public insuficientStorageErrorMessage(action) {
