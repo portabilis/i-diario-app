@@ -106,7 +106,7 @@ export class UtilsService {
   public hasAvailableStorage() {
     return this.file.getFreeDiskSpace().then(
       (success) => {
-        return success > 50000;
+        return true;
       },
       (error) => {
         return false;
