@@ -82,6 +82,6 @@ export class UserIndexPage {
   async getDeployInfo() {
     const info = await Pro.deploy.info();
     this.binary_version = info.binary_version;
-    this.minor_version = '6';
+    this.minor_version = '1';
   }
 }
