@@ -1,5 +1,5 @@
 import { User } from './../../data/user.interface';
-import { LoadingController, NavController, NavParams, ToastController, Content } from 'ionic-angular';
+import { LoadingController, NavController, NavParams, Content } from 'ionic-angular';
 
 import { NgForm } from '@angular/forms';
 import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
@@ -19,6 +19,7 @@ import { StudentsFrequencyPage } from '../students-frequency/students-frequency'
 
 import { Unity } from '../../data/unity.interface';
 import { Classroom } from '../../data/classroom.interface';
+import { MessagesService } from './../../services/messages';
 
 @Component({
   selector: 'page-frequency',
@@ -55,7 +56,8 @@ export class FrequencyPage{
     private offlineDataPersister: OfflineDataPersisterService,
     private utilsService: UtilsService,
     private cdr: ChangeDetectorRef,
-    public toastCtrl: ToastController){}
+    private messages: MessagesService,
+  ){}
 
   ionViewWillEnter(){
     if(!this.date){
@@ -86,7 +88,7 @@ export class FrequencyPage{
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
               if (!schoolCalendar.data) {
-                this.presentToastSchoolCalendarError();
+                this.messages.showToast('Calendário escolar não encontrado.');
                 return;
               }
 
@@ -207,15 +209,6 @@ export class FrequencyPage{
     this.classroomId = null;
     this.disciplineId = null;
     this.selectedClasses = [];
-  }
-
-  presentToastSchoolCalendarError() {
-    let toast = this.toastCtrl.create({
-      message: 'Calendário escolar não encontrado.',
-      duration: 3000,
-      position: 'middle'
-    });
-    toast.present();
   }
 
   updateSelectedClasses(selectedClass) {

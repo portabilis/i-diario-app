@@ -64,7 +64,7 @@ export class FrequencyIndexPage {
         this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
-        this.utilsService.showGenericToast("Puxe para baixo para atualizar.");
+        this.messages.showToast("Puxe para baixo para atualizar.");
         this.emptyFrequencies = true;
       }
     });
