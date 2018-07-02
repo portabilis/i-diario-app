@@ -8,7 +8,7 @@
 @each $state in $states {
   .tab-button[aria-selected=#{nth($state, 1)}] {
     @each $menu in $buttonConfig {
-      .tab-button-icon[aria-label="#{nth($menu, 1)}"] {
+      .tab-button-icon[aria-label^="#{nth($menu, 1)}"] {
         content: url("../assets/img/tabs/iconTabbar#{nth($menu, 2)}#{nth($state, 2)}@2x.png");
         height: #{nth($menu, 3)} !important;
         min-height: #{nth($menu, 4)} !important;
