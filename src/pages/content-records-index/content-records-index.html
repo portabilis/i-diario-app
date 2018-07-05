@@ -2,6 +2,10 @@
   <ion-navbar>
     <ion-title>Conteúdos de aula</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="doRefresh($event)">
+        <ion-icon *ngIf="!sync.isSyncing" name="sync"></ion-icon>
+        <ion-spinner *ngIf="sync.isSyncing"></ion-spinner>
+      </button>
       <button ion-button icon-only (click)="newContentRecordForm()">
          <ion-icon name="add"></ion-icon> 
       </button>
