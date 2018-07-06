@@ -2,22 +2,26 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SyncProvider {
-  public isSyncing: Boolean;
+  private isSyncingStatus: Boolean;
 
   constructor() {
-    this.isSyncing = false;
+    this.isSyncingStatus = false;
   }
 
   start() {
-    this.isSyncing = true;
+    this.isSyncingStatus = true;
   }
 
   cancel() {
-    this.isSyncing = false;
+    this.isSyncingStatus = false;
   }
 
   complete() {
-    this.isSyncing = false;
+    this.isSyncingStatus = false;
+  }
+
+  isSyncing() {
+    return this.isSyncingStatus;
   }
 
 }
