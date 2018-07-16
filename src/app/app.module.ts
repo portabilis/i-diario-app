@@ -77,6 +77,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
 import { CustomersService } from '../services/customers';
 import { MessagesService } from './../services/messages';
 import { ProService } from './../services/pro';
+import { SyncProvider } from '../services/sync';
 
 @Injectable()
 export class AppDiarioErrorHandler implements ErrorHandler {
@@ -179,7 +180,8 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     File,
     MessagesService,
     ProService,
-    [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }]
+    [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
+    SyncProvider
   ]
 })
 export class AppModule {}

@@ -13,6 +13,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { MessagesService } from './../../services/messages';
 import { ProService } from './../../services/pro';
+import { SyncProvider } from '../../services/sync';
 
 @IonicPage()
 @Component({
@@ -26,6 +27,7 @@ export class ContentRecordsIndexPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              private sync: SyncProvider,
               private auth: AuthService,
               private contentLessonPlansService: ContentLessonPlansService,
               private storage: Storage,
@@ -222,6 +224,10 @@ export class ContentRecordsIndexPage {
   }
 
   doRefresh(refresher) {
+    if(refresher.type === 'click') {
+      refresher = this.sync;
+      refresher.start();
+    }
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
         this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar conteúdos de aula'));
