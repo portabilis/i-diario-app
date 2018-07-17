@@ -38,30 +38,36 @@ export class LessonPlanIndexPage {
       refresher = this.sync;
       refresher.start();
     }
-    this.utilsService.hasAvailableStorage().then((available) => {
-      if (!available) {
-        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de aula'));
-        refresher.cancel();
-        return;
-      }
 
-      this.auth.currentUser().then((user) => {
-        this.lessonPlansService.getLessonPlans(
-          user.teacher_id
-        ).subscribe(
-          (lessonPlans:any) => {
-            this.storage.set('lessonPlans', lessonPlans);
-          },
-          (error) => {
-            this.utilsService.showRefreshPageError();
+    this.sync.verifyWifi().subscribe(continueSync => {
+      if (continueSync) {
+        this.utilsService.hasAvailableStorage().then((available) => {
+          if (!available) {
+            this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de aula'));
             refresher.cancel();
-          },
-          () => {
-            refresher.complete();
-            this.updateLessonPlans();
+            return;
           }
-        );
-      });
+    
+          this.auth.currentUser().then((user) => {
+            this.lessonPlansService.getLessonPlans(
+              user.teacher_id
+            ).subscribe(
+              (lessonPlans:any) => {
+                this.storage.set('lessonPlans', lessonPlans);
+              },
+              (error) => {
+                this.utilsService.showRefreshPageError();
+                refresher.cancel();
+              },
+              () => {
+                refresher.complete();
+                this.updateLessonPlans();
+              }
+            );
+          });
+        });
+      } else 
+        refresher.cancel();
     });
   }
 
