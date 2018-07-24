@@ -1,0 +1,45 @@
+tooltip {
+
+    .tooltip-body {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 20;
+        max-width: 200px;
+        text-align: center;
+        background-color: #000;
+        border-radius: 5px;
+        padding: 15px 10px;
+    }
+
+    .tooltip-content {
+        opacity: 1;
+        color: #fff;
+        font-size: 1.2em;
+    }
+
+    .caret-icon {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 20;
+        font-size: 36px;
+    }
+
+    &.tooltip-show {
+        .tooltip-body,
+        .caret-icon {
+            transition: opacity .3s;
+            opacity: 1;
+        }
+    }
+
+    &.tooltip-hide {
+        .tooltip-body,
+        .caret-icon {
+            transition: opacity .3s;
+            opacity: 0;
+        }
+    }
+
+}

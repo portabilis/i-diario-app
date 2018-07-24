@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-title>Frequência</ion-title>
     <ion-buttons end>
-        <button ion-button icon-only (click)="doRefresh($event)">
-          <ion-icon *ngIf="!sync.isSyncing" name="sync"></ion-icon>
-          <ion-spinner *ngIf="sync.isSyncing"></ion-spinner>
-        </button>
-        <button ion-button icon-only (click)="newFrequency()">
-           <ion-icon name="add"></ion-icon> 
-        </button>
+      <button #syncFrequency ion-button icon-only (click)="doRefresh($event)">
+        <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
+        <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
+      </button>
+      <button ion-button icon-only (click)="newFrequency()">
+          <ion-icon name="add"></ion-icon> 
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -58,3 +58,7 @@
   </div>
 
 </ion-content>
+
+<tooltip [reference]="syncFrequency">
+  Clique neste ícone para sincronizar
+</tooltip>

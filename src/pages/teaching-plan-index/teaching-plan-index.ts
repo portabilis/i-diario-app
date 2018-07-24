@@ -34,6 +34,8 @@ export class TeachingPlanIndexPage {
   }
 
   doRefresh(refresher) {
+    this.sync.setSyncDate();
+
     if(refresher.type === 'click') {
       refresher = this.sync;
       refresher.start();
