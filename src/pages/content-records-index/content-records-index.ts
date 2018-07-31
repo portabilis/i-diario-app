@@ -224,6 +224,8 @@ export class ContentRecordsIndexPage {
   }
 
   doRefresh(refresher) {
+    this.sync.setSyncDate();
+
     if(refresher.type === 'click') {
       refresher = this.sync;
       refresher.start();

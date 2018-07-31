@@ -12,7 +12,7 @@ import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
 import { StudentsFrequencyEditPage } from '../students-frequency-edit/students-frequency-edit';
 import { UnitiesService } from './../../services/unities';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
 import { ProService } from './../../services/pro';
@@ -23,7 +23,7 @@ import { SyncProvider } from '../../services/sync';
   selector: 'page-frequency-index',
   templateUrl: 'frequency-index.html'
 })
-export class FrequencyIndexPage {
+export class FrequencyIndexPage implements OnInit {
   shownGroup = null;
   lastFrequencyDays = null;
   emptyFrequencies = false;
@@ -49,6 +49,10 @@ export class FrequencyIndexPage {
     private pro: ProService,
   ) {}
 
+  ngOnInit() {
+    return this.sync.isSyncDelayed();
+  }
+
   ionViewWillEnter(){
     if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
         || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
@@ -66,7 +70,6 @@ export class FrequencyIndexPage {
         this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
-        this.messages.showToast("Puxe para baixo para atualizar.");
         this.emptyFrequencies = true;
       }
     });
@@ -232,6 +235,8 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
+    this.sync.setSyncDate();
+
     if(refresher.type === 'click') {
       refresher = this.sync;
       refresher.start();
