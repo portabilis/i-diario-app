@@ -38,30 +38,36 @@ export class TeachingPlanIndexPage {
       refresher = this.sync;
       refresher.start();
     }
-    this.utilsService.hasAvailableStorage().then((available) => {
-      if (!available) {
-        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
-        refresher.cancel();
-        return;
-      }
 
-      this.auth.currentUser().then((user) => {
-        this.teachingPlansService.getTeachingPlans(
-          user.teacher_id
-        ).subscribe(
-          (teachingPlans:any) => {
-            this.storage.set('teachingPlans', teachingPlans);
-          },
-          (error) => {
-            this.utilsService.showRefreshPageError();
+    this.sync.verifyWifi().subscribe(continueSync => {
+      if (continueSync) {
+        this.utilsService.hasAvailableStorage().then((available) => {
+          if (!available) {
+            this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
             refresher.cancel();
-          },
-          () => {
-            refresher.complete();
-            this.updateTeachingPlans();
+            return;
           }
-        );
-      });
+    
+          this.auth.currentUser().then((user) => {
+            this.teachingPlansService.getTeachingPlans(
+              user.teacher_id
+            ).subscribe(
+              (teachingPlans:any) => {
+                this.storage.set('teachingPlans', teachingPlans);
+              },
+              (error) => {
+                this.utilsService.showRefreshPageError();
+                refresher.cancel();
+              },
+              () => {
+                refresher.complete();
+                this.updateTeachingPlans();
+              }
+            );
+          });
+        });
+      } else 
+        refresher.cancel();
     });
   }
 

@@ -78,7 +78,7 @@ export class StudentsFrequencyEditPage {
 
       this.dailyFrequencyStudentService.updateFrequency(params).subscribe(
         (dailyFrequencyStudentsToSync) => {
-          if(this.connection.isOnline){
+          if(this.connection.isOnline && this.connection.getNetworkType() === "wifi"){
             this.loadingCount++
             let loadingCountLocal = this.loadingCount
             this.isSavingFrequencies = true

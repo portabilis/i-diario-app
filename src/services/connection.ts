@@ -11,4 +11,7 @@ export class ConnectionService {
   setStatus(online: boolean){
     this.isOnline = online;
   }
+  getNetworkType() {
+    return this.network.type;
+  }
 }

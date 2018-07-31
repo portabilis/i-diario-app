@@ -3,8 +3,8 @@
     <ion-title>Frequência</ion-title>
     <ion-buttons end>
         <button ion-button icon-only (click)="doRefresh($event)">
-          <ion-icon *ngIf="!sync.isSyncing" name="sync"></ion-icon>
-          <ion-spinner *ngIf="sync.isSyncing"></ion-spinner>
+          <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
+          <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
         </button>
         <button ion-button icon-only (click)="newFrequency()">
            <ion-icon name="add"></ion-icon> 
