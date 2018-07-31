@@ -16,6 +16,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
 import { ProService } from './../../services/pro';
+import { SyncProvider } from '../../services/sync';
 
 @IonicPage()
 @Component({
@@ -31,6 +32,7 @@ export class FrequencyIndexPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private sync: SyncProvider,
     private loadingCtrl: LoadingController,
     private unitiesService: UnitiesService,
     private dailyFrequencyService: DailyFrequencyService,
@@ -230,6 +232,10 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
+    if(refresher.type === 'click') {
+      refresher = this.sync;
+      refresher.start();
+    }
     this.utilsService.hasAvailableStorage().then((available) => {
       if (!available) {
         this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));

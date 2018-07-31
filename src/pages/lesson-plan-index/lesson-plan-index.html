@@ -1,6 +1,12 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Planos de aula</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="doRefresh($event)">
+        <ion-icon *ngIf="!sync.isSyncing" name="sync"></ion-icon>
+        <ion-spinner *ngIf="sync.isSyncing"></ion-spinner>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

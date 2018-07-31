@@ -140,6 +140,10 @@ ion-header .bar-button[icon-only] ion-icon {
     top: 5px;
 }
 
+.button-inner ion-spinner * {
+    stroke: #fff;
+}
+
 .ion-spin-animation { -webkit-animation: spin 1s infinite linear; -moz-animation: spin 1s infinite linear; -o-animation: spin 1s infinite linear; animation: spin 1s infinite linear; }
 
 @-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
