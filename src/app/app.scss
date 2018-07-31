@@ -124,6 +124,22 @@ ion-app .scroll-content {
     }
 }
 
+ion-header .bar-button[icon-only] ion-icon {
+    font-size: 3em;
+}
+
+.edit-img {
+    height: 51px;
+    display: block;
+    margin: 10px auto 20px;
+}
+
+.ion-buttons-back {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
 .ion-spin-animation { -webkit-animation: spin 1s infinite linear; -moz-animation: spin 1s infinite linear; -o-animation: spin 1s infinite linear; animation: spin 1s infinite linear; }
 
 @-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
