@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { Observable } from '../../node_modules/rxjs';
 
 @Injectable()
 export class SyncProvider {
@@ -10,6 +11,7 @@ export class SyncProvider {
     private storage: Storage,
   ) {
     this.isSyncingStatus = false;
+    this.verifySyncDate();
   }
 
   start() {
@@ -39,12 +41,20 @@ export class SyncProvider {
   isSyncDelayed() {
     return this.getLastSyncDate().then(lastSyncDate => {
       let difference = new Date().getTime() - lastSyncDate.getTime();
-      let dayInMs = 100*60*60*24;
+      let dayInMs = 1000*60*60*24;
 
-      if (difference/dayInMs >= 5)
+      if (difference/dayInMs >= 5 || !lastSyncDate)
         this.callSyncTooltip();
     }).catch(error => {
       this.callSyncTooltip();
+    });
+  }
+
+  verifySyncDate() {
+    let hourInMs = 1000*60*60;
+
+    Observable.interval(hourInMs*12).subscribe(() => {
+      this.isSyncDelayed();
     });
   }
 
