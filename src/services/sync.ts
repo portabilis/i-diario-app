@@ -1,6 +1,5 @@
 import { AlertController } from '../../node_modules/ionic-angular';
 import { ConnectionService } from './connection';
-import { Observable } from '../../node_modules/rxjs';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable } from '../../node_modules/rxjs';
