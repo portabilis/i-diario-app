@@ -159,6 +159,10 @@ ion-header .bar-button[icon-only] ion-icon.ion-ios-sync {
     }
 }
 
+.ion-buttons-back.bar-buttons.bar-buttons-ios .bar-button-ios {
+    font-size: 1rem;
+}
+
 @-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
     100% { -moz-transform: rotate(359deg); } }
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); }
