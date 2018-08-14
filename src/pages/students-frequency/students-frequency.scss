@@ -178,3 +178,19 @@
       padding: 0 !important;
   }
 }
+
+ion-spinner {
+    transition: opacity .3s;
+
+    &.no-opacity {
+        opacity: 0;
+    }
+    &.opacity {
+        opacity: 1;
+    }
+}
+
+ion-title.students-frequency-title.title-ios {
+    left: initial;
+    margin-left: 30px !important;
+}
