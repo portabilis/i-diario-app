@@ -36,6 +36,9 @@ export class MyApp {
             ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
+      statusBar.overlaysWebView(false);
+      statusBar.backgroundColorByHexString('#4a0079');
+      statusBar.styleBlackOpaque();
       splashScreen.hide();
       network.onConnect().subscribe(() => {
         this.connectionService.setStatus(true);
