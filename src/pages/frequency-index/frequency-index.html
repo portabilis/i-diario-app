@@ -6,7 +6,7 @@
         <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
         <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
       </button>
-      <button ion-button icon-only (click)="newFrequency()">
+      <button ion-button icon-only (tap)="newFrequency()">
           <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
