@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { FrequencyIndexPage } from './frequency-index';
-import { ComponentsModule } from '../../components/components.module';
+import { TooltipComponentModule } from '../../components/tooltip/tooltip.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +9,7 @@ import { ComponentsModule } from '../../components/components.module';
   ],
   imports: [
     IonicPageModule.forChild(FrequencyIndexPage),
-    ComponentsModule,
+    TooltipComponentModule,
   ],
   exports: [
     FrequencyIndexPage
