@@ -159,6 +159,20 @@ ion-header .bar-button[icon-only] ion-icon.ion-ios-sync {
     }
 }
 
+
+.multiple-lines {
+
+    &.title-ios {
+        position: static;
+        height: auto !important;
+    }
+    
+    &.title-md {
+        display: flex;
+        width: 100%;
+    }
+}
+
 .ion-buttons-back.bar-buttons.bar-buttons-ios .bar-button-ios {
     font-size: 1rem;
 }
