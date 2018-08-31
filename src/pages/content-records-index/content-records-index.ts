@@ -225,13 +225,14 @@ export class ContentRecordsIndexPage {
 
   doRefresh(refresher) {
     this.sync.setSyncDate();
-
-    if(refresher.type === 'click') {
-      refresher = this.sync;
-      refresher.start();
-    }
-
+    
     this.sync.verifyWifi().subscribe(continueSync => {
+
+      if(refresher.type === 'click') {
+        refresher = this.sync;
+        refresher.start();
+      }
+
       if (continueSync) {
         this.utilsService.hasAvailableStorage().then((available) => {
           if (!available) {
