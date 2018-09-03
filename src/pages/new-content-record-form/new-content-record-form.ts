@@ -89,7 +89,8 @@ export class NewContentRecordFormPage{
     const selectedClassroom = this.classrooms.filter(d=>d['id']==classroomId)[0];
     const gradeId = selectedClassroom['grade_id'];
     const classroomDescription = selectedClassroom['description'];
-    const date = new Date(form.value.date)
+    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
+    const date = new Date(new Date(form.value.date).setUTCHours(currentTimezone));
     const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     const disciplineDescription = this.disciplines.filter(d=>d['id']==disciplineId)[0]['description'];
