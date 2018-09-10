@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons class="button-left-student-frequency">
+    <ion-buttons class="button-left-student-frequency ion-buttons-back">
       <button ion-button icon-only (click)="goBack()">
-        <img class="img-close-frequency" src="assets/img/arrowLeft@3x.png" >
+        <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end>
       <button ion-button icon-only>
-        <ion-icon name="refresh" [ngClass]="isSavingFrequencies ? 'ion-spin-animation' : ''"></ion-icon>
+        <ion-spinner [ngClass]="isSavingFrequencies ? 'opacity' : 'no-opacity'"></ion-spinner>
       </button>
     </ion-buttons>
     <ion-title class="students-frequency-title">Frequência</ion-title>

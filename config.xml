@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.appoffline153013" version="0.0.30" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.appoffline153013" version="0.0.41" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Portabilis Diário</name>
     <description>Cadastro de frequências online/offline, consulta de planos de aula e de ensino.</description>
     <author email="suporte@portabilis.com.br" href="http://www.portabilis.com.br">Portabilis Tecnologia Ltda.</author>
@@ -25,6 +25,7 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
+        <preference name="android-minSdkVersion" value="19" />
         <preference name="loadUrlTimeoutValue" value="700000" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -49,6 +50,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="target-device" value="handset" />
         <icon height="57" platform="ios" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" platform="ios" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="resources/ios/icon/icon-40.png" width="40" />
@@ -88,7 +90,7 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-ionic" spec="^4.1.7">
         <variable name="APP_ID" value="***REMOVED***" />
-        <variable name="CHANNEL_NAME" value="Master" />
+        <variable name="CHANNEL_NAME" value="Development" />
         <variable name="UPDATE_METHOD" value="background" />
         <variable name="WARN_DEBUG" value="true" />
         <variable name="UPDATE_API" value="https://api.ionicjs.com" />
@@ -96,7 +98,7 @@
     </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <allow-navigation href="http://192.168.0.62:8100" />
     <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="4.5.4" />
-    <allow-navigation href="http://192.168.0.62:8100" />
 </widget>

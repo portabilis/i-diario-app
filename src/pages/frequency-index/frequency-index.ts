@@ -12,17 +12,18 @@ import { AuthService } from './../../services/auth';
 import { FrequencyPage } from './../frequency/frequency';
 import { StudentsFrequencyEditPage } from '../students-frequency-edit/students-frequency-edit';
 import { UnitiesService } from './../../services/unities';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
 import { ProService } from './../../services/pro';
+import { SyncProvider } from '../../services/sync';
 
 @IonicPage()
 @Component({
   selector: 'page-frequency-index',
   templateUrl: 'frequency-index.html'
 })
-export class FrequencyIndexPage {
+export class FrequencyIndexPage implements OnInit {
   shownGroup = null;
   lastFrequencyDays = null;
   emptyFrequencies = false;
@@ -31,6 +32,7 @@ export class FrequencyIndexPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private sync: SyncProvider,
     private loadingCtrl: LoadingController,
     private unitiesService: UnitiesService,
     private dailyFrequencyService: DailyFrequencyService,
@@ -46,6 +48,10 @@ export class FrequencyIndexPage {
     private contentRecordsSynchronizer: ContentRecordsSynchronizer,
     private pro: ProService,
   ) {}
+
+  ngOnInit() {
+    return this.sync.isSyncDelayed();
+  }
 
   ionViewWillEnter(){
     if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
@@ -64,7 +70,6 @@ export class FrequencyIndexPage {
         this.lastFrequencyDays = this.lastTenFrequencies(frequencies.daily_frequencies);
         this.emptyFrequencies = false;
       }else{
-        this.messages.showToast("Puxe para baixo para atualizar.");
         this.emptyFrequencies = true;
       }
     });
@@ -230,55 +235,68 @@ export class FrequencyIndexPage {
   }
 
   doRefresh(refresher) {
-    this.utilsService.hasAvailableStorage().then((available) => {
-      if (!available) {
-        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));
-        refresher.cancel();
-        return;
-      }
-      Observable.forkJoin(
-        Observable.fromPromise(this.auth.currentUser()),
-        Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-        Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
-        Observable.fromPromise(this.storage.get('contentRecordsToSync'))
-      ).subscribe(
-        (results) => {
-          let user = results[0];
-          let dailyFrequenciesToSync = results[1] || [];
-          let dailyFrequencyStudentsToSync = results[2] || [];
-          let contentRecordsToSync = results[3] || [];
+    this.sync.setSyncDate();
 
-          Observable.concat(
-            this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
-            this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
-            this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
+    this.sync.verifyWifi().subscribe(continueSync => {
+
+      if(refresher.type === 'click') {
+        refresher = this.sync;
+        refresher.start();
+      }
+
+      if (continueSync) {
+        this.utilsService.hasAvailableStorage().then((available) => {
+          if (!available) {
+            this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));
+            refresher.cancel();
+            return;
+          }
+          Observable.forkJoin(
+            Observable.fromPromise(this.auth.currentUser()),
+            Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
+            Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
+            Observable.fromPromise(this.storage.get('contentRecordsToSync'))
           ).subscribe(
-            () => {},
-            (error) => {
-              refresher.cancel();
-              this.pro.Exception(`On frequency syncing error: ${error}`);
-              this.messages.showError('Não foi possível realizar a sincronização.');
-            },
-            () => {
-              this.storage.remove('dailyFrequencyStudentsToSync')
-              this.storage.remove('dailyFrequenciesToSync')
-              this.offlineDataPersister.persist(user).subscribe(
-                (result) => {
-                },
+            (results) => {
+              let user = results[0];
+              let dailyFrequenciesToSync = results[1] || [];
+              let dailyFrequencyStudentsToSync = results[2] || [];
+              let contentRecordsToSync = results[3] || [];
+    
+              Observable.concat(
+                this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
+                this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
+                this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
+              ).subscribe(
+                () => {},
                 (error) => {
                   refresher.cancel();
-                  this.pro.Exception(`On frequency finishing sync error: ${error}`);
-                  this.messages.showError('Não foi possível finalizar a sincronização.');
+                  this.pro.Exception(`On frequency syncing error: ${error}`);
+                  this.messages.showError('Não foi possível realizar a sincronização.');
                 },
                 () => {
-                  refresher.complete();
-                  this.loadFrequencies()
+                  this.storage.remove('dailyFrequencyStudentsToSync')
+                  this.storage.remove('dailyFrequenciesToSync')
+                  this.offlineDataPersister.persist(user).subscribe(
+                    (result) => {
+                    },
+                    (error) => {
+                      refresher.cancel();
+                      this.pro.Exception(`On frequency finishing sync error: ${error}`);
+                      this.messages.showError('Não foi possível finalizar a sincronização.');
+                    },
+                    () => {
+                      refresher.complete();
+                      this.loadFrequencies()
+                    }
+                  )
                 }
               )
             }
           )
-        }
-      )
+        });
+      } else 
+        refresher.cancel();
     });
   }
 }

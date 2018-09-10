@@ -2,9 +2,13 @@
   <ion-navbar>
     <ion-title>Frequência</ion-title>
     <ion-buttons end>
-        <button ion-button icon-only (click)="newFrequency()">
-           <img width="50px" src="assets/img/icoAdicionar@3x.png" >
-        </button>
+      <button #syncFrequency ion-button icon-only (click)="doRefresh($event)">
+        <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
+        <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
+      </button>
+      <button ion-button icon-only (tap)="newFrequency()">
+          <ion-icon name="add"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -54,3 +58,7 @@
   </div>
 
 </ion-content>
+
+<tooltip [reference]="syncFrequency">
+  Clique neste ícone para sincronizar
+</tooltip>

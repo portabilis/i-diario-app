@@ -1,14 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons class="button-left-student-frequency">
+    <ion-buttons class="button-left ion-buttons-back">
       <button ion-button icon-only (click)="goBack()">
-        <img class="img-close-frequency-edit" src="assets/img/arrowLeft@3x.png" >
+        <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <img class="students-frequency-edit-img" src="assets/img/students-frequency-edit/ilustraFrequencia@2x.png">
-    <p class="title-students-frequency-edit" text-center>Lista de Frequência</p>
-    <p class="unity-name-students-frequency-edit" text-center>{{unityName}}</p>
-    <p class="date-students-frequency-edit" text-center>{{formatDate}}</p>
+    <ion-title class="multiple-lines">
+      <img class="students-frequency-edit-img edit-img" src="assets/img/students-frequency-edit/ilustraFrequencia@2x.png">
+      <p class="title-students-frequency-edit" text-center>Lista de Frequência</p>
+      <p class="unity-name-students-frequency-edit" text-center>{{unityName}}</p>
+      <p class="date-students-frequency-edit" text-center>{{formatDate}}</p>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 

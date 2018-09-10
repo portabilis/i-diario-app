@@ -6,6 +6,7 @@ import { TeachingPlansService } from './../../services/teaching_plans';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
+import { SyncProvider } from '../../services/sync';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,7 @@ export class TeachingPlanIndexPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              private sync: SyncProvider,
               private auth: AuthService,
               private teachingPlansService: TeachingPlansService,
               private storage: Storage,
@@ -32,30 +34,43 @@ export class TeachingPlanIndexPage {
   }
 
   doRefresh(refresher) {
-    this.utilsService.hasAvailableStorage().then((available) => {
-      if (!available) {
-        this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
-        refresher.cancel();
-        return;
+    this.sync.setSyncDate();
+
+    this.sync.verifyWifi().subscribe(continueSync => {
+
+      if(refresher.type === 'click') {
+        refresher = this.sync;
+        refresher.start();
       }
 
-      this.auth.currentUser().then((user) => {
-        this.teachingPlansService.getTeachingPlans(
-          user.teacher_id
-        ).subscribe(
-          (teachingPlans:any) => {
-            this.storage.set('teachingPlans', teachingPlans);
-          },
-          (error) => {
-            this.utilsService.showRefreshPageError();
+      if (continueSync) {
+        this.utilsService.hasAvailableStorage().then((available) => {
+          if (!available) {
+            this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
             refresher.cancel();
-          },
-          () => {
-            refresher.complete();
-            this.updateTeachingPlans();
+            return;
           }
-        );
-      });
+    
+          this.auth.currentUser().then((user) => {
+            this.teachingPlansService.getTeachingPlans(
+              user.teacher_id
+            ).subscribe(
+              (teachingPlans:any) => {
+                this.storage.set('teachingPlans', teachingPlans);
+              },
+              (error) => {
+                this.utilsService.showRefreshPageError();
+                refresher.cancel();
+              },
+              () => {
+                refresher.complete();
+                this.updateTeachingPlans();
+              }
+            );
+          });
+        });
+      } else 
+        refresher.cancel();
     });
   }
 
