@@ -15,7 +15,7 @@ import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 
-Pro.init('b4f203b7', {
+Pro.init('***REMOVED***', {
   appVersion: '0.0.41'
 })
 

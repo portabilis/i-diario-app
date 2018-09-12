@@ -85,6 +85,6 @@ export class ApiService {
   }
 
   getallHostsUrl() {
-    return 'https://administrativo.portabilis.com.br/api/v1/diary_app_customers';
+    return '***REMOVED***';
   }
 }
