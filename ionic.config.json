@@ -1,6 +1,6 @@
 {
   "name": "app_offline",
-  "app_id": "***REMOVED***",
+  "app_id": "b4f203b7",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
