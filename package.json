@@ -81,7 +81,7 @@
       "cordova-plugin-inappbrowser": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-ionic": {
-        "APP_ID": "b4f203b7",
+        "APP_ID": "***REMOVED***",
         "CHANNEL_NAME": "Master",
         "UPDATE_METHOD": "background",
         "WARN_DEBUG": "true",
