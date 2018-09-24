@@ -61,8 +61,8 @@ export class FrequencyPage{
 
   ionViewWillEnter(){
     if(!this.date){
-      const currentTime = new Date();
-      this.date = this.utilsService.toStringWithoutTime(currentTime);
+      const currentDate = new Date();
+      this.date = this.utilsService.toStringWithoutTime(currentDate);
     }
     if(!this.unities || !this.unities.length){
       this.unities = this.navParams.get('unities');
