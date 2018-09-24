@@ -61,7 +61,8 @@ export class FrequencyPage{
 
   ionViewWillEnter(){
     if(!this.date){
-      this.date = new Date().toISOString()
+      const currentTime = new Date();
+      this.date = this.utilsService.toStringWithoutTime(currentTime);
     }
     if(!this.unities || !this.unities.length){
       this.unities = this.navParams.get('unities');
@@ -167,7 +168,8 @@ export class FrequencyPage{
   frequencyForm(form: NgForm){
     const unityId = form.value.unity
     const classroomId = form.value.classroom
-    const date = new Date(form.value.date)
+    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
+    const date = new Date(new Date(form.value.date).setUTCHours(currentTimezone));
     const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     let classes:any[] = []
