@@ -36,7 +36,7 @@ export class NewContentRecordFormPage{
 
   ionViewWillEnter(){
     let date = this.navParams.get('date');
-    this.date = date ? new Date(date).toISOString() : new Date().toISOString();
+    this.date = date ? this.utilsService.toStringWithoutTime(date) : this.utilsService.toStringWithoutTime(new Date());
     this.unities = this.navParams.get('unities');
     this.emptyUnities = (!this.unities || this.unities.length == 0);
     this.unityId = this.navParams.get('unityId');
@@ -89,8 +89,7 @@ export class NewContentRecordFormPage{
     const selectedClassroom = this.classrooms.filter(d=>d['id']==classroomId)[0];
     const gradeId = selectedClassroom['grade_id'];
     const classroomDescription = selectedClassroom['description'];
-    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
-    const date = new Date(new Date(form.value.date).setUTCHours(currentTimezone));
+    const date = this.utilsService.dateToTimezone(form.value.date);
     const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     const disciplineDescription = this.disciplines.filter(d=>d['id']==disciplineId)[0]['description'];
