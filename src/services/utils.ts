@@ -87,6 +87,11 @@ export class UtilsService {
     );
   }
 
+  public dateToTimezone(date: Date) {
+    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
+    return new Date(new Date(date).setUTCHours(currentTimezone));
+  }
+
   public hasAvailableStorage() {
     return this.file.getFreeDiskSpace().then(
       (success) => {

@@ -168,8 +168,7 @@ export class FrequencyPage{
   frequencyForm(form: NgForm){
     const unityId = form.value.unity
     const classroomId = form.value.classroom
-    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
-    const date = new Date(new Date(form.value.date).setUTCHours(currentTimezone));
+    const date = this.utilsService.dateToTimezone(form.value.date);
     const stringDate = this.utilsService.toStringWithoutTime(date)
     const disciplineId = form.value.discipline;
     let classes:any[] = []
