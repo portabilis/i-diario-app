@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
+import { UtilsService } from './utils';
 
 @Injectable()
 export class ClassroomsService {
@@ -12,7 +13,8 @@ export class ClassroomsService {
     private http: Http,
     private storage: Storage,
     private connection: ConnectionService,
-    private api: ApiService
+    private api: ApiService,
+    private utilsService: UtilsService,
   ){}
 
   getOnlineClassrooms(teacherId: number, unityId: number){
@@ -32,7 +34,7 @@ export class ClassroomsService {
           observer.complete();
           return;
         }
-        var currentYear = (new Date()).getFullYear();
+        var currentYear = (this.utilsService.getCurrentDate()).getFullYear();
         classrooms.forEach((classroom) => {
           if (classroom.unityId == unityId){
             classroom.data = classroom.data.filter((value) => {

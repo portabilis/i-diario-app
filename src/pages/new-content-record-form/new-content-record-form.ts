@@ -36,7 +36,7 @@ export class NewContentRecordFormPage{
 
   ionViewWillEnter(){
     let date = this.navParams.get('date');
-    this.date = date ? this.utilsService.toStringWithoutTime(date) : this.utilsService.toStringWithoutTime(new Date());
+    this.date = date ? this.utilsService.toStringWithoutTime(date) : this.utilsService.toStringWithoutTime(this.utilsService.getCurrentDate());
     this.unities = this.navParams.get('unities');
     this.emptyUnities = (!this.unities || this.unities.length == 0);
     this.unityId = this.navParams.get('unityId');

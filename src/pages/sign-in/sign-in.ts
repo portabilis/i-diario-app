@@ -67,7 +67,7 @@ export class SignIn {
   greetingText() {
     let split_afternoon = 12;
     let split_evening = 17;
-    let currentHour = new Date().getHours();
+    let currentHour = this.utilsService.getCurrentDate().getHours();
 
     let greeting = "bom dia";
 

@@ -86,9 +86,19 @@ export class UtilsService {
       }
     );
   }
+  public getDate(date?: string | number | Date): Date {
+    if (date)
+      return new Date(date);
+    else
+      return new Date();
+  }
 
-  public dateToTimezone(date: Date) {
-    const currentTimezone = (new Date().getTimezoneOffset()) / 60;
+  public getCurrentDate(): Date {
+    return this.getDate();
+  }
+
+  public dateToTimezone(date: Date): Date {
+    const currentTimezone = (this.getCurrentDate().getTimezoneOffset()) / 60;
     return new Date(new Date(date).setUTCHours(currentTimezone));
   }
 

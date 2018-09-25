@@ -58,7 +58,7 @@ export class StudentsFrequencyEditPage {
     this.setCurrentUnity();
     this.setCurrentFrequencyDate();
     this.students = this.mountStudentList();
-    let date = new Date(this.frequencyDate);
+    let date = this.utilsService.getDate(this.frequencyDate);
     date.setHours(24,0,0,0);
     this.formatDate = this.utilsService.toBrazilianFormat(date);
   }

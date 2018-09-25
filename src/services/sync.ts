@@ -3,6 +3,7 @@ import { ConnectionService } from './connection';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable } from '../../node_modules/rxjs';
+import { UtilsService } from './utils';
 
 @Injectable()
 export class SyncProvider {
@@ -13,6 +14,7 @@ export class SyncProvider {
     private connectionService: ConnectionService,
     private alert: AlertController,
     private storage: Storage,
+    private utilsService: UtilsService,
   ) {
     this.isSyncingStatus = false;
     this.verifySyncDate();
@@ -75,13 +77,13 @@ export class SyncProvider {
     return this.storage.get('lastSyncDate').then(lastSyncDate => {
       return lastSyncDate;
     }).catch(error => {
-      return new Date();
+      return this.utilsService.getCurrentDate();
     });
   }
 
   isSyncDelayed() {
     return this.getLastSyncDate().then(lastSyncDate => {
-      let difference = new Date().getTime() - lastSyncDate.getTime();
+      let difference = this.utilsService.getCurrentDate().getTime() - lastSyncDate.getTime();
       let dayInMs = 1000*60*60*24;
 
       if (difference/dayInMs >= 5 || !lastSyncDate)
@@ -104,7 +106,7 @@ export class SyncProvider {
   }
 
   setSyncDate() {
-    let syncDate: Date = new Date();
+    let syncDate: Date = this.utilsService.getCurrentDate();
     this.storage.set('lastSyncDate', syncDate);
   }
 
