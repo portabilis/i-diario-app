@@ -63,7 +63,7 @@ export class ContentRecordsIndexPage {
       let classrooms = results[3];
 
       this.contentDays = [];
-      let currentDate = new Date();
+      let currentDate = this.utilsService.getCurrentDate();
       currentDate.setHours(0,0,0,0);
       // TODO: Pegar de algum parâmetro o número de dias
       let numberOfDays = 7;
@@ -71,7 +71,7 @@ export class ContentRecordsIndexPage {
         let unities = [];
 
         (contentRecords||[]).filter(x=>x.contents.length).forEach(contentRecord => {
-          let contentDate = new Date(contentRecord.record_date);
+          let contentDate = this.utilsService.getDate(contentRecord.record_date);
           contentDate.setHours(24,0,0,0);
 
           if(currentDate.getTime() == contentDate.getTime()){
@@ -106,9 +106,9 @@ export class ContentRecordsIndexPage {
 
         (lessonPlans||[]).forEach(lessonPlan => {
 
-          let startAt = new Date(lessonPlan.start_at);
+          let startAt = this.utilsService.getDate(lessonPlan.start_at);
           startAt.setHours(24,0,0,0);
-          let endAt = new Date(lessonPlan.end_at);
+          let endAt = this.utilsService.getDate(lessonPlan.end_at);
           endAt.setHours(24,0,0,0);
 
           if(currentDate >= startAt && currentDate <= endAt){

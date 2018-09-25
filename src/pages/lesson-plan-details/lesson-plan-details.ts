@@ -52,8 +52,8 @@ export class LessonPlanDetailsPage {
   }
 
   periodDate(start_at, end_at) {
-    start_at = this.utilsService.toBrazilianFormat(new Date(start_at));
-    end_at = this.utilsService.toBrazilianFormat(new Date(end_at));
+    start_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(start_at));
+    end_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(end_at));
     return start_at + " a " + end_at;
   }
 

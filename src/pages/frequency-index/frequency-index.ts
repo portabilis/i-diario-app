@@ -62,7 +62,7 @@ export class FrequencyIndexPage implements OnInit {
 
   loadFrequencies() {
     this.shownGroup = null;
-    this.currentDate = new Date();
+    this.currentDate = this.utilsService.getCurrentDate();
     this.currentDate.setHours(0,0,0,0);
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {

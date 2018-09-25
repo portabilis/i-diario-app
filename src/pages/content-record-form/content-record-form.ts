@@ -61,7 +61,7 @@ export class ContentRecordFormPage {
     this.contentRecord = {};
     this.contents = [];
     this.recordDate = this.navParams.get('date');
-    let date = new Date(this.recordDate);
+    let date = this.utilsService.getDate(this.recordDate);
     date.setHours(24,0,0,0);
     this.displayDate = this.utilsService.toExtensiveFormat(date);
     this.unityId = this.navParams.get('unityId');
