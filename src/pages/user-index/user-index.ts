@@ -83,6 +83,8 @@ export class UserIndexPage {
     await Pro.deploy.info(info => {
       this.binary_version = info.binary_version;
       this.minor_version = '1';
+    }, error => {
+      this.messages.showToast('Não foi possível identificar a versão do aplicativo.');
     });
   }
 }
