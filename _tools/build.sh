@@ -40,7 +40,7 @@ if [ "$PLATFORM" = "android" ] ; then
             echo "ERROR: Android Build Tools not found!"
             echo "Please, verify if Android Studio is installed."
         else
-            ionic cordova build android --release --prod
+            ionic cordova build android --release
             jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../app_offline.keystore ../platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk app_offline
             rm -f ./android-release-$VERSION.apk
             $ANDROID_BUILDTOOLS_VERSION_PATH/zipalign -v 4 ../platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ./android-release-$VERSION.apk
@@ -63,7 +63,7 @@ else
 
         if [ "$TYPE" = "release" ] ; then
             echo "Generating the release iOS build"
-            ionic cordova build ios --prod --release
+            ionic cordova build ios --release
             echo ">>> Build finished <<<"
         else
             if [ "$TYPE" = "debug" ] ; then
