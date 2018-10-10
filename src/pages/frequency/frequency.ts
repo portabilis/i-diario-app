@@ -70,6 +70,10 @@ export class FrequencyPage{
     }
   }
 
+  ionViewWillLeave() {
+    this.navCtrl.getPrevious().data.isBack = true;
+}
+
   scrollTo(elementId:string) {
     let yOffset = document.getElementById(elementId).offsetTop;
     this.content.scrollTo(0, yOffset, 1000)

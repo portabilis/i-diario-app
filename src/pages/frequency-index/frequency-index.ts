@@ -55,9 +55,15 @@ export class FrequencyIndexPage implements OnInit {
 
   ionViewWillEnter(){
     if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
-        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
+        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage" ||
+        this.navParams.get('isBack')){
+
       this.loadFrequencies();
+
+      if (this.navParams.get('isBack'))
+        this.navParams.data.isBack = false;
     }
+
   }
 
   loadFrequencies() {
