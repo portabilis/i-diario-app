@@ -1,4 +1,3 @@
-import { ErrorHanlderService } from './../../services/error_handler';
 import { Observable } from 'rxjs/Observable';
 import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
@@ -16,6 +15,7 @@ import { UnitiesService } from './../../services/unities';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
+import { ProService } from './../../services/pro';
 import { SyncProvider } from '../../services/sync';
 
 @IonicPage()
@@ -46,7 +46,7 @@ export class FrequencyIndexPage implements OnInit {
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
     private contentRecordsSynchronizer: ContentRecordsSynchronizer,
-    private errorHanlder: ErrorHanlderService,
+    private pro: ProService,
   ) {}
 
   ngOnInit() {
@@ -277,12 +277,8 @@ export class FrequencyIndexPage implements OnInit {
                 () => {},
                 (error) => {
                   refresher.cancel();
-                  this.errorHanlder.handleError(
-                    'Erro ao sincronizar',
-                    'Não foi possível realizar a sincronização.',
-                    101,
-                    `On frequency syncing error: ${error}`
-                  );
+                  this.pro.Exception(`On frequency syncing error: ${error}`);
+                  this.messages.showError('Não foi possível realizar a sincronização.');
                 },
                 () => {
                   this.storage.remove('dailyFrequencyStudentsToSync')
@@ -292,12 +288,8 @@ export class FrequencyIndexPage implements OnInit {
                     },
                     (error) => {
                       refresher.cancel();
-                      this.errorHanlder.handleError(
-                        'Erro ao sincronizar',
-                        'Não foi possível finalizar a sincronização.',
-                        102,
-                        `On frequency finishing sync error: ${error}`
-                      );
+                      this.pro.Exception(`On frequency finishing sync error: ${error}`);
+                      this.messages.showError('Não foi possível finalizar a sincronização.');
                     },
                     () => {
                       refresher.complete();

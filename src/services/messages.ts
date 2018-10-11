@@ -11,25 +11,14 @@ export class MessagesService {
   public showError(message,
                    title='Erro',
                    buttons=[{
-                     
+                    text: 'OK',
+                    handler: () => {}
                    }]) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
       buttons: buttons,
     });
-    alert.present();
-  }
-
-  public showAlert(title: string, message: string) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: message,
-      buttons: [{
-        text: 'OK',
-        handler: () => {}
-      }]
-    })
     alert.present();
   }
 

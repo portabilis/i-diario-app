@@ -1,4 +1,3 @@
-import { ErrorHanlderService } from './../services/error_handler';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -183,7 +182,6 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     ProService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
     SyncProvider,
-    ErrorHanlderService,
   ]
 })
 export class AppModule {}

@@ -12,8 +12,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { MessagesService } from './../../services/messages';
+import { ProService } from './../../services/pro';
 import { SyncProvider } from '../../services/sync';
-import { ErrorHanlderService } from '../../services/error_handler';
 
 @IonicPage()
 @Component({
@@ -37,7 +37,7 @@ export class ContentRecordsIndexPage {
               private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
               private contentRecordsSynchronizer: ContentRecordsSynchronizer,
-              private errorHanlder: ErrorHanlderService,
+              private pro: ProService,
             ) {
   }
 
@@ -260,12 +260,8 @@ export class ContentRecordsIndexPage {
                 () => {},
                 (error) => {
                   refresher.cancel();
-                  this.errorHanlder.handleError(
-                    'Erro ao sincronizar',
-                    'Não foi possível realizar a sincronização.',
-                    101,
-                    `On content record syncing error: ${error}`
-                  );
+                  this.pro.Exception(`On content record syncing error: ${error}`);
+                  this.messages.showError('Não foi possível realizar a sincronização.');
                 },
                 () => {
                   this.storage.remove('dailyFrequencyStudentsToSync');
@@ -275,12 +271,8 @@ export class ContentRecordsIndexPage {
                     },
                     (error) => {
                       refresher.cancel();
-                      this.errorHanlder.handleError(
-                        'Erro ao sincronizar',
-                        'Não foi possível finalizar a sincronização.',
-                        102,
-                        `On content record finishing sync error: ${error}`
-                      );
+                      this.pro.Exception(`On content record finishing sync error: ${error}`);
+                      this.messages.showError('Não foi possível finalizar a sincronização.');
                     },
                     () => {
                       refresher.complete()
