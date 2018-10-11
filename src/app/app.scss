@@ -177,6 +177,13 @@ ion-header .bar-button[icon-only] ion-icon.ion-ios-sync {
     font-size: 1rem;
 }
 
+.error-code {
+    background: #666;
+    padding: 1px 9px;
+    border-radius: 10px;
+    color: #fff;
+}
+
 @-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
     100% { -moz-transform: rotate(359deg); } }
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); }

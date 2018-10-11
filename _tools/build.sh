@@ -63,7 +63,7 @@ else
 
         if [ "$TYPE" = "release" ] ; then
             echo "Generating the release iOS build"
-            ionic cordova build ios --prod --release
+            ionic cordova build ios --release --prod
             echo ">>> Build finished <<<"
         else
             if [ "$TYPE" = "debug" ] ; then

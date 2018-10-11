@@ -1,3 +1,4 @@
+import { ErrorHanlderService } from './../services/error_handler';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 
 Pro.init('***REMOVED***', {
-  appVersion: '0.0.44'
+  appVersion: '0.0.45'
 })
 
 //Pages
@@ -181,7 +182,8 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     MessagesService,
     ProService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
-    SyncProvider
+    SyncProvider,
+    ErrorHanlderService,
   ]
 })
 export class AppModule {}
