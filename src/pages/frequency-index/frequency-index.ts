@@ -50,26 +50,22 @@ export class FrequencyIndexPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.utilsService.viewIsLeaving().subscribe(isLeaving => {
+      if (isLeaving) this.loadFrequencies();
+    });
+
     return this.sync.isSyncDelayed();
   }
 
   ionViewWillEnter(){
     if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
-        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage" ||
-        this.navParams.get('isBack')){
-
+        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
       this.loadFrequencies();
-
-      if (this.navParams.get('isBack'))
-        this.navParams.data.isBack = false;
     }
-
   }
 
   loadFrequencies() {
     this.shownGroup = null;
-    this.currentDate = this.utilsService.getCurrentDate();
-    this.currentDate.setHours(0,0,0,0);
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {
 
@@ -106,10 +102,11 @@ export class FrequencyIndexPage implements OnInit {
   };
 
   private lastTenFrequencies(frequencies) {
-
-
     var lastDays = []
     const frequencyLimit = 10
+
+    this.currentDate = this.utilsService.getCurrentDate();
+    this.currentDate.setHours(0,0,0,0);
 
     for (let i = frequencyLimit; i > 0; i--) {
       let shortDate = this.utilsService.toStringWithoutTime(this.currentDate);
