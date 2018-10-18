@@ -4,6 +4,7 @@ import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 import { MessagesService } from './messages';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class UtilsService {
@@ -13,7 +14,17 @@ export class UtilsService {
     private iab: InAppBrowser,
     private file: File,
     private messages: MessagesService,
+    private viewSubject: Subject<any>,
   ){}
+
+  public leaveView(isLeaving: boolean): Subject<boolean> {
+    this.viewSubject.next(isLeaving);
+    return this.viewSubject;
+  }
+
+  public viewIsLeaving() {
+    return this.viewSubject;
+  }
 
   public toStringWithoutTime(date: Date){
     return date.getFullYear() +

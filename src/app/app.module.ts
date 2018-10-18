@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 // Imports from angular
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -182,6 +183,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     ProService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
     SyncProvider,
+    Subject
   ]
 })
 export class AppModule {}
