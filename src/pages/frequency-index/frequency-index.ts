@@ -28,6 +28,7 @@ export class FrequencyIndexPage implements OnInit {
   lastFrequencyDays = null;
   emptyFrequencies = false;
   currentDate: Date = null;
+  frequenciesLoaded: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -51,21 +52,27 @@ export class FrequencyIndexPage implements OnInit {
 
   ngOnInit() {
     this.utilsService.viewIsLeaving().subscribe(isLeaving => {
-      if (isLeaving) this.loadFrequencies();
+      if (isLeaving) {
+        this.loadFrequencies();
+        this.frequenciesLoaded = true;
+      }
     });
 
     return this.sync.isSyncDelayed();
   }
 
   ionViewWillEnter(){
-    if(!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
-        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage"){
+    if(!this.frequenciesLoaded && (!this.currentDate || this.navCtrl.last()['component']['name'] == "FrequencyPage"
+        || this.navCtrl.last()['component']['name'] == "StudentsFrequencyPage")){
       this.loadFrequencies();
     }
+    this.frequenciesLoaded = false;
   }
 
   loadFrequencies() {
     this.shownGroup = null;
+    this.currentDate = this.utilsService.getCurrentDate();
+    this.currentDate.setHours(0,0,0,0);
     this.storage.get('frequencies').then((frequencies) => {
       if (frequencies) {
 
@@ -104,9 +111,6 @@ export class FrequencyIndexPage implements OnInit {
   private lastTenFrequencies(frequencies) {
     var lastDays = []
     const frequencyLimit = 10
-
-    this.currentDate = this.utilsService.getCurrentDate();
-    this.currentDate.setHours(0,0,0,0);
 
     for (let i = frequencyLimit; i > 0; i--) {
       let shortDate = this.utilsService.toStringWithoutTime(this.currentDate);
