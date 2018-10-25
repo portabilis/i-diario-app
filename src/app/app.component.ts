@@ -1,3 +1,4 @@
+import { SyncProvider } from './../services/sync';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable'
 import { DailyFrequencyStudentsSynchronizer } from './../services/offline_data_synchronization/daily_frequency_students_synchronizer';
@@ -33,6 +34,7 @@ export class MyApp {
               private contentRecordsSynchronizer: ContentRecordsSynchronizer,
               private storage: Storage,
               private messages: MessagesService,
+              private sync: SyncProvider,
               private utilsService: UtilsService,
             ) {
     platform.ready().then(() => {
@@ -67,6 +69,20 @@ export class MyApp {
 
         if (tabViews[activeView]) {
           nav.parent.select(0);
+        } else if(activeView === "FrequencyIndexPage") {
+          if (this.sync.isSyncing()) {
+            this.messages.showError("A sincronização ainda não foi concluída. Deseja sair mesmo assim?", "Sincronização em andamento", [{
+              text: 'Parar sincronização e sair',
+              handler: () => {
+                platform.exitApp();
+              }
+            }, {
+              text: 'Continuar sincronização',
+              handler: () => {}
+            }]);
+          } else {
+            platform.exitApp();
+          }
         } else {
           if (nav.canGoBack()) {
             nav.pop();
