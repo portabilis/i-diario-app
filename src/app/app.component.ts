@@ -5,7 +5,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
 import { ContentRecordsSynchronizer } from './../services/offline_data_synchronization/content_records_synchronizer';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
@@ -21,7 +21,8 @@ import { MessagesService } from './../services/messages';
 export class MyApp {
   rootPage:any = SignIn;
 
-  constructor(platform: Platform,
+  constructor(app: App,
+              platform: Platform,
               statusBar: StatusBar,
               splashScreen: SplashScreen,
               network: Network,
@@ -53,6 +54,26 @@ export class MyApp {
           this.rootPage = AppIndexPage
         }
       })
+      
+      platform.registerBackButtonAction(() => {
+        let nav = app.getActiveNavs()[0];
+        let activeView = nav.getActive().name;
+        let tabViews = {
+          "ContentRecordsIndexPage": true,
+          "LessonPlanIndexPage": true,
+          "TeachingPlanIndexPage": true,
+          "UserIndexPage": true
+        };
+
+        if (tabViews[activeView]) {
+          nav.parent.select(0);
+        } else {
+          if (nav.canGoBack()) {
+            nav.pop();
+          }
+        }
+
+      });
 
     });
   }
@@ -123,4 +144,3 @@ export class MyApp {
     });
   }
 }
-
