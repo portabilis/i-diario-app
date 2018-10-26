@@ -1,3 +1,5 @@
+import { UserIndexPage } from './../pages/user-index/user-index';
+import { ContentRecordsIndexPage } from './../pages/content-records-index/content-records-index';
 import { SyncProvider } from './../services/sync';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable'
@@ -15,6 +17,9 @@ import { ConnectionService } from './../services/connection';
 import { AppIndexPage } from "../pages/app-index/app-index";
 import { UtilsService } from './../services/utils';
 import { MessagesService } from './../services/messages';
+import { LessonPlanIndexPage } from '../pages/lesson-plan-index/lesson-plan-index';
+import { TeachingPlanIndexPage } from '../pages/teaching-plan-index/teaching-plan-index';
+import { FrequencyIndexPage } from '../pages/frequency-index/frequency-index';
 
 @Component({
   templateUrl: 'app.html'
@@ -59,17 +64,24 @@ export class MyApp {
       
       platform.registerBackButtonAction(() => {
         let nav = app.getActiveNavs()[0];
-        let activeView = nav.getActive().name;
-        let tabViews = {
-          "ContentRecordsIndexPage": true,
-          "LessonPlanIndexPage": true,
-          "TeachingPlanIndexPage": true,
-          "UserIndexPage": true
-        };
+        let activeComponent = nav.getActive().component;
+        let tabViews = [
+          ContentRecordsIndexPage,
+          LessonPlanIndexPage,
+          TeachingPlanIndexPage,
+          UserIndexPage
+        ];
+        let backDefaultTab = false;
 
-        if (tabViews[activeView]) {
+        for (let i = 0; i < tabViews.length; i++) {
+          if (tabViews[i] === activeComponent) {
+            backDefaultTab = true;
+          }
+        }
+
+        if (backDefaultTab) {
           nav.parent.select(0);
-        } else if (activeView === "FrequencyIndexPage") {
+        } else if (activeComponent === FrequencyIndexPage) {
           if (this.sync.isSyncing()) {
             this.messages.showError("A sincronização ainda não foi concluída. Deseja sair mesmo assim?", "Sincronização em andamento", [{
               text: 'Parar sincronização e sair',
@@ -83,7 +95,7 @@ export class MyApp {
           } else {
             platform.exitApp();
           }
-        } else if (activeView === "SignIn") {
+        } else if (activeComponent === SignIn) {
           platform.exitApp();
         } else {
           if (nav.canGoBack()) {
