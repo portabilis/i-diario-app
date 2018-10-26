@@ -69,7 +69,7 @@ export class MyApp {
 
         if (tabViews[activeView]) {
           nav.parent.select(0);
-        } else if(activeView === "FrequencyIndexPage") {
+        } else if (activeView === "FrequencyIndexPage") {
           if (this.sync.isSyncing()) {
             this.messages.showError("A sincronização ainda não foi concluída. Deseja sair mesmo assim?", "Sincronização em andamento", [{
               text: 'Parar sincronização e sair',
@@ -83,6 +83,8 @@ export class MyApp {
           } else {
             platform.exitApp();
           }
+        } else if (activeView === "SignIn") {
+          platform.exitApp();
         } else {
           if (nav.canGoBack()) {
             nav.pop();
