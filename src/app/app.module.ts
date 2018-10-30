@@ -17,7 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 
 Pro.init('***REMOVED***', {
-  appVersion: '0.0.49'
+  appVersion: '0.0.50'
 })
 
 //Pages
