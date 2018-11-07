@@ -113,11 +113,14 @@ export class MyApp {
   }
 
   private showIsSychronizedToast() {
-    this.messages.showToast('As frequências lançadas foram sincronizadas com sucesso.', 2000);
+    this.messages.showAlert(
+      'As frequências lançadas foram sincronizadas com sucesso.',
+      'Frequências sincronizadas'
+    );  
   }
 
   private showSynchronizationErrorToast() {
-    this.messages.showToast('Não foi possível sincronizar as frequências lançadas.', 2000);
+    this.messages.showError('Não foi possível sincronizar as frequências lançadas.');
   }
 
   private syncOfflineData(){
