@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>Conteúdos de aula</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="doRefresh($event)">
+      <button ion-button icon-only (click)="doRefresh()">
         <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
         <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
       </button>
@@ -14,10 +14,6 @@
 </ion-header>
 
 <ion-content class="page-content" padding>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
   <div class="content-space">
     <div *ngFor="let contentDay of contentDays; let i=index">
       <h3 class="content-day">{{contentDay.format_date}}</h3>
