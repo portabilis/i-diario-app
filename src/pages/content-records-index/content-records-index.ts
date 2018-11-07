@@ -223,15 +223,12 @@ export class ContentRecordsIndexPage {
     });
   }
 
-  doRefresh(refresher) {
+  doRefresh() {
     this.sync.setSyncDate();
     
     this.sync.verifyWifi().subscribe(continueSync => {
-
-      if(refresher.type === 'click') {
-        refresher = this.sync;
-        refresher.start();
-      }
+      let refresher = this.sync;
+      refresher.start();
 
       if (continueSync) {
         this.utilsService.hasAvailableStorage().then((available) => {
