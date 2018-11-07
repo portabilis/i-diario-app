@@ -3,8 +3,7 @@
     <ion-title>Conteúdos de aula</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="doRefresh()">
-        <ion-icon *ngIf="!sync.isSyncing()" name="sync"></ion-icon>
-        <ion-spinner *ngIf="sync.isSyncing()"></ion-spinner>
+        <ion-icon name="sync"></ion-icon>
       </button>
       <button ion-button icon-only (tap)="newContentRecordForm()">
          <ion-icon name="add"></ion-icon> 
