@@ -1,35 +1,46 @@
-import { AlertController } from '../../node_modules/ionic-angular';
-import { ConnectionService } from './connection';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
+
+import { AlertController, LoadingController, Loading } from '../../node_modules/ionic-angular';
+
 import { Observable } from '../../node_modules/rxjs';
+
+import { ConnectionService } from './connection';
 import { UtilsService } from './utils';
 
 @Injectable()
 export class SyncProvider {
   private isSyncingStatus: Boolean;
+  private loadingSync: Loading;
   public tooltipEvent: EventEmitter<any> = new EventEmitter;
 
   constructor(
-    private connectionService: ConnectionService,
     private alert: AlertController,
+    private connectionService: ConnectionService,
+    private loadingCtrl: LoadingController,
     private storage: Storage,
     private utilsService: UtilsService,
   ) {
     this.isSyncingStatus = false;
     this.verifySyncDate();
   }
-
+  
   start() {
     this.isSyncingStatus = true;
+    this.loadingSync = this.loadingCtrl.create({
+      content: "Estamos sincronizando os seus dados, aguarde por favor."
+    });
+    this.loadingSync.present();
   }
 
   cancel() {
     this.isSyncingStatus = false;
+    this.loadingSync.dismiss();
   }
 
   complete() {
     this.isSyncingStatus = false;
+    this.loadingSync.dismiss();
   }
 
   isSyncing() {
