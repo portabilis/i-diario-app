@@ -12,6 +12,7 @@ export class TooltipComponent implements AfterViewInit, OnInit {
   private tooltipBodyEl: ElementRef;
   private tooltipArrowEl: ElementRef;
   private tooltipOptions;
+  public text: string;
 
   constructor(
     private tooltipEl: ElementRef,
@@ -46,11 +47,11 @@ export class TooltipComponent implements AfterViewInit, OnInit {
       this.tooltipOptions.left += this.referenceEl.nativeElement.offsetParent.offsetLeft;
     }
 
-    this.sync.tooltipEvent.subscribe((time) => {
+    this.sync.tooltipEvent.subscribe(data => {
       {
         this.setPosition();
-        this.showTooltip();
-        this.setTimer(time);
+        this.showTooltip(data.text);
+        this.setTimer(data.seconds);
       }
     });
   }
@@ -61,7 +62,8 @@ export class TooltipComponent implements AfterViewInit, OnInit {
     }, time*1000);
   }
 
-  showTooltip() {
+  showTooltip(text: string) {
+    this.text = text;
     this.tooltipEl.nativeElement.classList.remove('hide');
     this.tooltipEl.nativeElement.classList.remove('tooltip-hide');
     this.tooltipEl.nativeElement.classList.add('tooltip-show');

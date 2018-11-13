@@ -96,9 +96,10 @@ export class SyncProvider {
     return this.getLastSyncDate().then(lastSyncDate => {
       let difference = this.utilsService.getCurrentDate().getTime() - lastSyncDate.getTime();
       let dayInMs = 1000*60*60*24;
+      let daysDifference = Math.round(difference/dayInMs);
 
-      if (difference/dayInMs >= 5 || !lastSyncDate)
-        this.callSyncTooltip();
+      if (daysDifference >= 5 || !lastSyncDate)
+        this.callDelayedSyncAlert(daysDifference);
     }).catch(error => {
       this.callSyncTooltip();
     });
@@ -113,8 +114,23 @@ export class SyncProvider {
   }
 
   callSyncTooltip() {
-    this.tooltipEvent.emit(5);
+    this.tooltipEvent.emit({
+      seconds: 5,
+      text: 'Clique neste ícone para sincronizar'
+    });
   }
+
+  callDelayedSyncAlert(delayedDays: number) {
+    let syncAlert = this.alert.create({
+      title: 'Sincronização',
+      message: 'Você está há ' + delayedDays + ' dias sem sincronizar o aplicativo. Acesse uma rede de internet sem fio e clique no botão de sincronização para evitar perder seus dados.',
+      buttons: [{
+        text: 'OK',
+        handler: () => {}
+       }],
+    });
+     syncAlert.present();
+  };
 
   setSyncDate() {
     let syncDate: Date = this.utilsService.getCurrentDate();
