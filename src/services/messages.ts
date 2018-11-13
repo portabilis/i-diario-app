@@ -22,6 +22,20 @@ export class MessagesService {
     alert.present();
   }
 
+  public showAlert(message,
+    title='Mensagem',
+    buttons=[{
+     text: 'OK',
+     handler: () => {}
+    }]) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: buttons,
+    });
+    alert.present();
+  };
+
   public showToast(message,
                    duration=3000,
                    position='middle'){
