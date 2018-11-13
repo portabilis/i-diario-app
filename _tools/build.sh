@@ -40,6 +40,7 @@ if [ "$PLATFORM" = "android" ] ; then
             echo "ERROR: Android Build Tools not found!"
             echo "Please, verify if Android Studio is installed."
         else
+            ionic monitoring syncmaps
             ionic cordova build android --release --prod
             jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../app_offline.keystore ../platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk app_offline
             rm -f ./android-release-$VERSION.apk
@@ -49,6 +50,7 @@ if [ "$PLATFORM" = "android" ] ; then
     else
         if [ "$TYPE" = "debug" ] ; then
             echo "Generating the debug Android build"
+            ionic monitoring syncmaps
             ionic cordova build android --debug
             cp -vf ../platforms/android/app/build/outputs/apk/debug/app-debug.apk .
             echo ">>> Build finished <<<"
@@ -63,11 +65,13 @@ else
 
         if [ "$TYPE" = "release" ] ; then
             echo "Generating the release iOS build"
+            ionic monitoring syncmaps
             ionic cordova build ios --release --prod
             echo ">>> Build finished <<<"
         else
             if [ "$TYPE" = "debug" ] ; then
                 echo "Generating the debug iOS build"
+                ionic monitoring syncmaps
                 ionic cordova build ios --debug
                 echo ">>> Build finished <<<"
             else

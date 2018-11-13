@@ -11,6 +11,9 @@
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
+  "config": {
+    "ionic_generate_source_map": "true"
+  },
   "dependencies": {
     "@angular/common": "5.2.10",
     "@angular/compiler": "5.2.10",
