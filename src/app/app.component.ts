@@ -8,7 +8,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
 import { ContentRecordsSynchronizer } from './../services/offline_data_synchronization/content_records_synchronizer';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
-import { Platform, App } from 'ionic-angular';
+import { Platform, App, LoadingController, Loading } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
@@ -26,6 +26,7 @@ import { FrequencyIndexPage } from '../pages/frequency-index/frequency-index';
 })
 export class MyApp {
   rootPage:any = SignIn;
+  private loadingSync: Loading;
 
   constructor(app: App,
               platform: Platform,
@@ -37,6 +38,7 @@ export class MyApp {
               private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
               private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
               private contentRecordsSynchronizer: ContentRecordsSynchronizer,
+              private loadingCtrl: LoadingController,
               private storage: Storage,
               private messages: MessagesService,
               private sync: SyncProvider,
@@ -109,10 +111,14 @@ export class MyApp {
   }
 
   private showIsSynchronizingToast() {
-    this.messages.showToast('As frequências lançadas estão sendo sincronizadas.', 2000);
+    this.loadingSync = this.loadingCtrl.create({
+      content: "As frequências lançadas estão sendo sincronizadas, aguarde por favor."
+    });
+    this.loadingSync.present();
   }
 
   private showIsSychronizedToast() {
+    this.loadingSync.dismiss();
     this.messages.showAlert(
       'As frequências lançadas foram sincronizadas com sucesso.',
       'Frequências sincronizadas'
@@ -120,6 +126,7 @@ export class MyApp {
   }
 
   private showSynchronizationErrorToast() {
+    this.loadingSync.dismiss();
     this.messages.showError('Não foi possível sincronizar as frequências lançadas.');
   }
 
