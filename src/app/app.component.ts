@@ -27,6 +27,7 @@ import { FrequencyIndexPage } from '../pages/frequency-index/frequency-index';
 export class MyApp {
   rootPage:any = SignIn;
   private loadingSync: Loading;
+  private networkStatus: string;
 
   constructor(app: App,
               platform: Platform,
@@ -51,11 +52,15 @@ export class MyApp {
       statusBar.styleBlackOpaque();
       splashScreen.hide();
       network.onConnect().subscribe(() => {
-        this.connectionService.setStatus(true);
-        this.syncOfflineData()
+        if (this.networkStatus === 'offline') {
+          this.networkStatus = 'online';
+          this.connectionService.setStatus(true);
+          this.syncOfflineData();
+        }
       });
       network.onDisconnect().subscribe(() => {
         this.connectionService.setStatus(false);
+        this.networkStatus = 'offline';
       });
 
       this.auth.currentUser().then((result) => {
@@ -112,7 +117,7 @@ export class MyApp {
 
   private showIsSynchronizingToast() {
     this.loadingSync = this.loadingCtrl.create({
-      content: "As frequências lançadas estão sendo sincronizadas, aguarde por favor."
+      content: "As frequências e os conteúdos de aula lançados estão sendo sincronizadas, aguarde por favor."
     });
     this.loadingSync.present();
   }
@@ -120,14 +125,14 @@ export class MyApp {
   private showIsSychronizedToast() {
     this.loadingSync.dismiss();
     this.messages.showAlert(
-      'As frequências lançadas foram sincronizadas com sucesso.',
-      'Frequências sincronizadas'
+      'As frequências e os conteúdos de aula lançados foram sincronizadas com sucesso.',
+      'Fim da sincronização'
     );  
   }
 
   private showSynchronizationErrorToast() {
     this.loadingSync.dismiss();
-    this.messages.showError('Não foi possível sincronizar as frequências lançadas.');
+    this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
   }
 
   private syncOfflineData(){
@@ -150,7 +155,6 @@ export class MyApp {
                 this.showSynchronizationErrorToast();
               },
               () => {
-                this.showIsSychronizedToast();
                 this.syncOfflineContentRecordsData();
               }
             )
@@ -170,7 +174,6 @@ export class MyApp {
       if(!contentRecords || !contentRecords.length ){
         return;
       }
-      this.showIsSynchronizingToast();;
       this.contentRecordsSynchronizer.sync(contentRecords, user['teacher_id']).subscribe(
         () => {
         },
