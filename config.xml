@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.appoffline153013" version="0.0.52" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.appoffline153013" version="0.0.53" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Portabilis Diário</name>
     <description>Cadastro de frequências online/offline, consulta de planos de aula e de ensino.</description>
     <author email="suporte@portabilis.com.br" href="http://www.portabilis.com.br">Portabilis Tecnologia Ltda.</author>
