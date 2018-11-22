@@ -7,7 +7,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
 import { Observable } from 'rxjs/Observable';
 import { Device } from '@ionic-native/device';
-import { Pro } from '@ionic/pro';
 
 @IonicPage()
 @Component({
@@ -80,11 +79,7 @@ export class UserIndexPage {
   }
 
   async getDeployInfo() {
-    await Pro.deploy.info(info => {
-      this.binary_version = info.binary_version;
-      this.minor_version = '1';
-    }, error => {
-      this.messages.showToast('Não foi possível identificar a versão do aplicativo.');
-    });
+    this.binary_version = '53';
+    this.minor_version = '1';
   }
 }

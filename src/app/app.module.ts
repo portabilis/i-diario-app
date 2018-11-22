@@ -10,15 +10,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage'
 import { Network } from '@ionic-native/network';
-import { Pro } from '@ionic/pro';
 import { Device } from '@ionic-native/device';
 import { SafariViewController } from '@ionic-native/safari-view-controller';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
-
-Pro.init('***REMOVED***', {
-  appVersion: '0.0.53'
-})
 
 //Pages
 import { MyApp } from './app.component';
@@ -77,7 +72,6 @@ import { DisciplineFrequenciesPersisterService } from './../services/offline_dat
 import { GlobalFrequenciesPersisterService } from './../services/offline_data_persistence/global_frequencies_persister';
 import { CustomersService } from '../services/customers';
 import { MessagesService } from './../services/messages';
-import { ProService } from './../services/pro';
 import { SyncProvider } from '../services/sync';
 
 @Injectable()
@@ -94,7 +88,6 @@ export class AppDiarioErrorHandler implements ErrorHandler {
   }
 
   handleError(err: any): void {
-    Pro.monitoring.handleNewError(err);
     // Remove this if you want to disable Ionic's auto exception handling
     // in development mode.
     this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
@@ -180,7 +173,6 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     InAppBrowser,
     File,
     MessagesService,
-    ProService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
     SyncProvider,
     Subject
