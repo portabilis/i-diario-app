@@ -57,7 +57,7 @@ export class MyApp {
           setTimeout(() => {
             this.connectionService.setStatus(true);
             this.syncOfflineData();
-          }, 1000);
+          }, 5000);
         }
       });
       network.onDisconnect().subscribe(() => {
