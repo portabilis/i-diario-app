@@ -142,33 +142,35 @@ export class MyApp {
   }
 
   private syncOfflineData(){
-    this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
-      this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
-        this.showIsSynchronizingToast();
-        if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync.length) {
-          this.syncOfflineContentRecordsData();
-          return;
-        }
-        this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
-          () => {
-          },
-          (error) => {
-            this.showSynchronizationErrorToast();
-          },
-          () => {
-            this.storage.remove('dailyFrequenciesToSync')
-            this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
-              () => {
-              },
-              (error) => {
-                this.showSynchronizationErrorToast();
-              },
-              () => {
-                this.syncOfflineContentRecordsData();
-              }
-            )
+    this.sync.verifyWifi().subscribe(() => {
+      this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
+        this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
+          this.showIsSynchronizingToast();
+          if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync.length) {
+            this.syncOfflineContentRecordsData();
+            return;
           }
-        )
+          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
+            () => {
+            },
+            (error) => {
+              this.showSynchronizationErrorToast();
+            },
+            () => {
+              this.storage.remove('dailyFrequenciesToSync')
+              this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
+                () => {
+                },
+                (error) => {
+                  this.showSynchronizationErrorToast();
+                },
+                () => {
+                  this.syncOfflineContentRecordsData();
+                }
+              )
+            }
+          )
+        })
       })
     })
   }
