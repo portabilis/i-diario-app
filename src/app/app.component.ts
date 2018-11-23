@@ -54,8 +54,10 @@ export class MyApp {
       network.onConnect().subscribe(() => {
         if (this.networkStatus === 'offline') {
           this.networkStatus = 'online';
-          this.connectionService.setStatus(true);
-          this.syncOfflineData();
+          setTimeout(() => {
+            this.connectionService.setStatus(true);
+            this.syncOfflineData();
+          }, 1000);
         }
       });
       network.onDisconnect().subscribe(() => {
@@ -122,8 +124,12 @@ export class MyApp {
     this.loadingSync.present();
   }
 
-  private showIsSychronizedToast() {
+  private hideIsSynchronizingToast() {
     this.loadingSync.dismiss();
+  }
+
+  private showIsSychronizedToast() {
+    this.hideIsSynchronizingToast();
     this.messages.showAlert(
       'As frequências e os conteúdos de aula lançados foram sincronizadas com sucesso.',
       'Fim da sincronização'
@@ -131,35 +137,40 @@ export class MyApp {
   }
 
   private showSynchronizationErrorToast() {
-    this.loadingSync.dismiss();
+    this.hideIsSynchronizingToast();
     this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
   }
 
   private syncOfflineData(){
-    this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
-      this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
-        if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync) return;
-        this.showIsSynchronizingToast();
-        this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
-          () => {
-          },
-          (error) => {
-            this.showSynchronizationErrorToast();
-          },
-          () => {
-            this.storage.remove('dailyFrequenciesToSync')
-            this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
-              () => {
-              },
-              (error) => {
-                this.showSynchronizationErrorToast();
-              },
-              () => {
-                this.syncOfflineContentRecordsData();
-              }
-            )
+    this.sync.verifyWifi().subscribe(() => {
+      this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
+        this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
+          this.showIsSynchronizingToast();
+          if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync.length) {
+            this.syncOfflineContentRecordsData();
+            return;
           }
-        )
+          this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
+            () => {
+            },
+            (error) => {
+              this.showSynchronizationErrorToast();
+            },
+            () => {
+              this.storage.remove('dailyFrequenciesToSync')
+              this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync).subscribe(
+                () => {
+                },
+                (error) => {
+                  this.showSynchronizationErrorToast();
+                },
+                () => {
+                  this.syncOfflineContentRecordsData();
+                }
+              )
+            }
+          )
+        })
       })
     })
   }
@@ -172,6 +183,7 @@ export class MyApp {
       let user = result[0];
       let contentRecords = result[1];
       if(!contentRecords || !contentRecords.length ){
+        this.hideIsSynchronizingToast();
         return;
       }
       this.contentRecordsSynchronizer.sync(contentRecords, user['teacher_id']).subscribe(
