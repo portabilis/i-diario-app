@@ -42,8 +42,8 @@ export class SignIn {
   loginForm(form: NgForm ){
     const credential = form.value.credential;
     const password = form.value.password;
-
-    this.api.setServerUrl(form.value.serverUrl);
+    const host = /^[a-z0-9]+:\/\//.test(form.value.serverUrl) ? form.value.serverUrl : "https://" + form.value.serverUrl;
+    this.api.setServerUrl(host);
 
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
