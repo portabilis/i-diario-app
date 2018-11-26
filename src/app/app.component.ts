@@ -126,7 +126,8 @@ export class MyApp {
   }
 
   private hideIsSynchronizingAlert() {
-    this.loadingSync.dismiss();
+    if (this.loadingSync)
+      this.loadingSync.dismiss();
   }
 
   private showIsSychronizedAlert() {
@@ -142,8 +143,13 @@ export class MyApp {
     this.syncAlert = this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
   }
 
+  private hideSyncronizationAlerts() {
+    if (this.syncAlert)
+      this.syncAlert.dismiss();
+  }
+
   private syncOfflineData(){
-    if (this.syncAlert) this.syncAlert.dismiss();
+    this.hideSyncronizationAlerts();
     this.sync.verifyWifi().subscribe(() => {
       this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
         this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
