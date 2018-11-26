@@ -20,6 +20,7 @@ export class MessagesService {
       buttons: buttons,
     });
     alert.present();
+    return alert;
   }
 
   public showAlert(message,
@@ -34,6 +35,7 @@ export class MessagesService {
       buttons: buttons,
     });
     alert.present();
+    return alert;
   };
 
   public showToast(message,

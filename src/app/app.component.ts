@@ -8,7 +8,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
 import { ContentRecordsSynchronizer } from './../services/offline_data_synchronization/content_records_synchronizer';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
-import { Platform, App, LoadingController, Loading } from 'ionic-angular';
+import { Platform, App, LoadingController, Loading, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
@@ -28,6 +28,7 @@ export class MyApp {
   rootPage:any = SignIn;
   private loadingSync: Loading;
   private networkStatus: string;
+  private syncAlert: Alert;
 
   constructor(app: App,
               platform: Platform,
@@ -119,7 +120,7 @@ export class MyApp {
 
   private showIsSynchronizingToast() {
     this.loadingSync = this.loadingCtrl.create({
-      content: "As frequências e os conteúdos de aula lançados estão sendo sincronizadas, aguarde por favor."
+      content: "As frequências e os conteúdos de aula lançados estão sendo sincronizados, aguarde por favor."
     });
     this.loadingSync.present();
   }
@@ -130,7 +131,7 @@ export class MyApp {
 
   private showIsSychronizedToast() {
     this.hideIsSynchronizingToast();
-    this.messages.showAlert(
+    this.syncAlert = this.messages.showAlert(
       'As frequências e os conteúdos de aula lançados foram sincronizadas com sucesso.',
       'Fim da sincronização'
     );  
@@ -138,10 +139,11 @@ export class MyApp {
 
   private showSynchronizationErrorToast() {
     this.hideIsSynchronizingToast();
-    this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
+    this.syncAlert = this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
   }
 
   private syncOfflineData(){
+    if (this.syncAlert) this.syncAlert.dismiss();
     this.sync.verifyWifi().subscribe(() => {
       this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
         this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
