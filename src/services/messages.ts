@@ -17,6 +17,7 @@ export class MessagesService {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
+      enableBackdropDismiss: false,
       buttons: buttons,
     });
     alert.present();
@@ -32,6 +33,7 @@ export class MessagesService {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
+      enableBackdropDismiss: false,
       buttons: buttons,
     });
     alert.present();
