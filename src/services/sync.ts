@@ -124,6 +124,7 @@ export class SyncProvider {
     let syncAlert = this.alert.create({
       title: 'Sincronização',
       message: 'Você está há ' + delayedDays + ' dias sem sincronizar o aplicativo. Acesse uma rede de internet sem fio e clique no botão de sincronização para evitar perder seus dados.',
+      enableBackdropDismiss: false,
       buttons: [{
         text: 'OK',
         handler: () => {}
