@@ -1,3 +1,4 @@
+import { MessagesService } from './messages';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
@@ -18,6 +19,7 @@ export class SyncProvider {
     private alert: AlertController,
     private connectionService: ConnectionService,
     private loadingCtrl: LoadingController,
+    private messages: MessagesService,
     private storage: Storage,
     private utilsService: UtilsService,
   ) {
@@ -36,11 +38,13 @@ export class SyncProvider {
   cancel() {
     this.isSyncingStatus = false;
     this.loadingSync.dismiss();
+    this.messages.showError('Não foi possível concluir a sincronização.');
   }
 
   complete() {
     this.isSyncingStatus = false;
     this.loadingSync.dismiss();
+    this.messages.showAlert('Sincornização concluída com sucesso.', 'Fim da sincronização');
   }
 
   isSyncing() {
