@@ -4,7 +4,7 @@
 # Build platforms: ios, android
 # Build types: debug, release
 # Run: ./build {platform} {build_type} {build_version} {token_hash}
-# Example: $ ./build android debug 40 J5YiOFRD&a|hH_~:Gsr`~hrT~Cr{II6`e?h<z0MBovb`1L18d68Y7W9@uJx8H7m
+# Example: $ ./build android debug 40 3DF1B9A6D1F484EF36D6A476122FE
 
 PLATFORM_DEFAULT="android"
 VERSION_DEFAULT=0
