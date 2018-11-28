@@ -1,12 +1,13 @@
 import { ApiService } from './api';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
+import { CustomHttp } from './custom_http';
 
 @Injectable()
 export class CustomersService {
   constructor(
-    private http: Http,
+    private http: CustomHttp,
     private api: ApiService
   ){}
 

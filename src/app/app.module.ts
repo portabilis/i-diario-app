@@ -1,6 +1,7 @@
 import { Subject } from 'rxjs/Subject';
 // Imports from angular
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, Injectable, Injector } from '@angular/core';
 
@@ -73,6 +74,7 @@ import { GlobalFrequenciesPersisterService } from './../services/offline_data_pe
 import { CustomersService } from '../services/customers';
 import { MessagesService } from './../services/messages';
 import { SyncProvider } from '../services/sync';
+import { CustomHttp } from '../services/custom_http';
 
 @Injectable()
 export class AppDiarioErrorHandler implements ErrorHandler {
@@ -118,6 +120,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     ContentRecordsIndexPageModule,
     ContentRecordFormPageModule,
     NewContentRecordFormModule,
+    HttpClientModule,
     IonicStorageModule.forRoot({
       name: '__appfrequencia',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -174,6 +177,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     File,
     MessagesService,
     [{ provide: ErrorHandler, useClass: AppDiarioErrorHandler }],
+    CustomHttp,
     SyncProvider,
     Subject
   ]

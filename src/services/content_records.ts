@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
@@ -7,11 +7,12 @@ import { ApiService } from './api';
 import { ConnectionService } from './connection';
 import { AuthService } from './auth';
 import { ContentRecordsSynchronizer } from './offline_data_synchronization/content_records_synchronizer';
+import { CustomHttp } from './custom_http';
 
 @Injectable()
 export class ContentRecordsService {
   constructor(
-    private http: Http,
+    private http: CustomHttp,
     private storage: Storage,
     private api: ApiService,
     private connectionService: ConnectionService,
