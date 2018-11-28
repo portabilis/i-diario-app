@@ -3,8 +3,8 @@
 # Script to create platform builds
 # Build platforms: ios, android
 # Build types: debug, release
-# Run: ./build {platform} {build_type} {build_version}
-# Example: $ ./build android debug 40
+# Run: ./build {platform} {build_type} {build_version} {token_hash}
+# Example: $ ./build android debug 40 J5YiOFRD&a|hH_~:Gsr`~hrT~Cr{II6`e?h<z0MBovb`1L18d68Y7W9@uJx8H7m
 
 PLATFORM_DEFAULT="android"
 VERSION_DEFAULT=0
@@ -13,6 +13,7 @@ TYPE_DEFAULT="debug"
 PLATFORM=${1:-$PLATFORM_DEFAULT}
 TYPE=${2:-$TYPE_DEFAULT}
 VERSION=${3:-$VERSION_DEFAULT}
+TOKEN=${4}
 
 if [ "$PLATFORM" = "help" ] ; then
     echo "Portabilis Build Script
@@ -22,10 +23,13 @@ Script to create platform builds
 Build platforms: ios, android
 Build types: debug, release
 
-Run: ./build {platform} {build_type} {build_version}
-Example: $ ./build android debug 40"
+Run: ./build {platform} {build_type} {build_version} {token_hash}
+Example: $ ./build android debug 40 3DF1B9A6D1F484EF36D6A476122FE"
     exit
 fi
+
+echo "Setting Token"
+sed -i -e 's/@@ACCESSTOKEN/'$TOKEN'/g' ../src/services/custom_http.ts
 
 if [ "$PLATFORM" = "android" ] ; then
     echo ">>> Starting steps for Android build <<<"
