@@ -1,16 +1,17 @@
 import { Observable } from 'rxjs/Observable';
 import { ConnectionService } from './connection';
 import { ApiService } from './api';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { UtilsService } from './utils';
+import { CustomHttp } from './custom_http';
 
 @Injectable()
 export class ClassroomsService {
   constructor(
-    private http: Http,
+    private http: CustomHttp,
     private storage: Storage,
     private connection: ConnectionService,
     private api: ApiService,

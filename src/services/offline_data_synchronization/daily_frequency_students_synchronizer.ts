@@ -1,13 +1,13 @@
 import { ApiService } from './../api'
 import { Observable } from 'rxjs/Observable'
-import { Http } from '@angular/http'
 import { Storage } from '@ionic/storage'
 import { Injectable } from '@angular/core'
+import { CustomHttp } from '../custom_http';
 
 @Injectable()
 export class DailyFrequencyStudentsSynchronizer {
   constructor(
-    private http: Http,
+    private http: CustomHttp,
     private api: ApiService,
     private storage: Storage
   ){
