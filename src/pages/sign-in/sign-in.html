@@ -13,11 +13,7 @@
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
-          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" id="serverUrl" required>
-            <ion-option *ngFor="let city of cities | sort:'name'" value={{city.value}}>
-              {{ city.name }}
-            </ion-option>
-          </ion-select>
+          <ion-input ngModel type="url" placeholder="Host/URL" name="serverUrl" id="serverUrl" required></ion-input>
         </ion-item>
         <ion-item class="inputs">
           <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" id="credential" required></ion-input>
