@@ -17,9 +17,11 @@ export class MessagesService {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
+      enableBackdropDismiss: false,
       buttons: buttons,
     });
     alert.present();
+    return alert;
   }
 
   public showAlert(message,
@@ -31,9 +33,11 @@ export class MessagesService {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
+      enableBackdropDismiss: false,
       buttons: buttons,
     });
     alert.present();
+    return alert;
   };
 
   public showToast(message,

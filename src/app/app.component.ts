@@ -8,7 +8,7 @@ import { DailyFrequenciesSynchronizer } from './../services/offline_data_synchro
 import { ContentRecordsSynchronizer } from './../services/offline_data_synchronization/content_records_synchronizer';
 import { AuthService } from './../services/auth';
 import { Component } from '@angular/core';
-import { Platform, App, LoadingController, Loading } from 'ionic-angular';
+import { Platform, App, LoadingController, Loading, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
@@ -28,6 +28,7 @@ export class MyApp {
   rootPage:any = SignIn;
   private loadingSync: Loading;
   private networkStatus: string;
+  private syncAlert: Alert;
 
   constructor(app: App,
               platform: Platform,
@@ -117,37 +118,44 @@ export class MyApp {
     });
   }
 
-  private showIsSynchronizingToast() {
+  private showIsSynchronizingAlert() {
     this.loadingSync = this.loadingCtrl.create({
-      content: "As frequências e os conteúdos de aula lançados estão sendo sincronizadas, aguarde por favor."
+      content: "As frequências e os conteúdos de aula lançados estão sendo sincronizados, aguarde por favor."
     });
     this.loadingSync.present();
   }
 
-  private hideIsSynchronizingToast() {
-    this.loadingSync.dismiss();
+  private hideIsSynchronizingAlert() {
+    if (this.loadingSync)
+      this.loadingSync.dismiss();
   }
 
-  private showIsSychronizedToast() {
-    this.hideIsSynchronizingToast();
-    this.messages.showAlert(
+  private showIsSychronizedAlert() {
+    this.hideIsSynchronizingAlert();
+    this.syncAlert = this.messages.showAlert(
       'As frequências e os conteúdos de aula lançados foram sincronizadas com sucesso.',
       'Fim da sincronização'
     );  
   }
 
   private showSynchronizationErrorToast() {
-    this.hideIsSynchronizingToast();
-    this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
+    this.hideIsSynchronizingAlert();
+    this.syncAlert = this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
+  }
+
+  private hideSyncronizationAlerts() {
+    if (this.syncAlert)
+      this.syncAlert.dismiss();
   }
 
   private syncOfflineData(){
+    this.hideSyncronizationAlerts();
     this.sync.verifyWifi().subscribe(() => {
       this.storage.get('dailyFrequenciesToSync').then((dailyFrequenciesToSync) => {
         this.storage.get('dailyFrequencyStudentsToSync').then((dailyFrequencyStudentsToSync) => {
-          this.showIsSynchronizingToast();
+          this.showIsSynchronizingAlert();
           if (!dailyFrequenciesToSync && !dailyFrequencyStudentsToSync.length) {
-            this.syncOfflineContentRecordsData();
+            this.syncOfflineContentRecordsData(false);
             return;
           }
           this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync).subscribe(
@@ -165,7 +173,7 @@ export class MyApp {
                   this.showSynchronizationErrorToast();
                 },
                 () => {
-                  this.syncOfflineContentRecordsData();
+                  this.syncOfflineContentRecordsData(true);
                 }
               )
             }
@@ -175,7 +183,7 @@ export class MyApp {
     })
   }
 
-  private syncOfflineContentRecordsData(){
+  private syncOfflineContentRecordsData(isFrequenciesSynced: boolean){
     Observable.forkJoin(
       this.auth.currentUser(),
       this.storage.get('contentRecordsToSync')
@@ -183,7 +191,10 @@ export class MyApp {
       let user = result[0];
       let contentRecords = result[1];
       if(!contentRecords || !contentRecords.length ){
-        this.hideIsSynchronizingToast();
+        if (!isFrequenciesSynced)
+          this.hideIsSynchronizingAlert();
+        else
+          this.showIsSychronizedAlert();
         return;
       }
       this.contentRecordsSynchronizer.sync(contentRecords, user['teacher_id']).subscribe(
@@ -193,7 +204,7 @@ export class MyApp {
           this.showSynchronizationErrorToast();
         },
         () => {
-          this.showIsSychronizedToast();
+          this.showIsSychronizedAlert();
         }
       );
     });
