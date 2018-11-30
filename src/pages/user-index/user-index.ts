@@ -79,7 +79,7 @@ export class UserIndexPage {
   }
 
   async getDeployInfo() {
-    this.binary_version = '56';
+    this.binary_version = '57';
     this.minor_version = '1';
   }
 }
