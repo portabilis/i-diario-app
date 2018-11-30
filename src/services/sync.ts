@@ -35,10 +35,10 @@ export class SyncProvider {
     this.loadingSync.present();
   }
 
-  cancel() {
+  cancel(errorMessage?: string) {
     this.isSyncingStatus = false;
     this.loadingSync.dismiss();
-    this.messages.showError('Não foi possível concluir a sincronização.');
+    this.messages.showError(errorMessage || 'Não foi possível concluir a sincronização.');
   }
 
   complete() {

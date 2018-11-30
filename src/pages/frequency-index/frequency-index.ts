@@ -272,9 +272,8 @@ export class FrequencyIndexPage implements OnInit {
               ).subscribe(
                 () => {},
                 (error) => {
-                  refresher.cancel();
+                  refresher.cancel('Não foi possível realizar a sincronização.');
                   //TODO: ErrorHandler: this.pro.Exception(`On frequency syncing error: ${error}`);
-                  this.messages.showError('Não foi possível realizar a sincronização.');
                 },
                 () => {
                   this.storage.remove('dailyFrequencyStudentsToSync')
@@ -283,9 +282,8 @@ export class FrequencyIndexPage implements OnInit {
                     (result) => {
                     },
                     (error) => {
-                      refresher.cancel();
+                      refresher.cancel('Não foi possível finalizar a sincronização.');
                       //TODO: ErrorHandler: this.pro.Exception(`On frequency finishing sync error: ${error}`);
-                      this.messages.showError('Não foi possível finalizar a sincronização.');
                     },
                     () => {
                       refresher.complete();

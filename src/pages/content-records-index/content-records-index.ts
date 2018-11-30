@@ -253,9 +253,8 @@ export class ContentRecordsIndexPage {
               ).subscribe(
                 () => {},
                 (error) => {
-                  refresher.cancel();
+                  refresher.cancel('Não foi possível realizar a sincronização.');
                   //TODO: ErrorHandler:  this.pro.Exception(`On content record syncing error: ${error}`);
-                  this.messages.showError('Não foi possível realizar a sincronização.');
                 },
                 () => {
                   this.storage.remove('dailyFrequencyStudentsToSync');
@@ -264,9 +263,8 @@ export class ContentRecordsIndexPage {
                     (result) => {
                     },
                     (error) => {
-                      refresher.cancel();
+                      refresher.cancel('Não foi possível finalizar a sincronização.');
                       //TODO: ErrorHandler: this.pro.Exception(`On content record finishing sync error: ${error}`);
-                      this.messages.showError('Não foi possível finalizar a sincronização.');
                     },
                     () => {
                       refresher.complete()
