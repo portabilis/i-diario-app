@@ -85,6 +85,6 @@ export class ApiService {
   }
 
   getallHostsUrl() {
-    return '***REMOVED***';
+    return '';
   }
 }
