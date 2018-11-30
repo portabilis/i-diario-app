@@ -19,11 +19,11 @@ export class CustomHttp extends Http {
   };
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return super.post(url, this.addAccessToken(options));
+    return super.post(url, body, this.addAccessToken(options));
   };
 
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return super.put(url, this.addAccessToken(options));
+    return super.put(url, body, this.addAccessToken(options));
   };
 
   delete(url: string, options?: RequestOptionsArgs): Observable<Response>{
@@ -31,7 +31,7 @@ export class CustomHttp extends Http {
   };
 
   patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response>{
-    return super.patch(url, this.addAccessToken(options));
+    return super.patch(url, body, this.addAccessToken(options));
   };
 
   head(url: string, options?: RequestOptionsArgs): Observable<Response>{
