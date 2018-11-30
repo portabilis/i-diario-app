@@ -3,7 +3,7 @@
     <name>Portabilis Diário</name>
     <description>Cadastro de frequências online/offline, consulta de planos de aula e de ensino.</description>
     <author email="suporte@portabilis.com.br" href="http://www.portabilis.com.br">Portabilis Tecnologia Ltda.</author>
-    <content original-src="index.html" src="http://192.168.0.31:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://192.168.0.85:8101" />
@@ -91,7 +91,6 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <allow-navigation href="http://192.168.0.62:8100" />
-    <allow-navigation href="http://192.168.0.31:8100" sessionid="77fcfe1e" />
-    <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="~7.1.0" />
 </widget>
