@@ -4,6 +4,7 @@ import { ApiService } from './api';
 import { Response } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
+import { SchoolCalendarsService } from '../services/school_calendars';
 import 'rxjs/Rx';
 import { UtilsService } from './utils';
 import { CustomHttp } from './custom_http';
@@ -16,6 +17,7 @@ export class ClassroomsService {
     private connection: ConnectionService,
     private api: ApiService,
     private utilsService: UtilsService,
+    private schoolCalendarsService: SchoolCalendarsService
   ){}
 
   getOnlineClassrooms(teacherId: number, unityId: number){
@@ -37,15 +39,30 @@ export class ClassroomsService {
         }
         var currentYear = (this.utilsService.getCurrentDate()).getFullYear();
         classrooms.forEach((classroom) => {
-          if (classroom.unityId == unityId){
-            classroom.data = classroom.data.filter((value) => {
-              return (value.year || currentYear) == currentYear
-            })
-            observer.next(classroom);
-            observer.complete();
-          }
-        })
-      })
-    })
+          this.schoolCalendarsService.getOfflineSchoolCalendar(unityId).subscribe((schoolCalendar: any) => {
+            let currentDate = new Date();
+            var hasStepOnCurrentDate = schoolCalendar.data.steps.filter((step) => {
+              let start_at = new Date(step.start_at);
+              let end_at = new Date(step.end_at);
+
+              return (start_at <= currentDate) && (end_at >= currentDate);
+            }).length >= 1;
+
+            if (!hasStepOnCurrentDate) {
+              observer.complete();
+              return;
+            }
+
+            if (classroom.unityId == unityId) {
+              classroom.data = classroom.data.filter((value) => {
+                return (value.year || currentYear) == (schoolCalendar.data.year || currentYear)
+              })
+              observer.next(classroom);
+              observer.complete();
+            }
+          });
+        });
+      });
+    });
   }
 }
