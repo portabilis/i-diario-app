@@ -264,7 +264,7 @@ export class FrequencyIndexPage implements OnInit {
               let dailyFrequenciesToSync = results[1] || [];
               let dailyFrequencyStudentsToSync = results[2] || [];
               let contentRecordsToSync = results[3] || [];
-    
+
               Observable.concat(
                 this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
                 this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
@@ -295,7 +295,7 @@ export class FrequencyIndexPage implements OnInit {
             }
           )
         });
-      } else 
+      } else
         refresher.cancel();
     });
   }

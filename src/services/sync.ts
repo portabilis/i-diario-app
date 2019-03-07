@@ -1,4 +1,6 @@
 import { MessagesService } from './messages';
+import { AlertController, Loading, LoadingController } from '../../node_modules/ionic-angular';
+import { ConnectionService } from './connection';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
@@ -20,6 +22,7 @@ export class SyncProvider {
     private connectionService: ConnectionService,
     private loadingCtrl: LoadingController,
     private messages: MessagesService,
+    private loadingCtrl: LoadingController,
     private storage: Storage,
     private utilsService: UtilsService,
   ) {

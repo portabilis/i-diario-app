@@ -2,11 +2,11 @@
   <ion-navbar>
     <ion-title>Conteúdos de aula</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="doRefresh()">
+      <button ion-button icon-only (click)="doRefresh($event)">
         <ion-icon name="sync"></ion-icon>
       </button>
       <button ion-button icon-only (tap)="newContentRecordForm()">
-         <ion-icon name="add"></ion-icon> 
+         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
