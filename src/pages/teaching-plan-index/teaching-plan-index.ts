@@ -38,16 +38,16 @@ export class TeachingPlanIndexPage {
 
     this.sync.verifyWifi().subscribe(continueSync => {
       let refresher = this.sync;
-      refresher.start();
 
       if (continueSync) {
         this.utilsService.hasAvailableStorage().then((available) => {
           if (!available) {
             this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar planos de ensino'));
-            refresher.cancel();
             return;
           }
-    
+
+          refresher.start();
+
           this.auth.currentUser().then((user) => {
             this.teachingPlansService.getTeachingPlans(
               user.teacher_id
@@ -66,8 +66,7 @@ export class TeachingPlanIndexPage {
             );
           });
         });
-      } else 
-        refresher.cancel();
+      }
     });
   }
 

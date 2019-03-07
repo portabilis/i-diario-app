@@ -244,15 +244,16 @@ export class FrequencyIndexPage implements OnInit {
 
     this.sync.verifyWifi().subscribe(continueSync => {
       let refresher = this.sync;
-      refresher.start();
 
       if (continueSync) {
         this.utilsService.hasAvailableStorage().then((available) => {
           if (!available) {
             this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));
-            refresher.cancel();
             return;
           }
+
+          refresher.start();
+
           Observable.forkJoin(
             Observable.fromPromise(this.auth.currentUser()),
             Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
@@ -295,8 +296,7 @@ export class FrequencyIndexPage implements OnInit {
             }
           )
         });
-      } else
-        refresher.cancel();
+      }
     });
   }
 }

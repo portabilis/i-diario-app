@@ -222,18 +222,18 @@ export class ContentRecordsIndexPage {
 
   doRefresh() {
     this.sync.setSyncDate();
-    
     this.sync.verifyWifi().subscribe(continueSync => {
       let refresher = this.sync;
-      refresher.start();
 
       if (continueSync) {
         this.utilsService.hasAvailableStorage().then((available) => {
           if (!available) {
             this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar conteúdos de aula'));
-            refresher.cancel();
             return;
           }
+
+          refresher.start();
+
           Observable.forkJoin(
             Observable.fromPromise(this.auth.currentUser()),
             Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
@@ -245,7 +245,7 @@ export class ContentRecordsIndexPage {
               let dailyFrequenciesToSync = results[1] || [];
               let dailyFrequencyStudentsToSync = results[2] || [];
               let contentRecordsToSync = results[3] || [];
-    
+
               Observable.concat(
                 this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
                 this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
@@ -276,8 +276,7 @@ export class ContentRecordsIndexPage {
             }
           )
         });
-      } else 
-        refresher.cancel();
+      }
     });
   }
 }
