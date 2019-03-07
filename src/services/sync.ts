@@ -88,7 +88,7 @@ export class SyncProvider {
 
     return continueSync;
   }
-  getLastSyncDate(): Promise<Date> {
+  getLastSyncDate(): Promise<any> {
     return this.storage.get('lastSyncDate').then(lastSyncDate => {
       return lastSyncDate;
     }).catch(error => {
