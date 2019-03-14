@@ -2,12 +2,6 @@ import { UtilsService } from './../../services/utils';
 import { ContentRecordFormPage } from './../content-record-form/content-record-form';
 import { NewContentRecordFormPage } from './../new-content-record-form/new-content-record-form';
 import { Storage } from '@ionic/storage';
-import { AuthService } from './../../services/auth';
-import { ContentLessonPlansService } from './../../services/content_lesson_plans';
-import { OfflineDataPersisterService } from './../../services/offline_data_persistence/offline_data_persister';
-import { ContentRecordsSynchronizer } from './../../services/offline_data_synchronization/content_records_synchronizer';
-import { DailyFrequenciesSynchronizer } from './../../services/offline_data_synchronization/daily_frequencies_synchronizer';
-import { DailyFrequencyStudentsSynchronizer } from './../../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -26,15 +20,9 @@ export class ContentRecordsIndexPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private sync: SyncProvider,
-              private auth: AuthService,
-              private contentLessonPlansService: ContentLessonPlansService,
               private storage: Storage,
               private utilsService: UtilsService,
-              private offlineDataPersister: OfflineDataPersisterService,
-              private messages: MessagesService,
-              private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
-              private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
-              private contentRecordsSynchronizer: ContentRecordsSynchronizer,
+              private messages: MessagesService
             ) {
   }
 
@@ -221,62 +209,6 @@ export class ContentRecordsIndexPage {
   }
 
   doRefresh() {
-    this.sync.setSyncDate();
-    this.sync.verifyWifi().subscribe(continueSync => {
-      let refresher = this.sync;
-
-      if (continueSync) {
-        this.utilsService.hasAvailableStorage().then((available) => {
-          if (!available) {
-            this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar conteúdos de aula'));
-            return;
-          }
-
-          refresher.start();
-
-          Observable.forkJoin(
-            Observable.fromPromise(this.auth.currentUser()),
-            Observable.fromPromise(this.storage.get('dailyFrequenciesToSync')),
-            Observable.fromPromise(this.storage.get('dailyFrequencyStudentsToSync')),
-            Observable.fromPromise(this.storage.get('contentRecordsToSync'))
-          ).subscribe(
-            (results) => {
-              let user = results[0];
-              let dailyFrequenciesToSync = results[1] || [];
-              let dailyFrequencyStudentsToSync = results[2] || [];
-              let contentRecordsToSync = results[3] || [];
-
-              Observable.concat(
-                this.dailyFrequenciesSynchronizer.sync(dailyFrequenciesToSync),
-                this.dailyFrequencyStudentsSynchronizer.sync(dailyFrequencyStudentsToSync),
-                this.contentRecordsSynchronizer.sync(contentRecordsToSync, user['teacher_id'])
-              ).subscribe(
-                () => {},
-                (error) => {
-                  refresher.cancel('Não foi possível realizar a sincronização.');
-                  //TODO: ErrorHandler:  this.pro.Exception(`On content record syncing error: ${error}`);
-                },
-                () => {
-                  this.storage.remove('dailyFrequencyStudentsToSync');
-                  this.storage.remove('dailyFrequenciesToSync');
-                  this.offlineDataPersister.persist(user).subscribe(
-                    (result) => {
-                    },
-                    (error) => {
-                      refresher.cancel('Não foi possível finalizar a sincronização.');
-                      //TODO: ErrorHandler: this.pro.Exception(`On content record finishing sync error: ${error}`);
-                    },
-                    () => {
-                      refresher.complete()
-                      this.loadContentDays()
-                    }
-                  )
-                }
-              )
-            }
-          )
-        });
-      }
-    });
+    this.sync.syncAll().subscribe(() => this.loadContentDays());
   }
 }
