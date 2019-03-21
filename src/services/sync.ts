@@ -166,10 +166,10 @@ export class SyncProvider {
       this.verifyWifi().subscribe(continueSync => {
         if (continueSync) {
           this.utilsService.hasAvailableStorage().then((available) => {
-        /*     if (!available) {
+            if (!available) {
               this.messages.showError(this.messages.insuficientStorageErrorMessage('sincronizar frequências'));
               return;
-            } */
+            }
 
             this.start();
 
@@ -219,6 +219,12 @@ export class SyncProvider {
                     )
                   }
                 )
+              }, (error) => {
+                this.cancel();
+                this.pro.Exception(`On frequency finishing sync error: ${error}`);
+                this.messages.showError('Não foi possível finalizar a sincronização.');
+                observer.error();
+                observer.complete();
               }
             )
           });
