@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { LoadingController, NavController } from 'ionic-angular';
 import { AppIndexPage } from "../app-index/app-index";
@@ -12,6 +12,7 @@ import { ApiService } from './../../services/api';
 import { UtilsService } from './../../services/utils';
 
 import { User } from '../../data/user.interface';
+import { MessagesService } from '../../services/messages';
 
 @Component({
   selector: 'page-sign-in',
@@ -21,6 +22,9 @@ export class SignIn {
   private cities = [];
   private anyError:Boolean = false;
   private errorMessage:String = "";
+  serverUrl: string = "";
+  isOnline: Boolean = false;
+  placeholder: String = "Municípios";
 
   constructor(
     private auth: AuthService,
@@ -31,11 +35,37 @@ export class SignIn {
     private customersService: CustomersService,
     private api: ApiService,
     private utilsService: UtilsService,
+    private messages: MessagesService,
+    private cdr: ChangeDetectorRef
   ){}
 
   ionViewWillEnter(){
+    this.isOnline = this.connection.isOnline;
+    this.changeInputMunicipios(this.isOnline);
+    this.connection.eventOnline.subscribe((online) => this.changeInputMunicipios(online));
+  }
+
+  changeInputMunicipios(online){
+    this.isOnline = online;
+    if(!this.isOnline){
+      this.messages.showToast('Sem conexão!',6000,'top');
+      this.placeholder = "Sem conexão"
+      this.serverUrl = "";
+    }else{
+      this.getCustomers();
+    }
+  }
+
+  getCustomers(){
+    this.placeholder = "Carregando..";
+    this.cdr.detectChanges();
     this.customersService.getCustomers().subscribe( data => {
       this.cities = data;
+    },
+    error => {},
+    () => {
+      this.placeholder = "Município";
+      this.cdr.detectChanges();
     });
   }
 
