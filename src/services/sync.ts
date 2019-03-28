@@ -171,6 +171,12 @@ export class SyncProvider {
               return;
             }
 
+            if(!this.connectionService.isOnline){
+              this.messages.showToast('Sem conexão! Verifique sua conexão com a internet e tente novamente.');
+              observer.error();
+              observer.complete();
+            }
+
             this.start();
 
             Observable.forkJoin(
