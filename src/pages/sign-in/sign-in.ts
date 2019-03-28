@@ -19,7 +19,7 @@ import { MessagesService } from '../../services/messages';
   templateUrl: 'sign-in.html'
 })
 export class SignIn {
-  private cities = [];
+  cities = [];
   private anyError:Boolean = false;
   private errorMessage:String = "";
   serverUrl: string = "";
@@ -42,14 +42,12 @@ export class SignIn {
   ionViewWillEnter(){
     this.isOnline = this.connection.isOnline;
     this.changeInputMunicipios(this.isOnline);
-    this.connection.eventOnline.subscribe((online) => this.changeInputMunicipios(online));
   }
 
   changeInputMunicipios(online){
     this.isOnline = online;
     if(!this.isOnline){
       this.messages.showToast('Sem conexão!',6000,'top');
-      this.placeholder = "Sem conexão"
       this.serverUrl = "";
     }else{
       this.getCustomers();
@@ -57,15 +55,8 @@ export class SignIn {
   }
 
   getCustomers(){
-    this.placeholder = "Carregando..";
-    this.cdr.detectChanges();
     this.customersService.getCustomers().subscribe( data => {
       this.cities = data;
-    },
-    error => {},
-    () => {
-      this.placeholder = "Município";
-      this.cdr.detectChanges();
     });
   }
 

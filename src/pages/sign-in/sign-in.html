@@ -13,7 +13,7 @@
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
-          <ion-select class="select-city" [(ngModel)]="serverUrl" [placeholder]="placeholder" name="serverUrl" id="serverUrl" required [disabled]="!isOnline || cities.length == 0" >
+          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" id="serverUrl" required [disabled]="!isOnline || cities.length == 0" >
             <ion-option *ngFor="let city of cities | sort:'name'" value={{city.value}}>
               {{ city.name }}
             </ion-option>
