@@ -51,7 +51,6 @@ export class SignIn {
       this.serverUrl = "";
       this.messages.showToast('Sem conexão!',1000,'top');
     }else{
-      this.messages.showToast('Aguarde buscando municipios',1000,'top');
       this.getCustomers();
     }
   }
