@@ -42,14 +42,16 @@ export class SignIn {
   ionViewWillEnter(){
     this.isOnline = this.connection.isOnline;
     this.changeInputMunicipios(this.isOnline);
+    this.connection.eventOnline.subscribe((online) => this.changeInputMunicipios(online));
   }
 
   changeInputMunicipios(online){
     this.isOnline = online;
     if(!this.isOnline){
-      this.messages.showToast('Sem conexão!',6000,'top');
       this.serverUrl = "";
+      this.messages.showToast('Sem conexão!',1000,'top');
     }else{
+      this.messages.showToast('Aguarde buscando municipios',1000,'top');
       this.getCustomers();
     }
   }
@@ -57,6 +59,7 @@ export class SignIn {
   getCustomers(){
     this.customersService.getCustomers().subscribe( data => {
       this.cities = data;
+      this.cdr.detectChanges();
     });
   }
 
