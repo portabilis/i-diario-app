@@ -3,13 +3,15 @@ import { Observable } from 'rxjs/Observable'
 import { Storage } from '@ionic/storage'
 import { Injectable } from '@angular/core'
 import { CustomHttp } from '../custom_http';
+import { AuthService } from '../auth';
 
 @Injectable()
 export class DailyFrequencyStudentsSynchronizer {
   constructor(
     private http: CustomHttp,
     private api: ApiService,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ){
 
   }
@@ -17,35 +19,38 @@ export class DailyFrequencyStudentsSynchronizer {
   public sync(dailyFrequencyStudents){
     return new Observable((observer) => {
       if(dailyFrequencyStudents){
-        let dailyFrequencyStudentObservables = []
-        dailyFrequencyStudents.forEach(dailyFrequencyStudent => {
-          const request = this.http.post(this.api.getDailyFrequencyStudentsUpdateOrCreateUrl(),
-            {
-              present: dailyFrequencyStudent.present,
-              user_id: dailyFrequencyStudent.userId,
-              classroom_id: dailyFrequencyStudent.classroomId,
-              discipline_id: dailyFrequencyStudent.disciplineId,
-              student_id: dailyFrequencyStudent.studentId,
-              class_number: dailyFrequencyStudent.classNumber,
-              frequency_date: dailyFrequencyStudent.frequencyDate
+        this.auth.currentUser().then((user) => {
+          let dailyFrequencyStudentObservables = []
+          dailyFrequencyStudents.forEach(dailyFrequencyStudent => {
+            const request = this.http.post(this.api.getDailyFrequencyStudentsUpdateOrCreateUrl(),
+              {
+                present: dailyFrequencyStudent.present,
+                user_id: dailyFrequencyStudent.userId,
+                classroom_id: dailyFrequencyStudent.classroomId,
+                discipline_id: dailyFrequencyStudent.disciplineId,
+                student_id: dailyFrequencyStudent.studentId,
+                class_number: dailyFrequencyStudent.classNumber,
+                frequency_date: dailyFrequencyStudent.frequencyDate,
+                teacher_id: user.teacher_id
+              }
+            )
+
+            dailyFrequencyStudentObservables.push(request)
+          })
+
+          Observable.concat(...dailyFrequencyStudentObservables).subscribe(
+            (result) => {
+              observer.next(result)
+            },
+            (error) => {
+              observer.error(error)
+            },
+            () => {
+              this.deleteFrequencies(dailyFrequencyStudents)
+              observer.complete()
             }
           )
-
-          dailyFrequencyStudentObservables.push(request)
-        })
-
-        Observable.concat(...dailyFrequencyStudentObservables).subscribe(
-          (result) => {
-            observer.next(result)
-          },
-          (error) => {
-            observer.error(error)
-          },
-          () => {
-            this.deleteFrequencies(dailyFrequencyStudents)
-            observer.complete()
-          }
-        )
+        });
       }else{
         observer.complete()
       }
