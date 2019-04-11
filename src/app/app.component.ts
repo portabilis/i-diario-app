@@ -45,6 +45,7 @@ export class MyApp {
               private messages: MessagesService,
               private sync: SyncProvider,
               private utilsService: UtilsService,
+              private loadingCtrl: LoadingController
             ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -71,7 +72,7 @@ export class MyApp {
           this.rootPage = AppIndexPage
         }
       })
-      
+
       platform.registerBackButtonAction(() => {
         let nav = app.getActiveNavs()[0];
         let activeComponent = nav.getActive().component;
@@ -138,14 +139,31 @@ export class MyApp {
     );  
   }
 
-  private showSynchronizationErrorToast() {
-    this.hideIsSynchronizingAlert();
-    this.syncAlert = this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
-  }
-
   private hideSyncronizationAlerts() {
     if (this.syncAlert)
       this.syncAlert.dismiss();
+  }
+
+  private showIsSychronizedToast() {
+    this.loadingSync.dismiss();
+    this.messages.showError('As frequências lançadas foram sincronizadas com sucesso.','Sucesso',
+    [
+      {
+        text: 'OK',
+        handler: () => {}
+      }
+    ]);
+  }
+
+  private showSynchronizationErrorToast() {
+    this.loadingSync.dismiss();
+    this.messages.showError('Não foi possível sincronizar as frequências lançadas.', 'Erro',
+    [
+      {
+        text: 'OK',
+        handler: () => {}
+      }
+    ]);
   }
 
   private syncOfflineData(){
