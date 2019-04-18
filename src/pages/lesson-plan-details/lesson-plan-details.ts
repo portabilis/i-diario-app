@@ -20,6 +20,8 @@ export class LessonPlanDetailsPage {
   contents: string;
   knowledge_areas: string;
   period_date: string;
+  start_at: Date;
+  end_at: Date;
   opinion: string;
   resources: string;
 
@@ -47,14 +49,9 @@ export class LessonPlanDetailsPage {
       this.activities = this.utilsService.convertTextToHtml(details.activities);
       this.opinion = this.utilsService.convertTextToHtml(details.opinion);
       this.resources = this.utilsService.convertTextToHtml(details.resources);
-      this.period_date = this.periodDate(details.start_at, details.end_at);
+      this.start_at = details.start_at;
+      this.end_at = details.end_at;
     });
-  }
-
-  periodDate(start_at, end_at) {
-    start_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(start_at));
-    end_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(end_at));
-    return start_at + " a " + end_at;
   }
 
   getLessonPlanDetail(lessonPlan){
