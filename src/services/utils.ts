@@ -114,6 +114,9 @@ export class UtilsService {
   }
 
   public hasAvailableStorage() {
+    return new Promise((resolve) => resolve(true) )
+
+    //Devido a incompatibilidade com androids antigos, foi comentado esse bloco de codigo.
     return this.file.getFreeDiskSpace().then(
       (success) => {
         return true;
