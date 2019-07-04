@@ -102,8 +102,10 @@ export class FrequencyPage{
               this.scrollTo("frequency-classroom");
             },
             (error) => {
-              console.log(error)
+              console.log(error);
               loader.dismiss()
+              this.messages.showToast(error);
+              return;
             },
             () => {
               loader.dismiss()
@@ -113,6 +115,7 @@ export class FrequencyPage{
         (error) => {
           console.log(error);
           loader.dismiss()
+          this.messages.showToast(error);
         }
       );
     });
