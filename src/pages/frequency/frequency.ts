@@ -102,7 +102,6 @@ export class FrequencyPage{
               this.scrollTo("frequency-classroom");
             },
             (error) => {
-              console.log(error);
               loader.dismiss()
               this.messages.showToast(error);
               return;
@@ -113,7 +112,6 @@ export class FrequencyPage{
         )
       },
         (error) => {
-          console.log(error);
           loader.dismiss()
           this.messages.showToast(error);
         }
@@ -149,9 +147,6 @@ export class FrequencyPage{
                 this.cdr.detectChanges();
                 this.scrollTo("frequency-discipline");
               },
-              (error) => {
-                console.log(error)
-              },
               () => {
                 loader.dismiss()
               }
@@ -163,8 +158,8 @@ export class FrequencyPage{
             this.scrollTo("frequency-date");
           }
         },
-        (error) => {
-          console.log(error)
+        () => {
+          loader.dismiss()
         }
       )
     })
