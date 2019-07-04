@@ -103,6 +103,7 @@ export class FrequencyPage{
             },
             (error) => {
               console.log(error)
+              loader.dismiss()
             },
             () => {
               loader.dismiss()
@@ -111,6 +112,7 @@ export class FrequencyPage{
       },
         (error) => {
           console.log(error);
+          loader.dismiss()
         }
       );
     });

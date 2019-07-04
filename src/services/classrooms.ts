@@ -42,10 +42,10 @@ export class ClassroomsService {
           this.schoolCalendarsService.getOfflineSchoolCalendar(unityId).subscribe((schoolCalendar: any) => {
             let currentDate = new Date();
             var hasStepOnCurrentDate = schoolCalendar.data.steps.filter((step) => {
-              let start_at = new Date(step.start_at);
-              let end_at = new Date(step.end_at);
+              let start_date = new Date(step.start_date_for_posting || step.start_at);
+              let end_date = new Date(step.end_date_for_posting || step.end_at);
 
-              return (start_at <= currentDate) && (end_at >= currentDate);
+              return (start_date <= currentDate) && (end_date >= currentDate);
             }).length >= 1;
 
             if (!hasStepOnCurrentDate) {
