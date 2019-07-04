@@ -111,11 +111,13 @@ export class FrequencyPage{
             }
         )
       },
-        (error) => {
-          loader.dismiss()
-          this.messages.showToast(error);
-        }
-      );
+      (error) => {
+        loader.dismiss()
+        this.messages.showToast(error);
+      },
+      () => {
+        loader.dismiss()
+      });
     });
   }
 
@@ -147,6 +149,7 @@ export class FrequencyPage{
                 this.cdr.detectChanges();
                 this.scrollTo("frequency-discipline");
               },
+              (error) => {},
               () => {
                 loader.dismiss()
               }
@@ -158,6 +161,7 @@ export class FrequencyPage{
             this.scrollTo("frequency-date");
           }
         },
+        (error) => {},
         () => {
           loader.dismiss()
         }

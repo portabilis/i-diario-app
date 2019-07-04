@@ -49,7 +49,7 @@ export class ClassroomsService {
             }).length >= 1;
 
             if (!hasStepOnCurrentDate) {
-              observer.error("Essa data está fora do calendário letivo. Tente novamente.")
+              observer.error("Data atual está fora do período de postagem de faltas. Tente novamente.")
               observer.complete();
               return;
             }
