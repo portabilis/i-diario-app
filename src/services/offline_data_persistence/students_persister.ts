@@ -17,7 +17,7 @@ export class StudentsPersisterService{
       let studentsObservables = []
       disciplines.forEach((disciplineList) => {
         disciplineList.data.forEach((discipline) => {
-          studentsObservables.push(this.students.getStudents(disciplineList.classroomId, discipline.id))
+          studentsObservables.push(this.students.getStudents(disciplineList.classroomId, discipline.id, user.teacher_id))
         });
       })
 
