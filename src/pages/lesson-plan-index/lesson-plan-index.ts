@@ -34,11 +34,16 @@ export class LessonPlanIndexPage {
     if (!lessonPlans) return;
     this.unities = [];
       lessonPlans.unities.forEach(unity => {
+        if ((unity.plans||[]).length == 0) {
+          return;
+        }
+
         let lessonPlans = [];
         unity.plans.forEach(plan => {
           lessonPlans.push({ id: plan.id,
                              description: plan.description + ' - ' + plan.classroom_name });
         });
+
         this.unities.push({ name: unity.unity_name, lessonPlans: lessonPlans});
       });
     });
