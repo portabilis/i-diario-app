@@ -45,7 +45,6 @@ export class NpsService {
 
   private setWootricSettings(callback: Function) {
     this.storage.get('serverUrl').then(host => {
-      window['wootric_survey_immediately'] = true; // Remover para produção
       window['wootric_no_surveyed_cookie'] = true;
       window['wootricSettings'] = {
         email: this.user.email,
