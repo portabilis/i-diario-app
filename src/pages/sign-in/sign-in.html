@@ -13,8 +13,8 @@
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
-          <ion-select class="select-city" [(ngModel)]="serverUrl" placeholder="Município" name="serverUrl" id="serverUrl" required [disabled]="!isOnline || cities.length == 0" >
-            <ion-option *ngFor="let city of cities | sort:'name'" value={{city.value}}>
+          <ion-select class="select-city" (ionChange)="updateSupportUrl()" [(ngModel)]="selectedCity" placeholder="Município" name="serverUrl" id="serverUrl" required [disabled]="!isOnline || cities.length == 0" >
+            <ion-option *ngFor="let city of cities | sort:'name'"  [value]="city">
               {{ city.name }}
             </ion-option>
           </ion-select>
@@ -32,7 +32,7 @@
     </form>
     <ion-label class="contato">
       Você não lembra o acesso?<br>
-      <a (click)='openUrl("https://portabilis.freshdesk.com/");'>Entre em contato.</a>
+      <a *ngIf="supportUrl" (click)='openSupportUrl();'>Entre em contato.</a>
     </ion-label>
   </div>
 </ion-content>

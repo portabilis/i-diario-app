@@ -15,7 +15,7 @@ export class CustomersService {
     const request = this.http.get(this.api.getallHostsUrl());
     return request.map((response: Response) => {
       return response.json()['customers'].map((customer) => {
-        return {name: customer.name, value: customer.url};
+        return {name: customer.name, value: customer.url, supportUrl: customer.support_url };
       });
     });
   }

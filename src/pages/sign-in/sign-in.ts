@@ -23,8 +23,9 @@ export class SignIn {
   cities = [];
   private anyError:Boolean = false;
   private errorMessage:String = "";
-  serverUrl: string = "";
+  selectedCity;
   isOnline: Boolean = false;
+  supportUrl: string = "";
   placeholder: String = "Municípios";
 
   constructor(
@@ -50,11 +51,16 @@ export class SignIn {
   changeInputMunicipios(online){
     this.isOnline = online;
     if(!this.isOnline){
-      this.serverUrl = "";
+      this.selectedCity = undefined;
       this.messages.showToast('Sem conexão!',1000,'top');
     }else{
       this.getCustomers();
     }
+  }
+
+  updateSupportUrl() {
+    const defaultSupport = "https://portabilis.freshdesk.com/";
+    this.supportUrl = this.selectedCity ? this.selectedCity.supportUrl || defaultSupport : "";
   }
 
   getCustomers(){
@@ -67,8 +73,8 @@ export class SignIn {
   loginForm(form: NgForm ){
     const credential = form.value.credential;
     const password = form.value.password;
-    const host = /^[a-z0-9]+:\/\//.test(form.value.serverUrl) ? form.value.serverUrl : "https://" + form.value.serverUrl;
-    this.api.setServerUrl(host);
+
+    this.api.setServerUrl(form.value.selectedCity && form.value.selectedCity.value);
 
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
@@ -106,7 +112,7 @@ export class SignIn {
     return `Olá, ${greeting}!`;
   }
 
-  openUrl(url) {
-    this.utilsService.openUrl(url);
+  openSupportUrl() {
+    this.utilsService.openUrl(this.supportUrl);
   }
 }
