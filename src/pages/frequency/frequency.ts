@@ -92,6 +92,7 @@ export class FrequencyPage{
             (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
+              loader.dismiss();
               if (!schoolCalendar.data) {
                 this.messages.showToast('Calendário escolar não encontrado.');
                 return;
@@ -105,18 +106,12 @@ export class FrequencyPage{
               loader.dismiss()
               this.messages.showToast(error);
               return;
-            },
-            () => {
-              loader.dismiss()
             }
         )
       },
       (error) => {
         loader.dismiss()
         this.messages.showToast(error);
-      },
-      () => {
-        loader.dismiss()
       });
     });
   }
