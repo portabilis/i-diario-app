@@ -40,12 +40,12 @@ export class ClassroomsService {
         var currentYear = (this.utilsService.getCurrentDate()).getFullYear();
         classrooms.forEach((classroom) => {
           this.schoolCalendarsService.getOfflineSchoolCalendar(unityId).subscribe((schoolCalendar: any) => {
-            const currentDate = this.utilsService.toStringWithoutTime(new Date());
+            const currentDate = new Date().toISOString().substr(0, 10);
             const hasStepOnCurrentDate = schoolCalendar.data.steps.filter((step) => {
               const startDate = step.start_date_for_posting || step.start_at;
               const endDate = step.end_date_for_posting || step.end_at;
 
-              return (start_date <= currentDate) && (end_date >= currentDate);
+              return (startDate <= currentDate) && (endDate >= currentDate);
             }).length >= 1;
 
             if (!hasStepOnCurrentDate) {
