@@ -13,7 +13,7 @@ export class TeachingPlanDetailsPage {
   description: string;
   unity_name: string;
   period: string;
-  objectives: string;
+  objectives = [];
   activities: string;
   evaluation: string;
   bibliography: string;
@@ -40,7 +40,7 @@ export class TeachingPlanDetailsPage {
       this.knowledge_areas = details.knowledge_areas;
       this.year = details.year;
 
-      this.objectives = this.utilsService.convertTextToHtml(details.objectives);
+      this.objectives = details.objectives || [];
       this.evaluation = this.utilsService.convertTextToHtml(details.evaluation);
       this.bibliography = this.utilsService.convertTextToHtml(details.bibliography);
       this.activities = this.utilsService.convertTextToHtml(details.activities);

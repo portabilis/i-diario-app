@@ -25,6 +25,10 @@ export class LessonPlanIndexPage {
     this.updateLessonPlans();
   }
 
+  ionViewDidEnter() {
+    this.updateLessonPlans();
+  }
+
   doRefresh() {
     this.sync.syncAll().subscribe(() => this.updateLessonPlans());
   }

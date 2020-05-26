@@ -34,7 +34,11 @@
     </div>
     <div class="detail">
       <h3 class="detail-title">Objetivos</h3>
-      <div class="detail-text" [innerHTML]="objectives || '-'"></div>
+      <ul class="contents-list">
+        <li *ngFor="let objective of objectives;" class="contents-list-item">
+          {{"- " + objective.description}}
+        </li>
+      </ul>
     </div>
     <div class="detail">
       <h3 class="detail-title">Conteúdos</h3>
