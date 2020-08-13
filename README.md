@@ -58,4 +58,4 @@ Como o projeto é antigo, foi necessário adicionar a plataforma com uma versão
 
 > ionic cordova platform add ios@5.1.1
 
-Depois de adicionado, basta abrir o arquivo `platforms/ios/Portabilis Diário.xcodeproj` no XCode e assinar com o certificado correto `Signing & Capabilities`
+Depois de adicionado, basta abrir o arquivo `platforms/ios/Portabilis Diário.xcodeproj` no XCode e assinar com o certificado correto em `Signing & Capabilities`
