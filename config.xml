@@ -3,10 +3,11 @@
     <name>Portabilis Diário</name>
     <description>Cadastro de frequências online/offline, consulta de planos de aula e de ensino.</description>
     <author email="suporte@portabilis.com.br" href="http://www.portabilis.com.br">Portabilis Tecnologia Ltda.</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.31.165:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://192.168.0.85:8101" />
+    <allow-navigation href="http://192.168.31.165:8100" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -24,8 +25,11 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
-        <preference name="android-minSdkVersion" value="21" />
-        <preference name="android-targetSdkVersion" value="28" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+        <preference name="android-minSdkVersion" value="27" />
+        <preference name="android-targetSdkVersion" value="30" />
         <preference name="loadUrlTimeoutValue" value="700000" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -90,7 +94,6 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
-    <allow-navigation href="http://192.168.0.62:8100" />
-    <engine name="android" spec="7.1.0" />
-    <engine name="ios" spec="~5.1.1" />
+    <engine name="android" spec="^7.1.0" />
+    <engine name="ios" spec="5.1.1" />
 </widget>

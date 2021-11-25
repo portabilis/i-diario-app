@@ -59,6 +59,7 @@ export class SignIn {
   }
 
   updateSupportUrl() {
+    this.api.setServerUrl(this.selectedCity.value);
     const defaultSupport = "https://portabilis.freshdesk.com/";
     this.supportUrl = this.selectedCity ? this.selectedCity.supportUrl || defaultSupport : "";
   }
@@ -71,15 +72,15 @@ export class SignIn {
   }
 
   loginForm(form: NgForm ){
+
     const credential = form.value.credential;
     const password = form.value.password;
-
-    this.api.setServerUrl(form.value.selectedCity && form.value.selectedCity.value);
-
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
     });
+
     loading.present();
+
     this.auth.signIn(credential, password).subscribe(
       (user: User) => {
         this.auth.setCurrentUser(user);
