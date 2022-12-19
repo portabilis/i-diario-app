@@ -47,7 +47,6 @@ export class MyApp {
               private messages: MessagesService,
               private sync: SyncProvider,
               private utilsService: UtilsService,
-              private loadingCtrl: LoadingController,
               private npsService: NpsService
             ) {
     platform.ready().then(() => {
