@@ -15,6 +15,7 @@ import { Device } from '@ionic-native/device';
   templateUrl: 'user-index.html',
 })
 export class UserIndexPage {
+  app_version: string;
   binary_version: string;
   minor_version: string;
   user_email: string;
