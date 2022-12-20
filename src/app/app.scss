@@ -188,3 +188,40 @@ ion-header .bar-button[icon-only] ion-icon.ion-ios-sync {
 @keyframes spin { 0% { transform: rotate(0deg); }
     100% { transform: rotate(359deg); } }
 .ion-load-a.ion-spin-animation { -webkit-animation-timing-function: steps(8, start); -moz-animation-timing-function: steps(8, start); animation-timing-function: steps(8, start); }
+
+#wootric-text::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: transparent;
+}
+
+#wootric-text:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: transparent;
+}
+
+#wootric-text::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: transparent;
+}
+
+#wootric-text:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: transparent;
+}
+
+#wootric-text::placeholder {
+  color: transparent;
+}
+
+@media only screen and (orientation: portrait) {
+  #wootric-modal.wootric-mobile-modal-zoomed #wootric-close #wootric-x {
+    margin: 0 2px !important;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  body.wootric-modal-showing #wootric-modal.wootric-mobile-modal-zoomed #wootric-close {
+    height: 20px !important;
+    width: 20px !important;
+  }
+}

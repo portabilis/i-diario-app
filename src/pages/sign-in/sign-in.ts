@@ -10,6 +10,7 @@ import { UnitiesService } from '../../services/unities';
 import { CustomersService } from '../../services/customers';
 import { ApiService } from './../../services/api';
 import { UtilsService } from './../../services/utils';
+import { NpsService } from './../../services/nps';
 
 import { User } from '../../data/user.interface';
 import { MessagesService } from '../../services/messages';
@@ -36,7 +37,8 @@ export class SignIn {
     private api: ApiService,
     private utilsService: UtilsService,
     private messages: MessagesService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private npsService: NpsService
   ){}
 
   ionViewWillEnter(){
@@ -75,6 +77,7 @@ export class SignIn {
     this.auth.signIn(credential, password).subscribe(
       (user: User) => {
         this.auth.setCurrentUser(user);
+        this.npsService.startNps(user);
         this.navCtrl.push(AppIndexPage, {'user': user});
       },
     (error) => {

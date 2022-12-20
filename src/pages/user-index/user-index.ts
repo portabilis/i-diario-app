@@ -2,6 +2,7 @@ import { Storage } from '@ionic/storage';
 import { SignIn } from './../sign-in/sign-in';
 import { App } from 'ionic-angular';
 import { AuthService } from './../../services/auth';
+import { NpsService } from './../../services/nps';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
@@ -26,6 +27,7 @@ export class UserIndexPage {
     private app: App,
     private storage: Storage,
     private messages: MessagesService,
+    private npsService: NpsService,
     public device: Device
   ) {
     this.getDeployInfo();
@@ -73,6 +75,7 @@ export class UserIndexPage {
   }
 
   logout() {
+    this.npsService.stopNps();
     this.auth.removeCurrentUser();
     this.app.getRootNav().setRoot(SignIn);
     this.storage.clear();

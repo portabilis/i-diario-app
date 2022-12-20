@@ -5,5 +5,6 @@ export interface User {
   kind: string,
   first_name: string,
   last_name: string,
-  teacher_id: number
+  teacher_id: number,
+  created_at: string
 }
