@@ -92,6 +92,7 @@ export class FrequencyPage{
             (schoolCalendar: any) => {
               this.resetSelectedValues();
               this.classrooms = classrooms.data;
+              loader.dismiss();
               if (!schoolCalendar.data) {
                 this.messages.showToast('Calendário escolar não encontrado.');
                 return;
@@ -102,17 +103,16 @@ export class FrequencyPage{
               this.scrollTo("frequency-classroom");
             },
             (error) => {
-              console.log(error)
-            },
-            () => {
               loader.dismiss()
+              this.messages.showToast(error);
+              return;
             }
         )
       },
-        (error) => {
-          console.log(error);
-        }
-      );
+      (error) => {
+        loader.dismiss()
+        this.messages.showToast(error);
+      });
     });
   }
 
@@ -144,9 +144,7 @@ export class FrequencyPage{
                 this.cdr.detectChanges();
                 this.scrollTo("frequency-discipline");
               },
-              (error) => {
-                console.log(error)
-              },
+              (error) => {},
               () => {
                 loader.dismiss()
               }
@@ -158,8 +156,9 @@ export class FrequencyPage{
             this.scrollTo("frequency-date");
           }
         },
-        (error) => {
-          console.log(error)
+        (error) => {},
+        () => {
+          loader.dismiss()
         }
       )
     })

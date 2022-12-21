@@ -14,8 +14,8 @@ export class StudentsService {
     private api: ApiService
   ){}
 
-  getStudents(classroomId: number, disciplineId: number){
-    const request = this.http.get(this.api.getClassroomStudentsUrl(), { params: { classroom_id: classroomId, discipline_id: disciplineId } } );
+  getStudents(classroomId: number, disciplineId: number, teacherId: number){
+    const request = this.http.get(this.api.getClassroomStudentsUrl(), { params: { classroom_id: classroomId, discipline_id: disciplineId, teacher_id: teacherId } } );
     return request.map((response: Response) => {
       return {
         data: response.json(),

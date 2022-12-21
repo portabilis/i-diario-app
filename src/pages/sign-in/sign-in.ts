@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { LoadingController, NavController } from 'ionic-angular';
 import { AppIndexPage } from "../app-index/app-index";
@@ -10,17 +10,23 @@ import { UnitiesService } from '../../services/unities';
 import { CustomersService } from '../../services/customers';
 import { ApiService } from './../../services/api';
 import { UtilsService } from './../../services/utils';
+import { NpsService } from './../../services/nps';
 
 import { User } from '../../data/user.interface';
+import { MessagesService } from '../../services/messages';
 
 @Component({
   selector: 'page-sign-in',
   templateUrl: 'sign-in.html'
 })
 export class SignIn {
-  private cities = [];
+  cities = [];
   private anyError:Boolean = false;
   private errorMessage:String = "";
+  selectedCity;
+  isOnline: Boolean = false;
+  supportUrl: string = "";
+  placeholder: String = "Municípios";
 
   constructor(
     private auth: AuthService,
@@ -31,27 +37,54 @@ export class SignIn {
     private customersService: CustomersService,
     private api: ApiService,
     private utilsService: UtilsService,
+    private messages: MessagesService,
+    private cdr: ChangeDetectorRef,
+    private npsService: NpsService
   ){}
 
   ionViewWillEnter(){
+    this.isOnline = this.connection.isOnline;
+    this.changeInputMunicipios(this.isOnline);
+    this.connection.eventOnline.subscribe((online) => this.changeInputMunicipios(online));
+  }
+
+  changeInputMunicipios(online){
+    this.isOnline = online;
+    if(!this.isOnline){
+      this.selectedCity = undefined;
+      this.messages.showToast('Sem conexão!',1000,'top');
+    }else{
+      this.getCustomers();
+    }
+  }
+
+  updateSupportUrl() {
+    this.api.setServerUrl(this.selectedCity.value);
+    const defaultSupport = "https://portabilis.freshdesk.com/";
+    this.supportUrl = this.selectedCity ? this.selectedCity.supportUrl || defaultSupport : "";
+  }
+
+  getCustomers(){
     this.customersService.getCustomers().subscribe( data => {
       this.cities = data;
+      this.cdr.detectChanges();
     });
   }
 
   loginForm(form: NgForm ){
+
     const credential = form.value.credential;
     const password = form.value.password;
-    const host = /^[a-z0-9]+:\/\//.test(form.value.serverUrl) ? form.value.serverUrl : "https://" + form.value.serverUrl;
-    this.api.setServerUrl(host);
-
     const loading = this.loadingCtrl.create({
       content: 'Carregando...'
     });
+
     loading.present();
+
     this.auth.signIn(credential, password).subscribe(
       (user: User) => {
         this.auth.setCurrentUser(user);
+        this.npsService.startNps(user);
         this.navCtrl.push(AppIndexPage, {'user': user});
       },
     (error) => {
@@ -80,7 +113,7 @@ export class SignIn {
     return `Olá, ${greeting}!`;
   }
 
-  openUrl(url) {
-    this.utilsService.openUrl(url);
+  openSupportUrl() {
+    this.utilsService.openUrl(this.supportUrl);
   }
 }

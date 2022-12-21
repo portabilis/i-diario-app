@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content class="page-content" padding>
-  <div class="accordion-list-border accordion-teaching-plan">
+  <div *ngIf="unities.length && unities[0].teachingPlans.length" class="accordion-list-border accordion-teaching-plan">
     <ion-list class="accordion-list"
               *ngFor="let unity of unities; let i=index">
       <ion-list-header class="accordion-list-header accordion-list-header-teaching"
@@ -28,5 +28,8 @@
         </ion-item>
       </div>
     </ion-list>
+  </div>
+  <div *ngIf="!unities.length || (unities[0] && !unities[0].teachingPlans.length)" class="empty-results">
+    <p margin>Nenhum plano de ensino foi encontrado.</p>
   </div>
 </ion-content>

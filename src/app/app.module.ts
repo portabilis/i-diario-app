@@ -64,6 +64,7 @@ import { ContentLessonPlansPersisterService } from './../services/offline_data_p
 import { ContentRecordsPersisterService } from './../services/offline_data_persistence/content_records_persister';
 import { TeachingPlansPersisterService } from './../services/offline_data_persistence/teaching_plans_persister';
 import { UtilsService } from './../services/utils';
+import { NpsService } from './../services/nps';
 import { DailyFrequencyStudentsSynchronizer } from '../services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { ContentRecordsSynchronizer } from '../services/offline_data_synchronization/content_records_synchronizer';
 import { OfflineClassroomFinder } from './../services/offline_data_finder/classrooms';
@@ -163,6 +164,7 @@ export class AppDiarioErrorHandler implements ErrorHandler {
     StudentsPersisterService,
     ApiService,
     UtilsService,
+    NpsService,
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
     ContentRecordsSynchronizer,

@@ -13,7 +13,11 @@
     <form class="form-login" #f="ngForm" (ngSubmit)="loginForm(f)">
       <ion-list>
         <ion-item class="inputs">
-          <ion-input ngModel type="url" placeholder="Host/URL" name="serverUrl" id="serverUrl" required></ion-input>
+          <ion-select class="select-city" (ionChange)="updateSupportUrl()" [(ngModel)]="selectedCity" placeholder="Município" name="serverUrl" id="serverUrl" required [disabled]="!isOnline || cities.length == 0" >
+            <ion-option *ngFor="let city of cities | sort:'name'"  [value]="city">
+              {{ city.name }}
+            </ion-option>
+          </ion-select>
         </ion-item>
         <ion-item class="inputs">
           <ion-input ngModel type="text" placeholder="Email ou CPF" name="credential" id="credential" required></ion-input>
@@ -28,7 +32,7 @@
     </form>
     <ion-label class="contato">
       Você não lembra o acesso?<br>
-      <a (click)='openUrl("http://suporte.portabilis.com.br");'>Entre em contato.</a>
+      <a *ngIf="supportUrl" (click)='openSupportUrl();'>Entre em contato.</a>
     </ion-label>
   </div>
 </ion-content>

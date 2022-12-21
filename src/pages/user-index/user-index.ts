@@ -2,6 +2,7 @@ import { Storage } from '@ionic/storage';
 import { SignIn } from './../sign-in/sign-in';
 import { App } from 'ionic-angular';
 import { AuthService } from './../../services/auth';
+import { NpsService } from './../../services/nps';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessagesService } from './../../services/messages';
@@ -14,6 +15,7 @@ import { Device } from '@ionic-native/device';
   templateUrl: 'user-index.html',
 })
 export class UserIndexPage {
+  app_version: string;
   binary_version: string;
   minor_version: string;
   user_email: string;
@@ -26,6 +28,7 @@ export class UserIndexPage {
     private app: App,
     private storage: Storage,
     private messages: MessagesService,
+    private npsService: NpsService,
     public device: Device
   ) {
     this.getDeployInfo();
@@ -73,13 +76,13 @@ export class UserIndexPage {
   }
 
   logout() {
+    this.npsService.stopNps();
     this.auth.removeCurrentUser();
     this.app.getRootNav().setRoot(SignIn);
     this.storage.clear();
   }
 
   async getDeployInfo() {
-    this.binary_version = '58';
-    this.minor_version = '1';
+    this.app_version = '0.0.86';
   }
 }

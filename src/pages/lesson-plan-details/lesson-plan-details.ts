@@ -13,13 +13,15 @@ export class LessonPlanDetailsPage {
   description: string;
   unity_name: string;
   period: string;
-  objectives: string;
+  objectives = [];
   activities: string;
   evaluation: string;
   bibliography: string;
-  contents: string;
+  contents = [];
   knowledge_areas: string;
   period_date: string;
+  start_at: Date;
+  end_at: Date;
   opinion: string;
   resources: string;
 
@@ -41,20 +43,15 @@ export class LessonPlanDetailsPage {
       this.contents = details.contents;
       this.knowledge_areas = details.knowledge_areas;
 
-      this.objectives = this.utilsService.convertTextToHtml(details.objectives);
-      this.evaluation = this.utilsService.convertTextToHtml(details.evaluation);
-      this.bibliography = this.utilsService.convertTextToHtml(details.bibliography);
-      this.activities = this.utilsService.convertTextToHtml(details.activities);
-      this.opinion = this.utilsService.convertTextToHtml(details.opinion);
-      this.resources = this.utilsService.convertTextToHtml(details.resources);
-      this.period_date = this.periodDate(details.start_at, details.end_at);
+      this.objectives = details.objectives || [];
+      this.evaluation = this.utilsService.convertTextToHtml(details.evaluation || '');
+      this.bibliography = this.utilsService.convertTextToHtml(details.bibliography || '');
+      this.activities = this.utilsService.convertTextToHtml(details.activities || '');
+      this.opinion = this.utilsService.convertTextToHtml(details.opinion || '');
+      this.resources = this.utilsService.convertTextToHtml(details.resources || '');
+      this.start_at = details.start_at;
+      this.end_at = details.end_at;
     });
-  }
-
-  periodDate(start_at, end_at) {
-    start_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(start_at));
-    end_at = this.utilsService.toBrazilianFormat(this.utilsService.getDate(end_at));
-    return start_at + " a " + end_at;
   }
 
   getLessonPlanDetail(lessonPlan){

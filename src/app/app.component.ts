@@ -16,10 +16,12 @@ import { SignIn } from '../pages/sign-in/sign-in';
 import { ConnectionService } from './../services/connection';
 import { AppIndexPage } from "../pages/app-index/app-index";
 import { UtilsService } from './../services/utils';
+import { NpsService } from './../services/nps';
 import { MessagesService } from './../services/messages';
 import { LessonPlanIndexPage } from '../pages/lesson-plan-index/lesson-plan-index';
 import { TeachingPlanIndexPage } from '../pages/teaching-plan-index/teaching-plan-index';
 import { FrequencyIndexPage } from '../pages/frequency-index/frequency-index';
+import { User } from '../data/user.interface';
 
 @Component({
   templateUrl: 'app.html'
@@ -45,6 +47,7 @@ export class MyApp {
               private messages: MessagesService,
               private sync: SyncProvider,
               private utilsService: UtilsService,
+              private npsService: NpsService
             ) {
     platform.ready().then(() => {
       statusBar.styleDefault();
@@ -68,10 +71,11 @@ export class MyApp {
 
       this.auth.currentUser().then((result) => {
         if(result){
+          npsService.startNps(<User> result);
           this.rootPage = AppIndexPage
         }
       })
-      
+
       platform.registerBackButtonAction(() => {
         let nav = app.getActiveNavs()[0];
         let activeComponent = nav.getActive().component;
@@ -138,14 +142,31 @@ export class MyApp {
     );  
   }
 
-  private showSynchronizationErrorToast() {
-    this.hideIsSynchronizingAlert();
-    this.syncAlert = this.messages.showError('Não foi possível sincronizar as frequências e os conteúdos de aula lançados.');
-  }
-
   private hideSyncronizationAlerts() {
     if (this.syncAlert)
       this.syncAlert.dismiss();
+  }
+
+  private showIsSychronizedToast() {
+    this.loadingSync.dismiss();
+    this.messages.showError('As frequências lançadas foram sincronizadas com sucesso.','Sucesso',
+    [
+      {
+        text: 'OK',
+        handler: () => {}
+      }
+    ]);
+  }
+
+  private showSynchronizationErrorToast() {
+    this.loadingSync.dismiss();
+    this.messages.showError('Não foi possível sincronizar as frequências lançadas.', 'Erro',
+    [
+      {
+        text: 'OK',
+        handler: () => {}
+      }
+    ]);
   }
 
   private syncOfflineData(){
