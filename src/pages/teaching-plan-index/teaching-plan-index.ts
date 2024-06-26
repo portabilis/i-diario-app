@@ -11,14 +11,12 @@ import { SyncProvider } from '../../services/sync';
 })
 export class TeachingPlanIndexPage {
   shownGroup = null;
-
   unities = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private sync: SyncProvider,
-              private storage: Storage
-             ) {
+              private storage: Storage) {
   }
 
   ionViewDidLoad() {
@@ -36,27 +34,39 @@ export class TeachingPlanIndexPage {
       teachingPlans.unities.forEach(unity => {
         let teachingPlans = [];
         unity.plans.forEach(plan => {
-          teachingPlans.push({ id: plan.id,
-                               description: plan.description + ' - ' + plan.grade_name });
+          teachingPlans.push({
+            id: plan.id,
+            description: plan.description + ' - ' + plan.grade_name
+          });
         });
-        this.unities.push({ name: unity.unity_name, teachingPlans: teachingPlans});
+        this.unities.push({ name: unity.unity_name, teachingPlans: teachingPlans });
       });
     });
   }
 
   toggleGroup(group) {
     if (this.isGroupShown(group)) {
-        this.shownGroup = null;
+      this.shownGroup = null;
     } else {
-        this.shownGroup = group;
+      this.shownGroup = group;
     }
   };
 
   isGroupShown(group) {
-      return this.shownGroup === group;
+    return this.shownGroup === group;
   };
 
   openDetail(teachingPlanId) {
     this.navCtrl.push(TeachingPlanDetailsPage, { "teachingPlanId": teachingPlanId });
+  }
+
+  hasTeachingPlans(): boolean {
+    let hasPlans = false;
+    this.unities.forEach(unity => {
+      if (unity.teachingPlans && unity.teachingPlans.length > 0) {
+        hasPlans = true;
+      }
+    });
+    return hasPlans;
   }
 }
