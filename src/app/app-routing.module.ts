@@ -88,6 +88,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'daily-note-form/:avaliationId',
+    loadChildren: () =>
+      import('./daily-note-form/daily-note-form.module').then(
+        (m) => m.DailyNoteFormPageModule,
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 @NgModule({
   imports: [

@@ -1,0 +1,128 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 16px;
+
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+ion-card {
+  margin: 16px;
+  border-radius: 5px;
+
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+
+  ion-card-subtitle {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  ion-card-title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  ion-card-content {
+    padding-top: 12px;
+
+    p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: var(--ion-text-color);
+
+      strong {
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+}
+
+// Estilos do painel de alunos
+.students-panel {
+  .student-card {
+    display: grid;
+    grid-template-columns: 1fr 10rem;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.student-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .student-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .student-number {
+    font-weight: 600;
+    color: var(--ion-color-medium);
+    min-width: 30px;
+    font-size: 14px;
+  }
+
+  .student-name {
+    font-weight: 500;
+    color: #3f3d4d;
+    font-size: 15px;
+  }
+
+  .unsync-badge {
+    font-size: 9px;
+    padding: 3px 6px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+}
+
+.grade-input-container {
+  width: 100%;
+
+  .grade-input {
+    width: 100%;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 5px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    min-height: 44px;
+
+    &:focus-within {
+      border-color: var(--ion-color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--ion-color-primary-rgb), 0.2);
+    }
+  }
+}
+
+ion-footer {
+  ion-toolbar {
+    --background: var(--ion-color-light);
+    padding: 0.5rem;
+  }
+
+  ion-button[fill="solid"] {
+    min-width: 140px;
+    --border-radius: 5px;
+    height: 44px;
+    font-weight: 600;
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+}

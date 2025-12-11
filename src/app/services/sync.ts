@@ -11,6 +11,7 @@ import { ObservationDiaryRecordsSynchronizer } from './offline_data_synchronizat
 import { OfflineDataPersisterService } from './offline_data_persistence/offline_data_persister';
 import { MessagesService } from './messages';
 import { StorageService } from './storage.service';
+import { DailyNoteRecordsSynchronizer } from "./offline_data_synchronization/daily_notes_record_synchronizer";
 
 @Injectable()
 export class SyncProvider {
@@ -29,6 +30,7 @@ export class SyncProvider {
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
     private contentRecordsSynchronizer: ContentRecordsSynchronizer,
     private observationDiaryRecordsSynchronizer: ObservationDiaryRecordsSynchronizer,
+    private dailyNoteRecordsSynchronizer: DailyNoteRecordsSynchronizer,
     private offlineDataPersister: OfflineDataPersisterService,
   ) {
     this.verifySyncDate();
@@ -316,6 +318,9 @@ export class SyncProvider {
           observationDiariesToSync: from(
             this.storage.get('observationDiaries') || [],
           ),
+          dailyNotesToSync: from(
+            this.storage.get('dailyNotes') || [],
+          ),
         }).pipe(map((result) => ({ ...payload, ...result }))),
       ),
 
@@ -328,6 +333,7 @@ export class SyncProvider {
           dailyFrequencyStudentsToSync,
           contentRecordsToSync,
           observationDiariesToSync,
+          dailyNotesToSync,
         } = payload;
 
         const dailyFrequenciesObservable = dailyFrequenciesToSync?.length
@@ -357,11 +363,19 @@ export class SyncProvider {
             )
           : of(null);
 
+        const dailyNotesObservable = dailyNotesToSync?.length
+          ? this.dailyNoteRecordsSynchronizer.sync(
+              dailyNotesToSync.filter((s: any) => !s.synced),
+              user?.['teacher_id'],
+            )
+          : of(null);
+
         return concat(
           dailyFrequenciesObservable,
           dailyFrequencyStudentsObservable,
           contentRecordsObservable,
           observationDiariesObservable,
+          dailyNotesObservable,
         ).pipe(map((result) => ({ ...payload, ...result })));
       }),
 

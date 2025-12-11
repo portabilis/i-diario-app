@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="" (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lançamento de Notas</ion-title>
+  </ion-toolbar>
+  <ion-toolbar mode="md" *ngIf="!isLoading && avaliation">
+    <ion-title size="small">
+      {{ avaliation.description }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Carregando...</p>
+  </div>
+
+  <div *ngIf="!isLoading && avaliation">
+    <h3 class="content-page-section">Detalhes da avaliação</h3>
+    <div class="details-panel">
+      <div class="detail">
+        <h3 class="detail-title">Turma</h3>
+        <p class="detail-text">{{ avaliation.classroom_name }}</p>
+      </div>
+      <div class="detail" *ngIf="avaliation.discipline_name">
+        <h3 class="detail-title">Disciplina</h3>
+        <p class="detail-text">{{ avaliation.discipline_name }}</p>
+      </div>
+      <div class="detail">
+        <h3 class="detail-title">Data</h3>
+        <p class="detail-text">{{ avaliation.test_date | date: 'dd/MM/yyyy' }}</p>
+      </div>
+      <div *ngIf="avaliation.weight" class="detail">
+        <h3 class="detail-title">Peso</h3>
+        <p class="detail-text">{{ avaliation.weight }}</p>
+      </div>
+      <div class="detail">
+        <h3 class="detail-title">Nota máxima</h3>
+        <p class="detail-text">{{ avaliation.max_score }}</p>
+      </div>
+    </div>
+
+    <h3 class="content-page-section">Notas dos alunos</h3>
+
+    <div class="details-panel students-panel">
+      <div class="detail student-card" *ngFor="let student of avaliation.notes">
+        <div class="student-header">
+          <div class="student-info">
+            <span class="student-name">{{ student.student_name }}</span>
+          </div>
+        </div>
+
+        <div class="grade-input-container">
+          <ion-input
+            type="number"
+            [(ngModel)]="student.note"
+            placeholder="0.00"
+            step="0.1"
+            min="0"
+            [max]="avaliation.max_score"
+            class="grade-input"
+          ></ion-input>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

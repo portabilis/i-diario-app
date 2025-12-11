@@ -1,0 +1,36 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 16px;
+
+  p {
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+ion-accordion {
+  margin-bottom: 8px;
+
+  &.panel {
+    border-radius: 5px;
+    overflow: hidden;
+  }
+}
+
+.view-eye {
+  cursor: pointer;
+
+  p {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: var(--ion-color-medium);
+  }
+
+  span {
+    color: var(--ion-color-primary);
+  }
+}

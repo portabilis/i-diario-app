@@ -87,6 +87,14 @@ export class ApiService {
     return this.serverUrl + '/api/v2/observation_diary_records/sync.json';
   }
 
+  getAvaliationsUrl() {
+    return this.serverUrl + '/api/v2/avaliations.json';
+  }
+
+  getDailyNotesSyncUrl() {
+    return this.serverUrl + '/api/v2/daily_notes/sync.json';
+  }
+
   getAllHostsUrl() {
     return environment.app.cities_url;
   }
