@@ -36,7 +36,7 @@ ion-grid.form-errors {
     height: 100%;
   }
   ion-row {
-    border-radius: 5pt;
+    border-radius: 5px;
     padding: 5pt 0;
     font-size: 30px;
     color: rgb(63, 61, 77);
@@ -60,7 +60,7 @@ ion-grid.form-errors {
     margin: 15px 5px;
   }
   background-color: #fff;
-  border-radius: 5pt;
+  border-radius: 5px;
   margin: 15pt auto;
   max-width: 290pt;
   opacity: 90%;
@@ -70,11 +70,11 @@ ion-grid.form-errors {
   font-size: 18pt;
   --background: #3fd4b4;
   height: 65pt;
-  --border-radius: 0 0 5pt 5pt;
+  --border-radius: 0 0 5px 5px;
   --border-top-left-radius: 0pt;
   --border-top-right-radius: 0pt;
-  --border-bottom-left-radius: 5pt;
-  --border-bottom-right-radius: 5pt;
+  --border-bottom-left-radius: 5px;
+  --border-bottom-right-radius: 5px;
   margin-bottom: 0;
 }
 

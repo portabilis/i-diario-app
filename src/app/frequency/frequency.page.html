@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content class="page-content" id="frequency-page">
+  <div *ngIf="!unities.length" class="empty-results">
+    <p>Nenhuma escola encontrada.</p>
+  </div>
+
   <form #f="ngForm" (ngSubmit)="frequencyForm(f)">
     <div class="form-frequency">
       <div class="form-item" *ngIf="unities.length">
@@ -32,10 +36,6 @@
           </ion-radio-group>
         </ion-list>
       </div>
-      <div *ngIf="!unities.length" class="empty-results">
-        <p>Nenhuma escola encontrada.</p>
-      </div>
-
       <div
         class="form-item"
         *ngIf="classrooms.length > 0"
@@ -98,7 +98,7 @@
         </ion-list>
       </div>
 
-      <div *ngIf="classrooms.length">
+      <div *ngIf="classrooms.length" class="form-item">
         <h3 class="form-item-title">Data</h3>
         <ion-datetime
           [(ngModel)]="date"
@@ -110,7 +110,7 @@
         ></ion-datetime>
       </div>
 
-      <div class="container-button-frequency">
+      <div class="container-button-frequency load-more">
         <ion-button
           type="submit"
           [disabled]="!f.valid || !classrooms.length || (!globalAbsence && !selectedClasses.length)"

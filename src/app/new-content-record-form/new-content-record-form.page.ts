@@ -68,7 +68,6 @@ export class NewContentRecordFormPage implements OnInit {
         this.classrooms = [];
         this.disciplines = [];
         this.messages.showError(err, 'Erro');
-        console.log(err);
       },
     });
   }

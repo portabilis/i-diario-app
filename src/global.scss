@@ -109,3 +109,28 @@
   text-align: center;
   margin-top: 15px;
 }
+
+.form-item {
+  margin-bottom: 24px;
+}
+
+.form-item-title {
+  color: #3f3e4d;
+  font-size: 20px;
+  margin-bottom: 12px;
+
+  .observation-count {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--ion-color-medium);
+  }
+}
+
+.content-page-section {
+  margin-top: 5px;
+
+  font-size: 16px;
+  line-height: 20px;
+  color: rgb(134, 132, 153);
+  padding-left: 12px;
+}
