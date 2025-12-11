@@ -7,6 +7,7 @@ import { UtilsService } from './utils';
 import { ContentRecordsSynchronizer } from './offline_data_synchronization/content_records_synchronizer';
 import { DailyFrequencyStudentsSynchronizer } from './offline_data_synchronization/daily_frequency_students_synchronizer';
 import { DailyFrequenciesSynchronizer } from './offline_data_synchronization/daily_frequencies_synchronizer';
+import { ObservationDiaryRecordsSynchronizer } from './offline_data_synchronization/observation_diary_records_synchronizer';
 import { OfflineDataPersisterService } from './offline_data_persistence/offline_data_persister';
 import { MessagesService } from './messages';
 import { StorageService } from './storage.service';
@@ -27,6 +28,7 @@ export class SyncProvider {
     private dailyFrequenciesSynchronizer: DailyFrequenciesSynchronizer,
     private dailyFrequencyStudentsSynchronizer: DailyFrequencyStudentsSynchronizer,
     private contentRecordsSynchronizer: ContentRecordsSynchronizer,
+    private observationDiaryRecordsSynchronizer: ObservationDiaryRecordsSynchronizer,
     private offlineDataPersister: OfflineDataPersisterService,
   ) {
     this.verifySyncDate();
@@ -200,6 +202,9 @@ export class SyncProvider {
                   contentRecordsToSync: from(
                     this.storage.get('contentRecordsToSync') || [],
                   ),
+                  observationDiariesToSync: from(
+                    this.storage.get('observationDiariesToSync') || [],
+                  ),
                 }).pipe(
                   switchMap((results) => {
                     if (!results) {
@@ -212,6 +217,7 @@ export class SyncProvider {
                       dailyFrequenciesToSync,
                       dailyFrequencyStudentsToSync,
                       contentRecordsToSync,
+                      observationDiariesToSync,
                     } = results;
 
                     // Tratamento seguro para sincronizações
@@ -237,11 +243,20 @@ export class SyncProvider {
                           )
                         : of(null);
 
+                    const observationDiariesObservable =
+                      observationDiariesToSync?.length
+                        ? this.observationDiaryRecordsSynchronizer.sync(
+                            observationDiariesToSync,
+                            user?.['teacher_id'],
+                          )
+                        : of(null);
+
                     // Garantimos que todos os observables sejam válidos para o concat
                     return concat(
                       dailyFrequenciesObservable,
                       dailyFrequencyStudentsObservable,
                       contentRecordsObservable,
+                      observationDiariesObservable,
                     ).pipe(
                       switchMap(() =>
                         forkJoin([
@@ -296,6 +311,11 @@ export class SyncProvider {
           contentRecordsToSync: from(
             this.storage.get('contentRecordsToSync') || [],
           ),
+          // Importante:
+          // Nova abordagem: usamos o campo `synced` para determinar se deve ou não ser sincronizados
+          observationDiariesToSync: from(
+            this.storage.get('observationDiaries') || [],
+          ),
         }).pipe(map((result) => ({ ...payload, ...result }))),
       ),
 
@@ -307,6 +327,7 @@ export class SyncProvider {
           dailyFrequenciesToSync,
           dailyFrequencyStudentsToSync,
           contentRecordsToSync,
+          observationDiariesToSync,
         } = payload;
 
         const dailyFrequenciesObservable = dailyFrequenciesToSync?.length
@@ -327,10 +348,20 @@ export class SyncProvider {
             )
           : of(null);
 
+        // Importante:
+        // Envia os dados apenas do que não está sincronizado
+        const observationDiariesObservable = observationDiariesToSync?.length
+          ? this.observationDiaryRecordsSynchronizer.sync(
+              observationDiariesToSync.filter((s: any) => !s.synced),
+              user?.['teacher_id'],
+            )
+          : of(null);
+
         return concat(
           dailyFrequenciesObservable,
           dailyFrequencyStudentsObservable,
           contentRecordsObservable,
+          observationDiariesObservable,
         ).pipe(map((result) => ({ ...payload, ...result })));
       }),
 

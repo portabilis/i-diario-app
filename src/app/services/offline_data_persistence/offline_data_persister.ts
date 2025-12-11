@@ -16,6 +16,7 @@ import { DisciplineFrequenciesPersisterService } from './discipline_frequencies_
 import { StudentsPersisterService } from './students_persister';
 import { GlobalFrequenciesPersisterService } from './global_frequencies_persister';
 import { StorageService } from '../storage.service';
+import { ObservationDiariesPersisterService } from "./observation_diaries_persister";
 
 @Injectable()
 export class OfflineDataPersisterService {
@@ -30,6 +31,7 @@ export class OfflineDataPersisterService {
     private contentLessonPlansPersister: ContentLessonPlansPersisterService,
     private contentRecordsPersister: ContentRecordsPersisterService,
     private teachingPlansPersister: TeachingPlansPersisterService,
+    private observationDiariesPersister: ObservationDiariesPersisterService,
     private disciplineFrequenciesPersister: DisciplineFrequenciesPersisterService,
     private studentsPersister: StudentsPersisterService,
     private globalFrequenciesPersister: GlobalFrequenciesPersisterService,
@@ -46,6 +48,7 @@ export class OfflineDataPersisterService {
     this.storage.remove('lessonPlans').then();
     this.storage.remove('schoolCalendars').then();
     this.storage.remove('teachingPlans').then();
+    this.storage.remove('observationDiaries').then();
     this.storage.remove('unities').then();
   }
 
@@ -126,6 +129,14 @@ export class OfflineDataPersisterService {
             payload.examRules,
           ),
           students: this.studentsPersister.persist(user, payload.disciplines),
+        }).pipe(map((result) => ({ ...payload, ...result }))),
+      ),
+
+      // Passo 5
+      // Sincronizar os diários de observações: depende das turmas, das disciplinas e dos alunos
+      switchMap((payload) =>
+        forkJoin({
+          observationDiaries: this.observationDiariesPersister.persist(user),
         }).pipe(map((result) => ({ ...payload, ...result }))),
       ),
 

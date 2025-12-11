@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>Diário de observações</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="doRefresh()">
+        <ion-icon slot="icon-only" name="sync"></ion-icon>
+      </ion-button>
+      <ion-button (click)="createNew()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <div *ngIf="diaryDays.length === 0" class="empty-results">
+    <p>Nenhum registro encontrado.</p>
+  </div>
+
+  <div *ngFor="let diaryDay of diaryDays">
+    <h3 class="date-header">{{ diaryDay.record_date }}</h3>
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let item of diaryDay.unities" class="panel">
+        <ion-item slot="header">
+          <ion-label>{{ item.unity.description }}</ion-label>
+        </ion-item>
+        <div slot="content">
+          <ion-item
+            *ngFor="let diary of item.diaries"
+            (click)="openDetail(diary.id)"
+            button
+          >
+            <ion-label>
+              <h3>{{ diary.discipline_name }} - {{ diary.classroom_name }}</h3>
+              <p>Alunos com observações: {{ getObservationCount(diary) }}</p>
+            </ion-label>
+            <ion-icon
+              slot="end"
+              [name]="getSyncIcon(diary.synced)"
+              [color]="getSyncColor(diary.synced)"
+            ></ion-icon>
+          </ion-item>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+</ion-content>
