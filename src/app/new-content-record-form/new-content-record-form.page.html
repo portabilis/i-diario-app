@@ -14,11 +14,8 @@
     <p>Nenhuma escola encontrada.</p>
   </div>
 
-  <form
-    *ngIf="unities.length"
-    #f="ngForm"
-    (ngSubmit)="submitNewContentRecord(f)"
-  >
+  <form *ngIf="unities.length" #f="ngForm" (ngSubmit)="submitNewContentRecord(f)">
+
     <div class="form-frequency">
       <div class="form-item">
         <h3 class="form-item-title">Qual a escola?</h3>
@@ -94,13 +91,14 @@
         ></ion-datetime>
       </div>
 
-      <ion-button
-        expand="block"
-        type="submit"
-        [disabled]="!f.valid || !classrooms.length"
-      >
-        Avançar
-      </ion-button>
+      <div class="load-more">
+        <ion-button
+          type="submit"
+          [disabled]="!f.valid || !classrooms.length"
+        >
+          Avançar
+        </ion-button>
+      </div>
     </div>
   </form>
 </ion-content>
