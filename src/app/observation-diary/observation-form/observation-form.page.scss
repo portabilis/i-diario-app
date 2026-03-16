@@ -1,0 +1,24 @@
+.empty-students {
+  text-align: center;
+  padding: 2rem;
+  color: var(--ion-color-medium);
+}
+
+ion-footer {
+  ion-toolbar {
+    --background: var(--ion-color-light);
+    padding: 0.5rem;
+  }
+
+  ion-button[fill="clear"] {
+    --color: var(--ion-color-medium);
+  }
+
+  ion-button[fill="solid"] {
+    min-width: 100px;
+  }
+}
+
+ion-spinner {
+  margin-right: 0.5rem;
+}

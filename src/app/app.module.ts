@@ -22,6 +22,7 @@ import { SyncProvider } from './services/sync';
 import { DailyFrequenciesSynchronizer } from './services/offline_data_synchronization/daily_frequencies_synchronizer';
 import { DailyFrequencyStudentsSynchronizer } from './services/offline_data_synchronization/daily_frequency_students_synchronizer';
 import { ContentRecordsSynchronizer } from './services/offline_data_synchronization/content_records_synchronizer';
+import { ObservationDiaryRecordsSynchronizer } from './services/offline_data_synchronization/observation_diary_records_synchronizer';
 import { OfflineDataPersisterService } from './services/offline_data_persistence/offline_data_persister';
 import { UnitiesPersisterService } from './services/offline_data_persistence/unities_persister';
 import { UnitiesService } from './services/unities';
@@ -50,6 +51,8 @@ import { ContentRecordsService } from './services/content_records';
 import { TeachingPlansPersisterService } from './services/offline_data_persistence/teaching_plans_persister';
 import { TeachingPlansService } from './services/teaching_plans';
 import { DailyFrequencyStudentService } from './services/daily_frequency_student';
+import { ObservationDiaryService } from "./services/observation_diary";
+import { ObservationDiariesPersisterService } from "./services/offline_data_persistence/observation_diaries_persister";
 
 @NgModule({
   declarations: [AppComponent],
@@ -76,6 +79,7 @@ import { DailyFrequencyStudentService } from './services/daily_frequency_student
     DailyFrequenciesSynchronizer,
     DailyFrequencyStudentsSynchronizer,
     ContentRecordsSynchronizer,
+    ObservationDiaryRecordsSynchronizer,
     OfflineDataPersisterService,
     UnitiesPersisterService,
     UnitiesService,
@@ -103,6 +107,8 @@ import { DailyFrequencyStudentService } from './services/daily_frequency_student
     ContentRecordsService,
     TeachingPlansPersisterService,
     TeachingPlansService,
+    ObservationDiaryService,
+    ObservationDiariesPersisterService,
     DailyFrequencyStudentService,
   ],
   bootstrap: [AppComponent],

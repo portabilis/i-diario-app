@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ isEditMode ? 'Editar' : 'Novo' }} diário de observações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+  <div class="form-container">
+
+    <div *ngIf="isEditMode || (!isEditMode && students.length > 0)">
+      <h3 class="content-page-section">Detalhes do diário de observações</h3>
+      <div *ngIf="diary" class="details-panel">
+        <div class="detail">
+          <h3 class="detail-title">Turma</h3>
+          <p class="detail-text">{{ diary.classroom.description }}</p>
+        </div>
+        <div class="detail">
+          <h3 class="detail-title">Disciplina</h3>
+          <p class="detail-text">{{ diary.discipline.description }}</p>
+        </div>
+        <div class="detail">
+          <h3 class="detail-title">Data</h3>
+          <p class="detail-text">{{ diary.record_date | date: 'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isEditMode && students.length === 0">
+      <div *ngIf="unities.length === 0" class="empty-results">
+        <p>Nenhuma escola encontrada.</p>
+      </div>
+
+      <div *ngIf="unities.length">
+        <div class="form-item">
+          <h3 class="form-item-title">Qual a escola?</h3>
+          <ion-list class="panel">
+            <ion-radio-group
+              [(ngModel)]="unityId"
+              (ionChange)="onChangeUnity()"
+            >
+              <ion-item *ngFor="let unity of unities">
+                <ion-radio
+                  [attr.aria-label]="unity.description"
+                  [value]="unity.id"
+                >
+                  {{ unity.description }}
+                </ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+
+        <div class="form-item" *ngIf="classrooms && classrooms.length > 0">
+          <h3 class="form-item-title">Turma</h3>
+          <ion-list class="panel">
+            <ion-radio-group
+              [(ngModel)]="classroomId"
+              (ionChange)="onChangeClassroom()"
+            >
+              <ion-item *ngFor="let classroom of classrooms">
+                <ion-radio
+                  [attr.aria-label]="classroom.description"
+                  [value]="classroom.id"
+                >
+                  {{ classroom.description }}
+                </ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+
+        <div class="form-item" *ngIf="disciplines && disciplines.length > 0">
+          <h3 class="form-item-title">Disciplina</h3>
+          <ion-list class="panel">
+            <ion-radio-group
+              [(ngModel)]="disciplineId"
+            >
+              <ion-item *ngFor="let discipline of disciplines">
+                <ion-radio
+                  [attr.aria-label]="discipline.description"
+                  [value]="discipline.id"
+                >
+                  {{ discipline.description }}
+                </ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </div>
+
+        <div class="form-item" *ngIf="classrooms && classrooms.length > 0">
+          <h3 class="form-item-title">Data</h3>
+          <ion-datetime
+            [(ngModel)]="recordDate"
+            [max]="maxDate"
+            locale="pt-BR"
+            presentation="date"
+            class="panel"
+          ></ion-datetime>
+        </div>
+
+        <ion-button
+          expand="block"
+          (click)="createOrUpdateRecord()"
+          [disabled]="!classroomId || !disciplineId || !recordDate || !classrooms.length"
+        >
+          Avançar
+        </ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="diary && diary.students.length > 0" class="form-item">
+      <h3 class="content-page-section">Alunos ({{ students.length }})</h3>
+
+      <div class="details-panel">
+        <div *ngFor="let observation of diary.students; let i = index" class="detail">
+          <ion-label>
+            {{ observation.student.name }}
+          </ion-label>
+          <ion-textarea
+            [(ngModel)]="observation.note"
+            rows="3"
+            style="border-bottom: 1px solid #e5deec !important"
+          ></ion-textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -8,6 +8,13 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'observation-diary',
+        loadChildren: () =>
+          import('../observation-diary/observation-diary.module').then(
+            (m) => m.ObservationDiaryPageModule,
+          ),
+      },
+      {
         path: 'tab1',
         loadChildren: () =>
           import('../tab1/tab1.module').then((m) => m.Tab1PageModule),
