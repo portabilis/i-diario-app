@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { Unity, Classroom, Discipline, ObservationDiary } from "../data/types";
+import { Unity, Classroom, Discipline, ObservationDiary, DailyNote, Student } from "../data/types";
 
 @Injectable({
   providedIn: 'root',
@@ -138,7 +138,7 @@ export class StorageService {
   /**
    * Retorna os alunos de uma turma/disciplina em um hash `{ [id]: student }`.
    */
-  async getStudentsFrom(classroom: number, discipline: number) {
+  async getStudentsFrom(classroom: number, discipline: number): Promise<Record<number, Student>> {
     const studentsInClassroomDiscipline = await this.storage.get('students') || [];
 
     const students = studentsInClassroomDiscipline.find((item: any) => item.classroomId == classroom && item.disciplineId == discipline);
@@ -220,5 +220,32 @@ export class StorageService {
     filteredObservationDiaries.push(observationToSave);
 
     await this.storage.set('observationDiaries', filteredObservationDiaries);
+  }
+
+  /**
+   * Salva no storage o lançamento de notas para uma avaliação ser sincronizado.
+   */
+  async saveDailyNote(dailyNote: DailyNote) {
+    const dailyNotes = await this.getDailyNotes();
+
+    dailyNotes[dailyNote.id] = {
+      ...dailyNote,
+      synced: false,
+    };
+
+    await this.storage.set('dailyNotes', Object.values(dailyNotes));
+  }
+
+  /**
+   * Retorna as avaliações em um hash `{ [id]: avaliation }`.
+   */
+  async getDailyNotes(): Promise<Record<number, DailyNote>> {
+    const dailyNotesFromStorage = await this.storage.get('dailyNotes') || [];
+
+    return dailyNotesFromStorage
+      .reduce((dailyNoteObject: object, dailyNote: { id: number }) => ({
+        ...dailyNoteObject,
+        [dailyNote.id]: dailyNote,
+      }), {});
   }
 }

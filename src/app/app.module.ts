@@ -53,6 +53,9 @@ import { TeachingPlansService } from './services/teaching_plans';
 import { DailyFrequencyStudentService } from './services/daily_frequency_student';
 import { ObservationDiaryService } from "./services/observation_diary";
 import { ObservationDiariesPersisterService } from "./services/offline_data_persistence/observation_diaries_persister";
+import { DailyNotesService } from "./services/daily_notes";
+import { DailyNotesPersisterService } from "./services/offline_data_persistence/daily_notes_persister";
+import { DailyNoteRecordsSynchronizer } from "./services/offline_data_synchronization/daily_notes_record_synchronizer";
 
 @NgModule({
   declarations: [AppComponent],
@@ -109,6 +112,9 @@ import { ObservationDiariesPersisterService } from "./services/offline_data_pers
     TeachingPlansService,
     ObservationDiaryService,
     ObservationDiariesPersisterService,
+    DailyNoteRecordsSynchronizer,
+    DailyNotesService,
+    DailyNotesPersisterService,
     DailyFrequencyStudentService,
   ],
   bootstrap: [AppComponent],
