@@ -4,17 +4,15 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ApiService {
-  serverUrl: string = '';
+  constructor(private storage: StorageService) {}
 
-  constructor(private storage: StorageService) {
-    this.storage.get('serverUrl').then((serverUrl) => {
-      this.serverUrl = serverUrl;
-    });
+  get serverUrl(): string {
+    return this.storage.serverUrl;
   }
 
   setServerUrl(serverUrl: string) {
     this.storage.set('serverUrl', serverUrl);
-    this.serverUrl = serverUrl;
+    this.storage.serverUrl = serverUrl;
   }
 
   getTeacherClassroomsUrl() {

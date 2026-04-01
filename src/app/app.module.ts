@@ -12,6 +12,8 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { APP_INITIALIZER } from '@angular/core';
+import { StorageService } from './services/storage.service';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ApiService } from './services/api';
 import { ConnectionService } from './services/connection';
@@ -60,6 +62,12 @@ import { DailyFrequencyStudentService } from './services/daily_frequency_student
     IonicStorageModule.forRoot(),
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (storage: StorageService) => () => storage.init(),
+      deps: [StorageService],
+      multi: true,
+    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

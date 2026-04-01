@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class StorageService {
   private initialized = false;
+  public serverUrl: string = '';
 
   constructor(private storage: Storage) {}
 
@@ -17,6 +18,7 @@ export class StorageService {
     this.initialized = true;
     await this.storage.create();
     await this.initializeDefaultData();
+    this.serverUrl = (await this.storage.get('serverUrl')) || '';
   }
 
   // TODO verificar
