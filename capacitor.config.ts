@@ -13,7 +13,7 @@ const config: CapacitorConfig = {
       hostname: 'localhost',
       AndroidInsecureFileModeEnabled: 'true',
       'android-minSdkVersion': '22',
-      'android-targetSdkVersion': '35',
+      'android-targetSdkVersion': '36',
       BackupWebStorage: 'none',
       SplashMaintainAspectRatio: 'true',
       FadeSplashScreenDuration: '300',

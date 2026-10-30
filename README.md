@@ -87,6 +87,20 @@ npx cap open ios
 npx cap open android
 ```
 
+#### Android 16 (API 36)
+
+A Play Store exige que o aplicativo segmente o Android 16 (nível 36 da API). Como a pasta `android/` é
+gerada pelo `npx cap add android` e o template do Capacitor 6 vem com a API 34, depois de gerá-la é
+necessário ajustar os arquivos abaixo antes do build:
+
+- `android/variables.gradle`: `compileSdkVersion = 36` e `targetSdkVersion = 36`
+- `android/build.gradle`: `classpath 'com.android.tools.build:gradle:8.13.0'`
+- `android/gradle/wrapper/gradle-wrapper.properties`:
+  `distributionUrl=https\://services.gradle.org/distributions/gradle-8.14.3-all.zip`
+
+O build exige o JDK 17 ou mais recente. No Android 16 o app sempre é exibido de ponta a ponta (edge-to-edge),
+então confira se a barra de status e a barra de navegação não cobrem o conteúdo.
+
 ## Perguntas frequentes (FAQ)
 
 Algumas perguntas aparecem recorrentemente. Olhe primeiro por aqui: [FAQ](https://github.com/portabilis/i-educar-website/blob/master/docs/faq.md).
